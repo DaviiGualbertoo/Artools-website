@@ -1,0 +1,64 @@
++----------------------------------------------------------------------------------------------------------------+
+| nav                                                                                                            |
+| [t1: Nexora]                 [lnk: Product]  [lnk: Solutions]  [lnk: Resources]  [lnk: Pricing]                |
+|                              [ico:search]  [lnk: Sign In]  [btn: Get Started ->]                               |
++----------------------------------------------------------------------------------------------------------------+
+| hero                                                                                                           |
+| +-----------------------------+  +-------------------------------------+  +----------------------------------+ |
+| | header-left                 |  | header-center                       |  | header-right                     | |
+| | [t3: BUILT FOR BIGGER IDEAS]|  | [h1: THE ALL-IN-ONE]                |  | [t2: Streamline your work, boost | |
+| |                             |  | [h1: PLATFORM FOR]                  |  | productivity, and scale faster   | |
+| |                             |  | [h1: MODERN TEAMS]                  |  | with a single, powerful platform]| |
+| |                             |  |                                     |  | [btn2: Start for Free ->]        | |
+| |                             |  |                                     |  | [t3: No credit card required]    | |
+| |                             |  |                                     |  | [t3: Free 14-day trial]          | |
+| +-----------------------------+  +-------------------------------------+  +----------------------------------+ |
++----------------------------------------------------------------------------------------------------------------+
+| media                                                                                                          |
+| [btn3: PLAN]  [btn3: COLLABORATE]  [btn3: AUTOMATE]  [btn3: SCALE]             [t3: Ideas into Impact]         |
+| [img: bg-saas-letters]                                                                                         |
+| +------------------------------------------------------------------------------------------------------------+ |
+| | mockup-stage                                                                                               | |
+| | [img: laptop-on-rock-pedestal-nexora-dashboard]                                                            | |
+| +------------------------------------------------------------------------------------------------------------+ |
++----------------------------------------------------------------------------------------------------------------+
+| rail                                                                                                           |
+| [img: slack]     [img: notion]     [img: dropbox]     [img: figma]     [img: shopify]     [img: adobe]         |
++----------------------------------------------------------------------------------------------------------------+
+| section                                                                                                        |
+| +-------------------------------+  +---------------------------------+  +------------------------------------+ |
+| | card-dark-left                |  | card-dark-center                |  | card-dark-right                    | |
+| | [t3: WHY CHOOSE NEXORA]       |  | [img: team-member-portrait]     |  | [t2: A modern workspace designed   | |
+| | [h2: WORK SMARTER, TOGETHER.] |  | +-----------------------------+ |  | to help ambitious teams move       | |
+| | [t2: Everything your team     |  | | card-float-top              | |  | faster and achieve more.]          | |
+| | needs to plan, collaborate,   |  | | [t3: Team Productivity]     | |  | [lnk: Learn More ->]               | |
+| | automate, and grow - all in   |  | | [h3: +42%] [t3: This month] | |  | +--------------------------------+ | |
+| | one place.]                   |  | | [btn5: ->]                  | |  | | stat-row                         | | |
+| | [btn4: Explore Features ->]   |  | +-----------------------------+ |  | | [ico:users] [h3: 10K+]           | | |
+| |                               |  | +-----------------------------+ |  | | [t3: Active Teams]               | | |
+| |                               |  | | card-float-bottom           | |  | +--------------------------------+ | |
+| |                               |  | | [ico:check]                 | |  | | stat-row                         | | |
+| |                               |  | | [t2: Automate               | |  | | [ico:star] [h3: 98%]             | | |
+| |                               |  | | Repetitive Work]            | |  | | [t3: Customer Satisfaction]      | | |
+| |                               |  | +-----------------------------+ |  | +--------------------------------+ | |
+| |                               |  |                                 |  | | stat-row                         | | |
+| |                               |  |                                 |  | | [ico:chart] [h3: 4.9/5]          | | |
+| |                               |  |                                 |  | | [t3: Average Rating]             | | |
+| |                               |  |                                 |  | +--------------------------------+ | |
+| +-------------------------------+  +---------------------------------+  +------------------------------------+ |
++----------------------------------------------------------------------------------------------------------------+
+| section2                                                                                                       |
+| [t3: FEATURES]                                                                                                 |
+| [h2: Everything you need in one platform.]                                                                     |
+| [t2: Powerful features to help your team work better, together.]                                               |
+| +-----------------------------+  +-----------------------------+  +------------------------------------------+ |
+| | card-feature                |  | card-feature                |  | card-feature                             | |
+| | [ico:users]                 |  | [ico:lightning]             |  | [ico:chart]                              | |
+| | [h3: Team Collaboration]    |  | [h3: Workflow Automation]   |  | [h3: Powerful Analytics]                 | |
+| | [t2: Work together in real- |  | [t2: Save time by automating|  | [t2: Get insights that help you make     | |
+| | time with your team,        |  | repetitive tasks and        |  | better, faster decisions.]               | |
+| | anywhere in the world.]     |  | workflows.]                 |  | [btn5: ->]                               | |
+| | [btn5: ->]                  |  | [btn5: ->]                  |  |                                          | |
+| +-----------------------------+  +-----------------------------+  +------------------------------------------+ |
++----------------------------------------------------------------------------------------------------------------+
+

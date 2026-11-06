@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARTOOLS.PRO — A Caneta Mais Tecnológica do Mundo</title>
+
+    <!-- Google Fonts: Inter & JetBrains Mono (Extraídas do design_system_oficial1.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Iconify Icons (Biblioteca de ícones do Design System Oficial) -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- GSAP & ScrollTrigger via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        surface: {
+                            body: '#ffffff',
+                            subtle: '#fafafa',
+                            muted: '#f4f4f5',
+                            studio: '#ecece8',
+                        },
+                        ink: {
+                            primary: '#09090b',
+                            main: '#18181b',
+                            secondary: '#71717a',
+                            tertiary: '#a1a1aa',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        /* =========================================================================
+           1. TOKENS & VARIÁVEIS DE ESTILO (EXTRAÍDOS DE design_system_oficial1.html)
+           ========================================================================= */
+        :root {
+            /* Paleta de Cores — Pure White & Studio Monochrome */
+            --bg-body: #ffffff;
+            --bg-surface: #fafafa;
+            --bg-surface-2: #f4f4f5;
+            --bg-highlight: #f0f0f0;
+            --bg-studio: #ecece8;
+
+            --text-primary: #09090b;
+            --text-main: #18181b;
+            --text-secondary: #71717a;
+            --text-muted: #737373;
+            --text-tertiary: #a1a1aa;
+            --text-light: #a3a3a3;
+
+            --border-light: #e4e4e7;
+            --border-hover: #d4d4d8;
+
+            --brand-primary: #18181b;
+            --brand-inverse: #ffffff;
+
+            /* Tipografia */
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Espaçamento & Layout */
+            --space-unit: 8px;
+            --section-gap: 7rem;
+
+            /* Curvas de Movimento (Motion Curves do Design System) */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-studio);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        iconify-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+
+        /* =========================================================================
+           2. COMPONENTES DO DESIGN SYSTEM (GLASS, LETTERING VAZADO E BOTÕES)
+           ========================================================================= */
+
+        /* Header Glassmorphism (.glass de design_system_oficial1.html) */
+        .glass-header {
+            background: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Tipografia Vazada / Outline (.text-stroke-outline de design_system_oficial1.html) */
+        .text-stroke-outline {
+            color: transparent;
+            -webkit-text-stroke: 1.35px #18181b;
+            transition: -webkit-text-stroke 0.5s var(--ease-out-expo), color 0.5s var(--ease-out-expo);
+        }
+
+        .text-stroke-outline:hover {
+            -webkit-text-stroke: 1.6px #000000;
+        }
+
+        /* Botões Base e Variantes (.btn-base, .btn-primary, .btn-outline, .btn-glow) */
+        .btn-base {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+            padding: 1rem 2.15rem;
+            border-radius: 9999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: transform 0.35s var(--ease-out-expo),
+                        box-shadow 0.35s var(--ease-out-expo),
+                        background-color 0.3s ease,
+                        border-color 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .btn-primary-dark {
+            background-color: var(--brand-primary);
+            color: var(--brand-inverse);
+            border: 1px solid var(--brand-primary);
+            box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.28);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-dark:hover {
+            background-color: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px -6px rgba(0, 0, 0, 0.34);
+        }
+
+        .btn-primary-dark:active {
+            transform: translateY(0);
+        }
+
+        /* Efeito Radial Glow no Hover (.btn-glow do Design System) */
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        .btn-glow:hover::after {
+            transform: scale(1);
+        }
+
+        .btn-secondary-light {
+            background-color: rgba(255, 255, 255, 0.96);
+            color: var(--text-main);
+            border: 1px solid rgba(228, 228, 231, 0.9);
+            box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-secondary-light:hover {
+            background-color: #ffffff;
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary-light:active {
+            transform: translateY(0);
+        }
+
+        /* Animação da linha indicadora de scroll no rodapé */
+        @keyframes scrollPulse {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        .animate-scroll-indicator {
+            animation: scrollPulse 1.8s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+        }
+
+        /* Estados iniciais para evitar FOUC antes do GSAP iniciar */
+        .gsap-init-hidden {
+            opacity: 0;
+            will-change: transform, opacity, filter;
+        }
+
+        /* Scrollbar Minimalista (design_system_oficial1.html) */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ecece8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d8;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1aa;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-zinc-900 selection:text-white antialiased">
+
+    <!-- =========================================================================
+         NAVBAR / HEADER MINIMALISTA (Fixo no topo, vidro translúcido)
+         ========================================================================= -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 glass-header gsap-init-hidden">
+        <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-12 h-16 md:h-[72px] flex items-center justify-between">
+
+            <!-- Esquerda: Logo ARTOOLS.PRO -->
+            <a href="#" class="flex items-center gap-2.5 group focus:outline-none" aria-label="Artools Pro Home">
+                <div class="w-8 h-8 bg-[#18181b] text-white rounded-md flex items-center justify-center shadow-sm transition-transform duration-500 ease-out group-hover:scale-105">
+                    <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-lg"></iconify-icon>
+                </div>
+                <span class="font-sans font-bold tracking-tight text-sm md:text-[15px] text-[#18181b]">
+                    ARTOOLS<span class="font-normal text-[#a1a1aa]">.PRO</span>
+                </span>
+            </a>
+
+            <!-- Centro: Links de Navegação (Design, Technology, Specs) -->
+            <nav class="hidden md:flex items-center gap-9 text-[11px] font-mono uppercase tracking-[0.22em] text-[#71717a]" aria-label="Navegação Principal">
+                <a href="#design" class="hover:text-[#09090b] transition-colors duration-200">Design</a>
+                <a href="#technology" class="hover:text-[#09090b] transition-colors duration-200">Technology</a>
+                <a href="#specs" class="hover:text-[#09090b] transition-colors duration-200">Specs</a>
+            </nav>
+
+            <!-- Direita: Ícone de Sacola de Compras + Divisor Sutil -->
+            <div class="flex items-center gap-4">
+                <button type="button" aria-label="Sacola de Compras" class="text-[#18181b] hover:text-[#71717a] transition-colors duration-200 flex items-center justify-center">
+                    <iconify-icon icon="solar:bag-linear" class="text-[20px]"></iconify-icon>
+                </button>
+                <span class="hidden sm:block w-px h-4 bg-zinc-200"></span>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         SEÇÃO HERO COM SCROLL-SCRUB DE VÍDEO (EFEITO APPLE)
+         - A seção #hero-scroll-track possui 400vh de altura para fornecer uma pista
+           de rolagem longa e precisa.
+         - A div interna .sticky permanece fixa (sticky top-0 h-screen) enquanto o
+           usuário rola a página, permitindo avançar e retroceder o vídeo frame a frame.
+         ========================================================================= -->
+    <main>
+        <section id="hero-scroll-track" class="relative w-full h-[400vh] bg-[#ecece8]">
+
+            <!-- Viewport Fixa (Sticky) durante toda a experiência da Hero -->
+            <div class="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center">
+
+                <!-- 1. ELEMENTO CENTRAL / FUNDO: VÍDEO CONTROLADO POR SCROLL -->
+                <div class="absolute inset-0 z-0 w-full h-full overflow-hidden bg-[#ecece8]">
+                    <video
+                        id="hero-video"
+                        class="w-full h-full object-cover object-center pointer-events-none select-none"
+                        muted
+                        playsinline
+                        webkit-playsinline
+                        preload="auto"
+                    >
+                        <!-- Caminho oficial na estrutura do repositório + fallback direto -->
+                        <source src="assets/raw_files/videoof.mp4" type="video/mp4" />
+                        <source src="videoof.mp4" type="video/mp4" />
+                    </video>
+                </div>
+
+                <!-- 2. CONTEÚDO PRINCIPAL (TIPOGRAFIA E BOTÕES À ESQUERDA) -->
+                <div class="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-24 pt-12 pointer-events-none">
+                    <div id="hero-content-parallax" class="max-w-2xl pointer-events-auto">
+
+                        <!-- Título Principal misturando pesos e linha central vazada (Outline) -->
+                        <h1 class="font-sans text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-bold tracking-[-0.04em] leading-[1.02] text-[#18181b] select-none">
+                            <span class="hero-reveal gsap-init-hidden block">A caneta</span>
+                            <span class="hero-reveal gsap-init-hidden block text-stroke-outline my-0.5">mais tecnológica</span>
+                            <span class="hero-reveal gsap-init-hidden block">do mundo.</span>
+                        </h1>
+
+                        <!-- Parágrafo Descritivo -->
+                        <p class="hero-reveal gsap-init-hidden mt-6 mb-9 text-base sm:text-lg md:text-[1.125rem] text-[#71717a] font-light leading-[1.6] max-w-[460px]">
+                            A Artools Precision Pen redefine o equilíbrio entre peso, fluxo e design. Feita para criadores que exigem perfeição em cada traço.
+                        </p>
+
+                        <!-- Botões de Ação Alinhados Horizontalmente -->
+                        <div class="hero-reveal gsap-init-hidden flex flex-wrap items-center gap-4">
+                            <!-- Botão Primário Escuro -->
+                            <a href="#comprar" class="btn-base btn-primary-dark btn-glow">
+                                <span>Comprar Agora</span>
+                            </a>
+
+                            <!-- Botão Secundário Claro -->
+                            <button type="button" id="btn-explore" class="btn-base btn-secondary-light group">
+                                <span>Explorar</span>
+                                <span class="inline-block text-sm transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 3. DETALHE LATERAL DIREITO (Indicador de Página "01" + Linha Vertical) -->
+                <aside
+                    id="hero-side-indicator"
+                    class="gsap-init-hidden absolute right-6 sm:right-10 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-5 select-none pointer-events-none"
+                    aria-label="Indicador de Seção"
+                >
+                    <span class="font-mono text-[11px] font-medium tracking-widest text-[#71717a]">01</span>
+                    <div class="w-[1.5px] h-11 bg-zinc-300/80 relative overflow-hidden rounded-full">
+                        <!-- Barra interna que acompanha o progresso do scroll -->
+                        <div id="side-progress-bar" class="w-full h-full bg-[#18181b] origin-top"></div>
+                    </div>
+                </aside>
+
+                <!-- 4. DETALHE RODAPÉ CENTRALIZADO ("SCROLL TO CONTROL" + Linha Vertical) -->
+                <div
+                    id="hero-scroll-hint"
+                    class="gsap-init-hidden absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2.5 select-none pointer-events-none"
+                >
+                    <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.26em] text-[#a1a1aa]">
+                        SCROLL TO CONTROL
+                    </span>
+                    <div class="w-px h-7 bg-zinc-300/90 overflow-hidden relative">
+                        <div class="w-full h-full bg-zinc-600/80 animate-scroll-indicator"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================================================
+         MOTOR DE ANIMAÇÃO E INTERATIVIDADE (GSAP + SCROLLTRIGGER)
+         ========================================================================= -->
+    <script>
+        // Registra o plugin ScrollTrigger no núcleo do GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("hero-video");
+            const scrollTrack = document.getElementById("hero-scroll-track");
+            const exploreBtn = document.getElementById("btn-explore");
+
+            /* ---------------------------------------------------------------------
+               1. ANIMAÇÕES DE ENTRADA (Fade In + Slide Up Suave no Carregamento)
+               --------------------------------------------------------------------- */
+            const introTimeline = gsap.timeline({
+                defaults: {
+                    ease: "expo.out",
+                    duration: 1.25
+                }
+            });
+
+            // Entrada suave do vídeo de fundo com leve escala decrescente
+            introTimeline.fromTo(
+                video,
+                { opacity: 0, scale: 1.04 },
+                { opacity: 1, scale: 1, duration: 1.6, ease: "power3.out" },
+                0
+            );
+
+            // Entrada da Navbar deslizando de cima
+            introTimeline.fromTo(
+                "#navbar",
+                { opacity: 0, y: -20 },
+                { opacity: 1, y: 0, duration: 1.1 },
+                0.1
+            );
+
+            // Entrada escalonada (stagger) das linhas do título, parágrafo e botões
+            introTimeline.fromTo(
+                ".hero-reveal",
+                {
+                    opacity: 0,
+                    y: 32,
+                    filter: "blur(8px)"
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    stagger: 0.12,
+                    duration: 1.3
+                },
+                0.2
+            );
+
+            // Entrada dos indicadores minimalistas (direita e rodapé)
+            introTimeline.fromTo(
+                ["#hero-side-indicator", "#hero-scroll-hint"],
+                { opacity: 0 },
+                { opacity: 1, duration: 1.2, stagger: 0.15 },
+                0.65
+            );
+
+            /* ---------------------------------------------------------------------
+               2. VÍDEO PARALLAX VIA SCROLL (Scrub Frame a Frame estilo Apple)
+               ---------------------------------------------------------------------
+               Como o GSAP e o <video> interagem:
+               - Criamos um objeto proxy (`videoPlayhead`) com a propriedade `time`.
+               - O ScrollTrigger monitora o progresso de rolagem da seção `#hero-scroll-track`
+                 (que tem 400vh de altura) do topo ao fim ("top top" -> "bottom bottom").
+               - Com `scrub: 0.35`, o GSAP aplica uma micro-inércia suave ao avanço e
+                 retrocesso da propriedade `videoPlayhead.time` entre 0 e `video.duration`.
+               - Para evitar gargalos de decodificação de frames no navegador quando o
+                 usuário rola rapidamente, sincronizamos `video.currentTime` verificando
+                 o estado `video.seeking` e garantindo que o último frame alvo seja
+                 sempre renderizado assim que o evento `seeked` disparar.
+               --------------------------------------------------------------------- */
+            let targetVideoTime = 0;
+            let isScrubSetup = false;
+
+            // Quando o navegador termina de decodificar um frame, verifica se o scroll
+            // já avançou/retrocedeu para um novo instante e atualiza imediatamente.
+            video.addEventListener("seeked", () => {
+                if (Math.abs(video.currentTime - targetVideoTime) > 0.015) {
+                    video.currentTime = targetVideoTime;
+                }
+            });
+
+            const setupVideoScrollScrub = () => {
+                if (isScrubSetup) return;
+                isScrubSetup = true;
+
+                // Garante que o vídeo esteja pausado no primeiro frame
+                video.pause();
+                video.currentTime = 0;
+
+                const duration = (video.duration && !isNaN(video.duration)) ? video.duration : 7.85;
+                const videoPlayhead = { time: 0 };
+
+                // Tween principal que amarra a duração do vídeo ao ScrollTrigger
+                gsap.to(videoPlayhead, {
+                    time: duration,
+                    ease: "none", // Progresso linear fiel à posição da barra de rolagem
+                    scrollTrigger: {
+                        trigger: scrollTrack,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 0.35, // Suavização estilo Apple (0.35s de amortecimento)
+                        invalidateOnRefresh: true,
+                        onUpdate: () => {
+                            // Calcula o tempo exato do vídeo com base no playhead interpolado pelo GSAP
+                            targetVideoTime = Math.min(Math.max(videoPlayhead.time, 0), duration - 0.02);
+
+                            // Só solicita novo frame ao decodificador se ele não estiver ocupado
+                            if (!video.seeking) {
+                                video.currentTime = targetVideoTime;
+                            }
+                        }
+                    }
+                });
+
+                // Parallax sutil no bloco de texto à esquerda durante a rolagem
+                gsap.fromTo(
+                    "#hero-content-parallax",
+                    { y: 0 },
+                    {
+                        y: -28,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: scrollTrack,
+                            start: "top top",
+                            end: "bottom bottom",
+                            scrub: true
+                        }
+                    }
+                );
+            };
+
+            // Inicializa o ScrollTrigger assim que os metadados (duração/dimensões) do vídeo estiverem prontos
+            if (video.readyState >= 1 && video.duration) {
+                setupVideoScrollScrub();
+            } else {
+                video.addEventListener("loadedmetadata", setupVideoScrollScrub, { once: true });
+                video.addEventListener("canplay", setupVideoScrollScrub, { once: true });
+            }
+
+            // Destrava a decodificação no primeiro frame em navegadores WebKit/Blink
+            video.load();
+
+            /* ---------------------------------------------------------------------
+               3. INTERAÇÃO DO BOTÃO "EXPLORAR ↓"
+               --------------------------------------------------------------------- */
+            if (exploreBtn) {
+                exploreBtn.addEventListener("click", () => {
+                    const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+                    const currentScroll = window.scrollY;
+                    // Avança suavemente pela animação da caneta (ou retorna ao topo se já estiver no fim)
+                    const nextStop = currentScroll < maxScroll * 0.85
+                        ? Math.min(currentScroll + window.innerHeight * 1.1, maxScroll)
+                        : 0;
+
+                    window.scrollTo({
+                        top: nextStop,
+                        behavior: "smooth"
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARTOOLS.PRO — A Caneta Mais Tecnológica do Mundo</title>
+
+    <!-- Google Fonts: Inter & JetBrains Mono (Extraídas de design_system_oficial1.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Iconify Icons (Biblioteca Solar do Design System Oficial) -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- GSAP & ScrollTrigger via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        // 1. Evita que o navegador restaure a posição de rolagem anterior (evita começar no final da página)
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // 2. Se a URL contiver hash como #comprar, limpa o hash imediatamente para não pular ao final
+        if (window.location.hash) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+
+        // 3. Força rolagem inicial no topo (0, 0)
+        window.scrollTo(0, 0);
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        /* =========================================================================
+           1. TOKENS & VARIÁVEIS HERDADAS DE design_system_oficial1.html
+           ========================================================================= */
+        :root {
+            --bg-body: #ffffff;
+            --bg-surface: #fafafa;
+            --bg-surface-2: #f4f4f5;
+            --bg-studio: #ecece8;
+
+            --text-primary: #09090b;
+            --text-main: #0a0a0a;
+            --text-secondary: #71717a;
+            --text-tertiary: #a1a1aa;
+
+            --border-light: #e4e4e7;
+            --border-hover: #d4d4d8;
+
+            --brand-primary: #000000;
+            --brand-inverse: #ffffff;
+
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-studio);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+        }
+
+        iconify-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+
+        /* =========================================================================
+           2. TIPOGRAFIA VAZADA (-webkit-text-stroke) & PREENCHIMENTO LÍQUIDO
+           ========================================================================= */
+        .text-stroke-transparent {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(9, 9, 11, 0.22);
+            transition: -webkit-text-stroke 0.45s var(--ease-out-expo), color 0.45s var(--ease-out-expo);
+        }
+
+        .text-stroke-outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px #18181b;
+            transition: -webkit-text-stroke 0.45s var(--ease-out-expo), color 0.45s var(--ease-out-expo);
+        }
+
+        .text-stroke-outline:hover {
+            color: #18181b;
+        }
+
+        /* Preenchimento Líquido Horizontal (Sem nó ::before duplicado) */
+        .text-transparent-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1.5px #18181b;
+            background-image: linear-gradient(90deg, #18181b 0%, #18181b 100%);
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            display: inline-block;
+            white-space: nowrap;
+            transition: background-size 0.75s var(--ease-out-expo), -webkit-text-stroke 0.45s var(--ease-out-expo);
+        }
+
+        .group:hover .text-transparent-stroke,
+        .text-transparent-stroke:hover {
+            background-size: 100% 100%;
+        }
+
+        /* Camada Óptica Mix-Blend-Difference (DS7) */
+        .mix-blend-diff {
+            mix-blend-mode: difference;
+            color: #ffffff;
+        }
+
+        /* =========================================================================
+           3. PALCO DO VÍDEO SHOWCASE (60FPS HARDWARE ACCELERATED)
+           ========================================================================= */
+        .video-parallax-stage {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            background-color: var(--bg-studio);
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            will-change: transform;
+        }
+
+        .video-parallax-stage video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            pointer-events: none;
+            user-select: none;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
+        }
+
+        /* Vinheta Direcional Suave (Garante leitura limpa da tipografia à esquerda) */
+        .studio-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(236, 236, 232, 0.85) 0%,
+                    rgba(236, 236, 232, 0.45) 32%,
+                    rgba(236, 236, 232, 0) 58%
+                ),
+                linear-gradient(
+                    180deg,
+                    rgba(236, 236, 232, 0.6) 0%,
+                    rgba(236, 236, 232, 0) 14%,
+                    rgba(236, 236, 232, 0) 84%,
+                    rgba(236, 236, 232, 0.85) 100%
+                );
+        }
+
+        /* =========================================================================
+           4. COMPONENTES DO DESIGN SYSTEM (BOTÕES BEAM, PILLS & CARDS BENTO)
+           ========================================================================= */
+        @keyframes beam-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Botão Primário com Feixe Cônico Giratório (DS5 .btn-beam-wrapper) */
+        .btn-beam-wrapper {
+            position: relative;
+            display: inline-flex;
+            padding: 1.5px;
+            border-radius: 9999px;
+            overflow: hidden;
+            cursor: pointer;
+            transform: translate3d(0, 0, 0);
+            box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.24);
+            transition: box-shadow 0.3s ease;
+            will-change: transform;
+        }
+
+        .btn-beam-wrapper:hover {
+            box-shadow: 0 18px 36px -6px rgba(0, 0, 0, 0.32);
+        }
+
+        .btn-beam-border {
+            position: absolute;
+            inset: -200%;
+            background: conic-gradient(from 0deg, transparent 0 300deg, #000000 360deg);
+            animation: beam-spin 3s linear infinite;
+        }
+
+        .btn-beam-inner {
+            position: relative;
+            background: #18181b;
+            color: #ffffff;
+            border-radius: 9999px;
+            padding: 0.92rem 2.1rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            z-index: 1;
+            transition: background-color 0.25s ease;
+        }
+
+        .btn-beam-wrapper:hover .btn-beam-inner {
+            background: #000000;
+        }
+
+        /* Botão Pílula Claro (DS5 .btn-outline) */
+        .btn-pill-light {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding: 0.92rem 1.85rem;
+            border-radius: 9999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.94);
+            color: #18181b;
+            border: 1px solid rgba(228, 228, 231, 0.95);
+            box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+            will-change: transform;
+        }
+
+        .btn-pill-light:hover {
+            background: #ffffff;
+            border-color: #18181b;
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cards Bento / Flashlight com Rastreamento de Luz Radial (DS5 & DS11) */
+        .flashlight-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(228, 228, 231, 0.95);
+            box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.07);
+            border-radius: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                360px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(0, 0, 0, 0.055),
+                transparent 45%
+            );
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .flashlight-card:hover::before {
+            opacity: 1;
+        }
+
+        .flashlight-card:hover {
+            border-color: #18181b;
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.11);
+        }
+
+        /* Camadas de Storytelling Parallax Empilhadas na Viewport Fixa */
+        .story-stage {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .story-interactive {
+            pointer-events: auto;
+        }
+
+        @keyframes scrollLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .animate-scroll-line {
+            animation: scrollLine 1.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #ecece8; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #71717a; }
+    </style>
+</head>
+
+<body class="selection:bg-black selection:text-white antialiased">
+
+    <!-- =========================================================================
+         1. HEADER MINIMALISTA FIXO (Fiel à Referência da Artools.Pro + Design System)
+         ========================================================================= -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 glass-header">
+        <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 h-16 md:h-[72px] flex items-center justify-between">
+
+            <!-- Logo ARTOOLS.PRO -->
+            <button type="button" onclick="scrollToStage(0)" class="flex items-center gap-2.5 group cursor-pointer border-none bg-transparent text-left p-0">
+                <div class="w-8 h-8 bg-[#18181b] text-white rounded-lg flex items-center justify-center shadow-sm group-hover:rotate-90 transition-transform duration-500">
+                    <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-lg"></iconify-icon>
+                </div>
+                <span class="font-sans font-bold tracking-tight text-sm md:text-[15px] text-[#18181b]">
+                    ARTOOLS<span class="font-normal text-[#a1a1aa]">.PRO</span>
+                </span>
+            </button>
+
+            <!-- Links de Navegação que levam aos estágios de Parallax da Caneta -->
+            <nav class="hidden md:flex items-center gap-9 text-[11px] font-mono uppercase tracking-[0.22em] text-[#71717a]" aria-label="Navegação Principal">
+                <button type="button" onclick="scrollToStage(0)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">Design</button>
+                <button type="button" onclick="scrollToStage(0.48)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">Technology</button>
+                <button type="button" onclick="scrollToStage(0.88)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">Specs</button>
+            </nav>
+
+            <!-- Status de Otimização 60fps + Mix-Blend + Sacola -->
+            <div class="flex items-center gap-4">
+                <div id="fps-badge" class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-[10px] font-mono text-zinc-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span>60FPS INTRA-KEYFRAME</span>
+                </div>
+
+                <button type="button" onclick="toggleMixBlend()" class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-200 bg-white text-[10px] font-mono uppercase tracking-wider text-zinc-700 hover:border-black transition-colors cursor-pointer">
+                    <iconify-icon icon="solar:Contrast-bold-duotone" class="text-xs"></iconify-icon>
+                    <span>Mix-Blend</span>
+                </button>
+
+                <button type="button" onclick="scrollToBuy()" class="text-[#18181b] hover:text-[#71717a] transition-colors flex items-center justify-center cursor-pointer bg-transparent border-none p-0" aria-label="Comprar">
+                    <iconify-icon icon="solar:bag-linear" class="text-[20px]"></iconify-icon>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         2. HERO SECTION COM PIN + PARALLAX MULTICAMADAS ESTILO APPLE + SCRUB 60FPS
+         ========================================================================= -->
+    <main>
+        <section id="hero-pin-section" class="relative w-full h-screen overflow-hidden bg-[#ecece8]">
+
+            <!-- CAMADA DE PROFUNDIDADE -1: MARCA D'ÁGUA GIGANTE EM PARALLAX (Move-se mais devagar no scroll) -->
+            <div id="bg-watermark-parallax" class="absolute inset-x-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none flex justify-center overflow-hidden opacity-40">
+                <span class="text-[19vw] font-black tracking-[-0.06em] leading-none text-stroke-transparent whitespace-nowrap">
+                    PRECISION // 01
+                </span>
+            </div>
+
+            <!-- CAMADA DE PROFUNDIDADE 0: PALCO DO VÍDEO (Hard-accelerated, Intra-frame 60fps) -->
+            <div id="video-stage-parallax" class="video-parallax-stage">
+                <video
+                    id="pen-video"
+                    src="assets/raw_files/videoof.mp4?v=2"
+                    muted
+                    playsinline
+                    webkit-playsinline
+                    preload="auto"
+                >
+                    <source src="assets/raw_files/videoof.mp4?v=2" type="video/mp4" />
+                    <source src="videoof.mp4?v=2" type="video/mp4" />
+                    <source src="assets/raw_files/videoof_smooth_opt.mp4?v=2" type="video/mp4" />
+                    <source src="assets/raw_files/vídeoof.mp4?v=2" type="video/mp4" />
+                </video>
+            </div>
+
+            <!-- Vinheta direcional sutil para leitura perfeita na esquerda -->
+            <div class="studio-vignette"></div>
+
+            <!-- =================================================================
+                 ESTÁGIO PARALLAX 01 (0% a 38% do Scroll):
+                 Headline Principal à esquerda + Botões Magnéticos (Como na Referência!)
+                 Cada elemento sobe em velocidade diferente (Parallax Real) ao rolar.
+                 ================================================================= -->
+            <div id="stage-1" class="story-stage">
+                <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 pt-8">
+                    <div id="stage-1-blend-target" class="max-w-3xl story-interactive">
+
+                        <!-- Pílula Superior do Design System -->
+                        <div id="p1-badge" class="gsap-intro inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/90 border border-zinc-200/90 shadow-2xs mb-6">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-700">SÉRIE MONOLÍTICA // LOTE 01</span>
+                        </div>
+
+                        <!-- Título em Grande Escala com Linha Central Vazada (-webkit-text-stroke) -->
+                        <h1 id="p1-title" class="group font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[5.15rem] font-extrabold tracking-[-0.04em] leading-[1.02] text-[#18181b] select-none cursor-default">
+                            <span class="gsap-intro block">A caneta</span>
+                            <span class="gsap-intro block my-0.5">
+                                <span class="text-transparent-stroke">mais tecnológica</span>
+                            </span>
+                            <span class="gsap-intro block">do mundo.</span>
+                        </h1>
+
+                        <!-- Parágrafo Editorial -->
+                        <p id="p1-desc" class="gsap-intro mt-6 mb-9 text-base sm:text-lg text-[#71717a] font-light leading-[1.6] max-w-[450px]">
+                            A Artools Precision Pen redefine o equilíbrio entre peso, fluxo e design. Feita para criadores que exigem perfeição em cada traço.
+                        </p>
+
+                        <!-- Botões Magnéticos Alinhados Horizontalmente -->
+                        <div id="p1-cta" class="gsap-intro flex flex-wrap items-center gap-4">
+                            <button type="button" onclick="scrollToBuy()" class="btn-beam-wrapper magnetic-btn" data-strength="0.32">
+                                <span class="btn-beam-border"></span>
+                                <span class="btn-beam-inner">
+                                    <span>Comprar Agora</span>
+                                </span>
+                            </button>
+
+                            <button type="button" onclick="scrollToStage(0.48)" class="btn-pill-light magnetic-btn group" data-strength="0.24">
+                                <span>Explorar</span>
+                                <span class="inline-block text-sm transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- =================================================================
+                 ESTÁGIO PARALLAX 02 (36% a 72% do Scroll):
+                 Cards Flutuantes Bento / Flashlight entram em velocidades diferentes
+                 nas laterais enquanto a caneta gira no centro!
+                 ================================================================= -->
+            <div id="stage-2" class="story-stage pointer-events-none" style="opacity: 0;">
+                <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+
+                    <!-- Coluna Esquerda: Título de Engenharia + Card Flashlight 01 -->
+                    <div id="p2-left" class="max-w-md space-y-6 story-interactive">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black text-white text-[10px] font-mono uppercase tracking-widest">
+                            <span>02 // ENGENHARIA AEROESPACIAL</span>
+                        </div>
+
+                        <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.02] text-[#18181b]">
+                            Equilíbrio áureo.<br />
+                            <span class="text-stroke-outline">Corpo monolítico.</span>
+                        </h2>
+
+                        <div class="flashlight-card p-6 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
+                                    <iconify-icon icon="solar:scale-bold-duotone" class="text-xl"></iconify-icon>
+                                </div>
+                                <span class="text-2xl font-black text-stroke-transparent font-mono">24.0g</span>
+                            </div>
+                            <h3 class="text-base font-bold text-black">Centro de Massa Calibrado</h3>
+                            <p class="text-xs sm:text-sm text-zinc-500 leading-relaxed">
+                                Usinada a partir de um bloco sólido de Titânio Grau 5 com tolerância de <code class="font-mono text-black bg-zinc-100 px-1.5 py-0.5 rounded">±0.002mm</code> para eliminar qualquer fadiga muscular.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Coluna Direita (Deslocada para baixo em Parallax): Card Flashlight 02 -->
+                    <div id="p2-right" class="max-w-xs w-full lg:mt-40 story-interactive">
+                        <div class="flashlight-card p-6 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[10px] uppercase tracking-wider">
+                                    Zero-Gravity Flow
+                                </span>
+                                <span class="text-xl font-black text-stroke-transparent font-mono">02</span>
+                            </div>
+                            <h3 class="text-base font-bold text-black">Câmara Pressurizada</h3>
+                            <p class="text-xs text-zinc-500 leading-relaxed">
+                                Fluxo hermético de nanoriço japonês que responde instantaneamente na vertical, horizontal ou em micro-traços rápidos.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- =================================================================
+                 ESTÁGIO PARALLAX 03 (70% a 100% do Scroll):
+                 Macro da Ponta 0.18mm + Cards Bento Finais e Call to Action
+                 ================================================================= -->
+            <div id="stage-3" class="story-stage pointer-events-none" style="opacity: 0;">
+                <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8">
+
+                    <!-- Esquerda: Tipografia Monumental de Fechamento -->
+                    <div id="p3-left" class="max-w-lg space-y-6 story-interactive">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-300 bg-white/90 text-[10px] font-mono uppercase tracking-widest text-zinc-700">
+                            <span>03 // PRECISÃO MICRO-CÔNICA</span>
+                        </div>
+
+                        <h2 class="text-4xl sm:text-6xl font-black tracking-tighter leading-[0.95] text-[#18181b]">
+                            PERFEIÇÃO EM<br />
+                            <span class="text-stroke-outline">CADA TRAÇO.</span>
+                        </h2>
+
+                        <p class="text-sm sm:text-base text-zinc-600 font-light leading-relaxed max-w-md">
+                            A ponta híbrida de <strong class="text-black font-semibold">0.18mm em tungstênio polido</strong> desliza sem atrito, entregando linhas arquitetônicas com densidade óptica constante.
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-4 pt-1">
+                            <button type="button" onclick="scrollToBuy()" class="btn-beam-wrapper magnetic-btn" data-strength="0.32">
+                                <span class="btn-beam-border"></span>
+                                <span class="btn-beam-inner">
+                                    <span>Reservar Edição 01 — R$ 1.490</span>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+                                </span>
+                            </button>
+                            <button type="button" onclick="scrollToStage(0)" class="btn-pill-light magnetic-btn" data-strength="0.22">
+                                <iconify-icon icon="solar:restart-bold" class="text-base"></iconify-icon>
+                                <span>Rever Giro</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Direita: Mini Grid Bento 2 Colunas (Especificações Finais) -->
+                    <div id="p3-right" class="grid grid-cols-2 gap-3.5 max-w-sm w-full story-interactive">
+                        <div class="flashlight-card p-4">
+                            <span class="font-mono text-[10px] uppercase text-zinc-400 block">Diâmetro Ponta</span>
+                            <span class="text-2xl font-black text-black tracking-tight mt-1 block">0.18mm</span>
+                            <span class="text-[11px] text-zinc-500">Esfera de Tungstênio</span>
+                        </div>
+                        <div class="flashlight-card p-4">
+                            <span class="font-mono text-[10px] uppercase text-zinc-400 block">Autonomia</span>
+                            <span class="text-2xl font-black text-black tracking-tight mt-1 block">14.5km</span>
+                            <span class="text-[11px] text-zinc-500">Tinta Arquival Preta</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- =================================================================
+                 INDICADOR LATERAL DIREITO ("01 / 02 / 03" + Barra de Progresso)
+                 ================================================================= -->
+            <aside
+                id="side-indicator"
+                class="gsap-intro absolute right-6 sm:right-10 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col items-center gap-4 select-none pointer-events-none"
+            >
+                <span id="stage-number" class="font-mono text-[11px] font-semibold tracking-widest text-[#18181b]">01</span>
+                <div class="w-[1.5px] h-14 bg-zinc-300/90 relative overflow-hidden rounded-full">
+                    <div id="side-progress-fill" class="w-full h-full bg-[#18181b] origin-top scale-y-0"></div>
+                </div>
+                <span class="font-mono text-[10px] tracking-widest text-zinc-400">03</span>
+            </aside>
+
+            <!-- =================================================================
+                 INDICADOR INFERIOR CENTRAL ("SCROLL TO CONTROL" — Da Referência!)
+                 ================================================================= -->
+            <div
+                id="scroll-hint"
+                class="gsap-intro absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 select-none pointer-events-none"
+            >
+                <span id="scroll-hint-label" class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.26em] text-[#71717a]">
+                    SCROLL TO CONTROL
+                </span>
+                <div class="w-px h-7 bg-zinc-300 overflow-hidden relative">
+                    <div class="w-full h-full bg-zinc-700 animate-scroll-line"></div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =========================================================================
+             3. SEÇÃO DE FECHAMENTO PÓS-PIN (Para ancorar o botão Comprar Agora)
+             ========================================================================= -->
+        <section id="comprar" class="relative z-30 bg-white border-t border-zinc-200/80 py-20">
+            <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-[0.24em] text-zinc-400">ARTOOLS.PRO // OFICIAL</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-black mt-2">
+                        A SUA PRÓXIMA <span class="text-stroke-outline">OBRA-PRIMA.</span>
+                    </h2>
+                </div>
+                <div class="flex flex-wrap items-center gap-4">
+                    <button type="button" onclick="scrollToStage(0)" class="btn-pill-light magnetic-btn" data-strength="0.22">
+                        <iconify-icon icon="solar:arrow-up-linear" class="text-base"></iconify-icon>
+                        <span>Voltar ao Topo</span>
+                    </button>
+                    <button type="button" onclick="alert('Pedido iniciado com sucesso!')" class="btn-beam-wrapper magnetic-btn" data-strength="0.3">
+                        <span class="btn-beam-border"></span>
+                        <span class="btn-beam-inner">
+                            <span>Finalizar Pedido — R$ 1.490</span>
+                            <iconify-icon icon="solar:bag-check-bold" class="text-lg text-emerald-400"></iconify-icon>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================================================
+         4. ENGINE JAVASCRIPT DE ALTA PERFORMANCE (60FPS INTRA-FRAME SCRUB + PARALLAX APPLE)
+         ========================================================================= -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        let masterScrollTrigger = null;
+
+        // Navegação suave para qualquer estágio de scroll da caneta
+        function scrollToStage(progressRatio) {
+            if (!masterScrollTrigger) return;
+            const targetY = masterScrollTrigger.start + (masterScrollTrigger.end - masterScrollTrigger.start) * progressRatio;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+
+        // Navegação suave para a seção de compra sem poluir a URL com hash #comprar
+        function scrollToBuy() {
+            const buySection = document.getElementById('comprar');
+            if (buySection) {
+                buySection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Alternar modo Mix-Blend-Difference do Design System
+        function toggleMixBlend() {
+            const target = document.getElementById('stage-1-blend-target');
+            if (target) target.classList.toggle('mix-blend-diff');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Limpa memória de scroll do ScrollTrigger e força o topo absoluto
+            ScrollTrigger.clearScrollMemory('manual');
+            window.scrollTo(0, 0);
+
+            const video = document.getElementById('pen-video');
+            const sideProgressFill = document.getElementById('side-progress-fill');
+            const stageNumber = document.getElementById('stage-number');
+
+            /* ---------------------------------------------------------------------
+               1. ENTRADA SUAVE COM GSAP.FROM() NO CARREGAMENTO DA PÁGINA
+               --------------------------------------------------------------------- */
+            const introTl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+
+            introTl.from('#navbar', {
+                y: -24,
+                opacity: 0,
+                duration: 1.1
+            }, 0);
+
+            introTl.from('#video-stage-parallax', {
+                scale: 1.05,
+                opacity: 0,
+                duration: 1.4,
+                ease: 'power3.out'
+            }, 0);
+
+            introTl.from('.gsap-intro', {
+                y: 36,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 1.25,
+                clearProps: 'transform,opacity'
+            }, 0.15);
+
+            /* ---------------------------------------------------------------------
+               2. MOTOR DE VÍDEO 60FPS HARDWARE-ACCELERATED (INTRA-FRAME SCRUB):
+               - Como todos os frames são keyframes independentes (I-frames),
+                 a decodificação direta de currentTime leva 1 a 2 milissegundos.
+               - O listener 'seeked' garante atualização instantânea sem fila de espera.
+               --------------------------------------------------------------------- */
+            let videoDuration = 7.85;
+            let targetVideoTime = 0;
+
+            video.addEventListener('seeked', () => {
+                if (Math.abs(video.currentTime - targetVideoTime) > 0.015) {
+                    video.currentTime = targetVideoTime;
+                }
+            });
+
+            function syncVideoTime(time) {
+                targetVideoTime = Math.min(Math.max(time, 0), Math.max(videoDuration - 0.02, 0.05));
+                if (!video.seeking) {
+                    video.currentTime = targetVideoTime;
+                }
+            }
+
+            /* ---------------------------------------------------------------------
+               3. SCROLLTRIGGER PIN + TIMELINE DE PARALLAX MULTICAMADA ESTILO APPLE
+               --------------------------------------------------------------------- */
+            let isScrollInitialized = false;
+
+            function initAppleParallaxAndScrub() {
+                if (isScrollInitialized) return;
+                if (!video.duration || isNaN(video.duration)) return;
+                isScrollInitialized = true;
+
+                videoDuration = video.duration;
+                video.pause();
+                video.currentTime = 0;
+
+                // Garante que o scroll continue no topo antes de construir o ScrollTrigger
+                window.scrollTo(0, 0);
+
+                // Timeline Mestre atrelada ao ScrollTrigger com Pin
+                const masterTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '#hero-pin-section',
+                        start: 'top top',
+                        end: '+=420%', // Pista de rolagem ampla para controle milimétrico do vídeo
+                        pin: true,
+                        scrub: 0.35,   // Amortecimento sedoso estilo Apple
+                        anticipatePin: 1,
+                        invalidateOnRefresh: true,
+                        onUpdate: (self) => {
+                            const time = self.progress * (videoDuration - 0.02);
+                            syncVideoTime(time);
+
+                            // Atualiza barra lateral de progresso
+                            if (sideProgressFill) {
+                                sideProgressFill.style.transform = `scaleY(${self.progress})`;
+                            }
+                            if (stageNumber) {
+                                stageNumber.textContent = self.progress < 0.36 ? '01' : (self.progress < 0.70 ? '02' : '03');
+                            }
+                        }
+                    }
+                });
+
+                masterScrollTrigger = masterTl.scrollTrigger;
+
+                // A. Parallax da Marca d'Água Gigante ao Fundo (Deslocamento suave)
+                masterTl.fromTo('#bg-watermark-parallax',
+                    { xPercent: 8, yPercent: 10 },
+                    { xPercent: -14, yPercent: -12, ease: 'none', duration: 100 },
+                    0
+                );
+
+                // B. Parallax Óptico no Palco do Vídeo (Leve zoom dinâmico no meio do giro)
+                masterTl.fromTo('#video-stage-parallax',
+                    { scale: 1, yPercent: 0 },
+                    { scale: 1.05, yPercent: -2, ease: 'sine.inOut', duration: 50 },
+                    0
+                ).to('#video-stage-parallax',
+                    { scale: 1.01, yPercent: 0, ease: 'sine.inOut', duration: 50 },
+                    50
+                );
+
+                // C. ESTÁGIO 1 (0 -> 36): Parallax Diferencial de Saída (Cada elemento em velocidade própria)
+                masterTl.to('#p1-badge', { y: -150, opacity: 0, ease: 'power2.in', duration: 22 }, 14);
+                masterTl.to('#p1-title', { y: -120, opacity: 0, filter: 'blur(6px)', ease: 'power2.in', duration: 24 }, 15);
+                masterTl.to('#p1-desc',  { y: -85,  opacity: 0, filter: 'blur(4px)', ease: 'power2.in', duration: 22 }, 17);
+                masterTl.to('#p1-cta',   { y: -55,  opacity: 0, ease: 'power2.in', duration: 20 }, 19);
+
+                // D. ESTÁGIO 2 (34 -> 70): Entrada e Saída em Parallax Assimétrico (Cards Bento Flutuantes)
+                masterTl.to('#stage-2', { opacity: 1, duration: 1 }, 33);
+                masterTl.fromTo('#p2-left',
+                    { y: 130, opacity: 0, filter: 'blur(6px)' },
+                    { y: 0, opacity: 1, filter: 'blur(0px)', ease: 'power2.out', duration: 16 },
+                    34
+                );
+                masterTl.fromTo('#p2-right',
+                    { y: 210, opacity: 0, filter: 'blur(6px)' },
+                    { y: -20, opacity: 1, filter: 'blur(0px)', ease: 'power2.out', duration: 18 },
+                    36
+                );
+
+                // Saída em Parallax do Estágio 2
+                masterTl.to('#p2-left',  { y: -130, opacity: 0, filter: 'blur(6px)', ease: 'power2.in', duration: 15 }, 56);
+                masterTl.to('#p2-right', { y: -190, opacity: 0, filter: 'blur(6px)', ease: 'power2.in', duration: 15 }, 57);
+                masterTl.to('#stage-2',  { opacity: 0, duration: 1 }, 71);
+
+                // E. ESTÁGIO 3 (68 -> 100): Entrada em Parallax da Ponta 0.18mm & Bento Specs
+                masterTl.to('#stage-3', { opacity: 1, duration: 1 }, 68);
+                masterTl.fromTo('#p3-left',
+                    { y: 120, opacity: 0, filter: 'blur(6px)' },
+                    { y: 0, opacity: 1, filter: 'blur(0px)', ease: 'power3.out', duration: 18 },
+                    69
+                );
+                masterTl.fromTo('#p3-right',
+                    { y: 170, opacity: 0, scale: 0.95 },
+                    { y: 0, opacity: 1, scale: 1, ease: 'power3.out', duration: 20 },
+                    72
+                );
+
+                // Garante que a página inicie no topo e recalcula os offsets
+                window.scrollTo(0, 0);
+                ScrollTrigger.refresh();
+            }
+
+            // Inicialização atrelada ao carregamento de metadados do vídeo
+            if (video.readyState >= 1 && video.duration && !isNaN(video.duration)) {
+                initAppleParallaxAndScrub();
+            } else {
+                video.addEventListener('loadedmetadata', initAppleParallaxAndScrub, { once: true });
+                video.addEventListener('canplay', initAppleParallaxAndScrub, { once: true });
+            }
+
+            video.load();
+
+            /* ---------------------------------------------------------------------
+               4. MICRO-INTERAÇÕES: HOVER MAGNÉTICO & CARDS FLASHLIGHT
+               --------------------------------------------------------------------- */
+            const magneticBtns = document.querySelectorAll('.magnetic-btn');
+            magneticBtns.forEach((btn) => {
+                const strength = parseFloat(btn.dataset.strength || '0.28');
+                const xTo = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3.out' });
+                const yTo = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3.out' });
+
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const relX = e.clientX - (rect.left + rect.width / 2);
+                    const relY = e.clientY - (rect.top + rect.height / 2);
+                    xTo(relX * strength);
+                    yTo(relY * strength);
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1, 0.4)' });
+                });
+            });
+
+            const flashlightCards = document.querySelectorAll('.flashlight-card');
+            flashlightCards.forEach((card) => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                    card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                });
+            });
+        });
+
+        // Garantia adicional contra rolagem residual em reloads
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+        });
+
+        window.addEventListener('beforeunload', () => {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>S Y S T E M // O F I C I A L — 0 1 (Pure White &amp; Transparent Lettering)</title>
+
+    <!-- External Fonts (Inter & JetBrains Mono as used across DS2, DS5, DS7, DS11) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Core Design System Assets (Local file:// ready) -->
+    <script src="templates/digital-architect.aura.build/assets/resource_3fa48481346f.js"></script>
+    <script src="templates/digital-architect.aura.build/assets/iconify-icon_d39ffc6e4c56.js"></script>
+    <link href="templates/digital-architect.aura.build/assets/css2_19fd9cc6b396.css" rel="stylesheet" />
+
+    <style>
+        /* =========================================================================
+           1. TOKENS & VARIABLES (MERGED FROM design_system5, 2, 7, 11)
+           ========================================================================= */
+        :root {
+            /* Colors - Pure White Aesthetic (design_system5 & design_system7) */
+            --bg-body: #ffffff;
+            --bg-surface: #fafafa;
+            --bg-surface-2: #f4f4f5;
+            --bg-highlight: #f0f0f0;
+
+            --text-primary: #09090b;
+            --text-main: #0a0a0a;
+            --text-secondary: #71717a;
+            --text-muted: #737373;
+            --text-tertiary: #a1a1aa;
+            --text-light: #a3a3a3;
+
+            --border-light: #e4e4e7;
+            --border-hover: #d4d4d8;
+
+            --brand-primary: #000000;
+            --brand-inverse: #ffffff;
+            --primary: #000000;
+            --primary-fg: #ffffff;
+
+            --accent: #2563eb;
+            --accent-primary: #000000;
+            --accent-glow: rgba(0, 0, 0, 0.05);
+
+            --status-success: #10b981;
+            --status-warning: #f59e0b;
+            --status-error: #ef4444;
+
+            /* Typography */
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing */
+            --space-unit: 8px;
+            --section-gap: 7rem;
+
+            /* Motion Curves */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .font-mono {
+            font-family: var(--font-mono);
+        }
+
+        iconify-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+
+        /* =========================================================================
+           2. ANIMATIONS & KEYFRAMES (UNIFIED FROM DS5, DS2, DS7, DS11)
+           ========================================================================= */
+
+        /* 2.1 FadeUp Entrance (design_system5) */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .animate-in {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-in.active {
+            animation: fadeUp 1s var(--ease-out-expo) forwards;
+        }
+
+        /* 2.2 SlideUpFade & ClipReveal (design_system2) */
+        @keyframes slideUpFade {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes clipReveal {
+            0% {
+                clip-path: inset(100% 0 0 0);
+                transform: translateY(20px);
+            }
+            100% {
+                clip-path: inset(0 0 0 0);
+                transform: translateY(0);
+            }
+        }
+
+        .motion-enter {
+            opacity: 0;
+            animation-play-state: paused;
+        }
+
+        .motion-enter.active {
+            animation: slideUpFade 1.2s var(--ease-out-expo) forwards;
+            animation-play-state: running;
+        }
+
+        .clip-enter {
+            clip-path: inset(100% 0 0 0);
+            transition: clip-path 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo);
+        }
+
+        .clip-enter.active {
+            clip-path: inset(0 0 0 0);
+        }
+
+        /* 2.3 Blur Fade In (design_system11 & design_system2) */
+        @keyframes animationIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-on-scroll.active {
+            animation: animationIn 0.9s var(--ease-out-expo) forwards;
+        }
+
+        /* 2.4 Scroll Reveal & Masked Text Reveal (design_system7, 2, 11) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: all 1s var(--ease-out-expo);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-reveal-wrapper {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+
+        .text-reveal-content {
+            transform: translateY(112%);
+            opacity: 0;
+            transition: transform 1.2s var(--ease-out-expo), opacity 1.2s ease;
+            display: block;
+        }
+
+        .reveal-active .text-reveal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Stagger Delays */
+        .delay-100 { animation-delay: 0.1s; transition-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; transition-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; transition-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; transition-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; transition-delay: 0.5s; }
+        .delay-700 { animation-delay: 0.7s; transition-delay: 0.7s; }
+
+        /* 2.5 Spin, Shimmer, Float & Marquee Keyframes */
+        @keyframes beam-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-spin-slow {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-150%) skewX(-15deg); }
+            100% { transform: translateX(150%) skewX(-15deg); }
+        }
+
+        .animate-shimmer {
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(20px, -25px); }
+            66% { transform: translate(-15px, 15px); }
+        }
+
+        .animate-float {
+            animation: float 7s ease-in-out infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            animation: marquee 45s linear infinite;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 40s linear infinite;
+        }
+
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            min-width: 100%;
+            animation: scroll 40s linear infinite;
+        }
+
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* Nav Load State (design_system7 & 11) */
+        .nav-load {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.8s ease-out;
+        }
+
+        .nav-load.loaded,
+        header.nav-load.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================================================
+           3. TRANSPARENT LETTERING SYSTEM (THE SIGNATURE LOOK OF DS5, DS2, DS7, DS11)
+           ========================================================================= */
+
+        /* 3.1 Core Transparent Stroke (from design_system5.html) */
+        .text-stroke-transparent {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.22);
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hover-stroke-fill:hover .text-stroke-transparent,
+        .text-stroke-transparent:hover {
+            -webkit-text-stroke: 1.5px #000000;
+            color: transparent;
+        }
+
+        /* 3.2 Liquid Wipe Fill Transparent Stroke (from design_system2.html) */
+        .text-transparent-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.22);
+            transition: all 0.6s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .text-transparent-stroke::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            color: #000000;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 0.85s var(--ease-out-expo);
+            -webkit-text-stroke: 0;
+        }
+
+        .group:hover .text-transparent-stroke::before,
+        .text-transparent-stroke:hover::before {
+            width: 100%;
+        }
+
+        /* 3.3 Simple Stroke Outline (from design_system2.html & design_system11.html) */
+        .text-stroke-outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .group:hover .text-stroke-outline,
+        .text-stroke-outline:hover {
+            -webkit-text-stroke: 1.5px rgba(0, 0, 0, 1);
+        }
+
+        /* 3.4 Optical Mix-Blend-Difference Layer (from design_system7.html) */
+        .transparent-text-layer {
+            mix-blend-mode: difference;
+            color: white;
+            z-index: 10;
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #000000, #71717a);
+        }
+
+        /* =========================================================================
+           4. HERO CAROUSEL, GLASS & GRID BACKGROUNDS (DS5 + DS7 + DS11)
+           ========================================================================= */
+        .hero-bg-container {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background-color: #ffffff;
+            transition: opacity 0.7s ease;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            transition: opacity 1.5s ease-in-out;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            transform: scale(1);
+            transition: transform 10s ease-out;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.12) brightness(1.12);
+        }
+
+        .carousel-slide.active img {
+            transform: scale(1.1);
+        }
+
+        /* White Atmosphere Overlay (from design_system7.html) */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.92) 0%,
+                rgba(255, 255, 255, 0.78) 45%,
+                rgba(255, 255, 255, 0.98) 100%
+            );
+            pointer-events: none;
+            z-index: 1;
+            transition: background 0.6s ease;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.68);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.06);
+        }
+
+        .bg-grid,
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        }
+
+        /* =========================================================================
+           5. BUTTONS, BEAM CONTROLS, FLASHLIGHT CARDS & INPUTS (DS5, DS2, DS7, DS11)
+           ========================================================================= */
+
+        /* Base Buttons (design_system5) */
+        .btn-base {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.25s var(--ease-out-expo);
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            color: var(--brand-inverse);
+            border: 1px solid var(--brand-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-primary);
+            background: var(--bg-surface);
+            transform: translateY(-1px);
+        }
+
+        /* Beam Button Wrapper (from design_system5.html) */
+        .btn-beam-wrapper {
+            position: relative;
+            display: inline-flex;
+            padding: 1.5px;
+            border-radius: 9999px;
+            overflow: hidden;
+            cursor: pointer;
+            transform: translateZ(0);
+            transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-beam-wrapper:hover {
+            transform: scale(1.03) translateY(-1px);
+            box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.18);
+        }
+
+        .btn-beam-border {
+            position: absolute;
+            inset: -200%;
+            background: conic-gradient(from 0deg, transparent 0 300deg, var(--text-primary) 360deg);
+            animation: beam-spin 3s linear infinite;
+        }
+
+        .btn-beam-inner {
+            position: relative;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            border-radius: 9999px;
+            padding: 0.75rem 1.85rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1;
+        }
+
+        /* Beam Button Alt (from design_system2.html) */
+        .beam-btn {
+            position: relative;
+            overflow: hidden;
+            border-radius: 999px;
+            padding: 1.5px;
+            background: rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            display: inline-flex;
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .beam-btn:hover {
+            transform: scale(1.03);
+        }
+
+        .beam-btn-content {
+            background: #ffffff;
+            color: #000000;
+            padding: 11px 26px;
+            border-radius: 999px;
+            position: relative;
+            z-index: 2;
+            transition: background 0.3s;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .beam-btn:hover .beam-btn-content {
+            background: #f5f5f5;
+        }
+
+        .beam-spinner {
+            position: absolute;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0 330deg, #000000 360deg);
+            animation: spin 3s linear infinite;
+        }
+
+        /* Radial Glow Button (from design_system7.html) */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        .btn-glow:hover::after {
+            transform: scale(1);
+        }
+
+        /* Flashlight Card (from design_system5.html & design_system11.html) */
+        .flashlight-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-light);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s var(--ease-out-expo);
+        }
+
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            background: radial-gradient(
+                550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(0, 0, 0, 0.055),
+                transparent 45%
+            );
+            opacity: 0;
+            transition: opacity 0.45s;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .flashlight-card:hover::before {
+            opacity: 1;
+        }
+
+        .flashlight-card:hover {
+            border-color: var(--text-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 22px 44px -12px rgba(0, 0, 0, 0.07);
+        }
+
+        /* Glow Card (from design_system2.html) */
+        .glow-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s, transform 0.3s var(--ease-out-expo);
+        }
+
+        .glow-card::after {
+            content: '';
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.05) 0%, transparent 60%);
+            top: var(--y, -250px);
+            left: var(--x, -250px);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .glow-card:hover::after {
+            opacity: 1;
+        }
+
+        .hover-lift {
+            transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Inputs (from design_system5.html & design_system11.html) */
+        .input-group {
+            position: relative;
+        }
+
+        .input-animated {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-surface-2);
+            border: none;
+            border-bottom: 1px solid var(--border-light);
+            border-radius: 0.5rem 0.5rem 0 0;
+            outline: none;
+            transition: background 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .input-animated:focus {
+            background: #ffffff;
+        }
+
+        .input-border-bottom,
+        .input-underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1.5px;
+            width: 0%;
+            background: var(--brand-primary);
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .input-animated:focus + .input-border-bottom,
+        .input-group:focus-within .input-underline {
+            width: 100%;
+        }
+
+        /* Layout & 3D Utilities (from design_system5 & design_system11) */
+        .container-xl {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-padding {
+            padding: 6rem 0;
+        }
+
+        .grid-guide {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+            display: flex;
+            justify-content: space-between;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .grid-line {
+            width: 1px;
+            height: 100%;
+            background: var(--border-light);
+        }
+
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .transform-style-preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+    </style>
+</head>
+
+<body class="selection:bg-black selection:text-white bg-white antialiased">
+
+    <!-- =========================================================================
+         ARCHITECTURAL BACKGROUND GUIDES (DS5 .grid-guide + DS11 Radial .bg-grid)
+         ========================================================================= -->
+    <div class="fixed inset-0 pointer-events-none z-0 bg-grid opacity-45"
+         style="mask-image: radial-gradient(circle at center, black 35%, transparent 85%); -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 85%);">
+    </div>
+
+    <div class="grid-guide">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+    </div>
+
+    <!-- =========================================================================
+         STICKY GLASS NAVIGATION (DS5 + DS2 + DS7 + DS11)
+         ========================================================================= -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 glass nav-load animate-in active transition-all duration-300">
+        <div class="container-xl h-20 flex items-center justify-between">
+            <!-- Brand Logo (DS5 + DS7 hover tracking expansion) -->
+            <a href="#hero" class="flex items-center gap-3 group cursor-pointer">
+                <div class="w-9 h-9 bg-black text-white rounded-lg flex items-center justify-center shadow-md group-hover:rotate-90 transition-transform duration-500">
+                    <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="text-xl"></iconify-icon>
+                </div>
+                <span class="font-bold tracking-tight text-lg group-hover:tracking-widest transition-all duration-500">
+                    SYSTEM<span class="font-light text-zinc-400"> // 01</span>
+                </span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="#hero" class="text-xs font-mono font-medium uppercase tracking-widest text-zinc-500 hover:text-black transition-colors">01. Hero</a>
+                <a href="#typography" class="text-xs font-mono font-medium uppercase tracking-widest text-zinc-500 hover:text-black transition-colors">02. Type</a>
+                <a href="#colors" class="text-xs font-mono font-medium uppercase tracking-widest text-zinc-500 hover:text-black transition-colors">03. Color</a>
+                <a href="#components" class="text-xs font-mono font-medium uppercase tracking-widest text-zinc-500 hover:text-black transition-colors">04. Components</a>
+                <a href="#icons" class="text-xs font-mono font-medium uppercase tracking-widest text-zinc-500 hover:text-black transition-colors">05. Icons</a>
+            </nav>
+
+            <!-- Interactive Hero Mode Switcher + Beam CTA -->
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:inline-flex bg-zinc-100/90 p-1 rounded-full border border-zinc-200/80 text-[11px] font-mono">
+                    <button type="button" onclick="setAtmosphere('white', this)" class="atmo-btn px-3 py-1 rounded-full bg-white shadow-sm font-medium text-black transition-all">Pure White</button>
+                    <button type="button" onclick="setAtmosphere('carousel', this)" class="atmo-btn px-3 py-1 rounded-full text-zinc-500 hover:text-black transition-all">Optical Lens</button>
+                    <button type="button" onclick="setAtmosphere('invert', this)" class="atmo-btn px-3 py-1 rounded-full text-zinc-500 hover:text-black transition-all">Mix-Blend</button>
+                </div>
+
+                <button type="button" class="btn-beam-wrapper" onclick="cycleHeroSlide()">
+                    <span class="btn-beam-border"></span>
+                    <span class="btn-beam-inner py-2 px-5 text-xs font-mono uppercase tracking-widest">
+                        <span>v5.8 Oficial</span>
+                        <iconify-icon icon="solar:stars-minimalistic-bold" class="text-sm"></iconify-icon>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 w-full overflow-hidden">
+
+        <!-- =========================================================================
+             1. PRIMEIRA DOBRA / HERO SHOWCASE (INNOVATIVE FUSION OF DS5 + DS2 + DS7 + DS11)
+             - Pure White Atmosphere with High-Key Architectural Carousel (.hero-bg-container + .hero-overlay)
+             - Pastel & Monochrome Floating Aura Glow Orbs (from DS5 & DS11)
+             - Giant Transparent Lettering with Liquid Hover Fill (.text-transparent-stroke + .text-stroke-transparent)
+             - Interactive 3D Card Stack Window (from DS11) + Staggered 2x2 Flashlight Playground (from DS5)
+             - Floating Mix-Blend Palette Widget & Compass Watermark (from DS7)
+             ========================================================================= -->
+        <section id="hero" class="relative min-h-screen flex flex-col justify-between pt-24 pb-10 overflow-hidden border-b border-zinc-200/80">
+
+            <!-- Layer 0: Subtle High-Key Architectural Carousel (from design_system7.html) -->
+            <div class="hero-bg-container" id="hero-carousel-bg" style="opacity: 0.45;">
+                <div class="carousel-slide active">
+                    <img src="templates/digital-architect.aura.build/assets/c7fa69dd-d7fb-48f2-a866-ef3663_f6b789593f38.webp" alt="Abstract Architecture 01" />
+                </div>
+                <div class="carousel-slide">
+                    <img src="templates/digital-architect.aura.build/assets/6c710de5-9712-4c8e-a7db-59ac54_b647957b5aa5.webp" alt="Clean Interface 02" />
+                </div>
+                <div class="carousel-slide">
+                    <img src="templates/digital-architect.aura.build/assets/62cc53b7-3355-4618-b7fa-3283f6_a6d3415bc434.webp" alt="Creative Space 03" />
+                </div>
+            </div>
+
+            <!-- Layer 1: White Luminous Fade Overlay (.hero-overlay from design_system7.html) -->
+            <div class="hero-overlay" id="hero-white-veil"></div>
+
+            <!-- Layer 2: Soft Floating Glow Orbs (from design_system5.html & design_system11.html) -->
+            <div class="absolute top-1/4 left-1/5 w-[440px] h-[440px] bg-purple-100/70 rounded-full blur-[110px] pointer-events-none animate-[float_10s_infinite_ease-in-out]"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[440px] h-[440px] bg-blue-100/70 rounded-full blur-[110px] pointer-events-none animate-[float_12s_infinite_ease-in-out_reverse]"></div>
+
+            <!-- Layer 3: Giant Rotating Compass Watermark Top-Right (from design_system7.html) -->
+            <div class="absolute top-28 right-8 z-10 hidden xl:block pointer-events-none animate-float" style="animation-delay: 1s;">
+                <iconify-icon class="text-[13rem] text-black/[0.035] rotate-12" icon="solar:compass-linear"></iconify-icon>
+            </div>
+
+            <!-- Layer 4: Main 12-Column Hero Content Grid -->
+            <div class="container-xl relative z-20 my-auto py-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+
+                    <!-- LEFT 7 COLUMNS: Transparent Lettering Showcase, Editorial Lead & Multi-Effect Buttons -->
+                    <div id="hero-text-col" class="lg:col-span-7 space-y-8">
+
+                        <!-- Eyebrow & Live Status Pill (DS5 + DS7 + DS2) -->
+                        <div class="flex flex-wrap items-center gap-4 animate-in active delay-100">
+                            <span class="h-px w-12 bg-black"></span>
+                            <span class="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">S Y S T E M // 0 2 × V 8</span>
+                            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-zinc-200 bg-white/85 backdrop-blur-md text-[11px] font-mono uppercase tracking-widest text-zinc-700 shadow-sm">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                White &amp; Transparent Active
+                            </span>
+                        </div>
+
+                        <!-- MONUMENTAL TRANSPARENT LETTERING HEADLINE (DS5 + DS2 + DS7 + DS11) -->
+                        <div class="relative group cursor-default">
+                            <h1 id="hero-title" class="text-6xl sm:text-8xl xl:text-[6.6rem] font-extrabold tracking-tighter leading-[0.88] text-black select-none">
+                                <!-- Line 1: Masked Reveal Solid -->
+                                <span class="text-reveal-wrapper block">
+                                    <span class="text-reveal-content delay-100">PURE WHITE</span>
+                                </span>
+
+                                <!-- Line 2: Transparent Stroke with Liquid Hover Fill (DS5 .text-stroke-transparent + DS2 .text-transparent-stroke) -->
+                                <span class="text-reveal-wrapper block my-1">
+                                    <span class="text-reveal-content delay-200">
+                                        <span id="hero-stroke-word" class="text-transparent-stroke text-stroke-transparent" data-text="AESTHETIC.">AESTHETIC.</span>
+                                    </span>
+                                </span>
+
+                                <!-- Line 3: Interactive Outline + Badge -->
+                                <span class="text-reveal-wrapper block">
+                                    <span class="text-reveal-content delay-300 flex flex-wrap items-center gap-4">
+                                        <span class="text-stroke-outline hover:text-black transition-colors duration-500">VISION</span>
+                                        <span class="text-xs sm:text-sm font-mono font-normal tracking-widest uppercase px-4 py-2 rounded-full border border-zinc-300 bg-white/90 text-zinc-700 shadow-sm">
+                                            Passe o mouse no título ↗
+                                        </span>
+                                    </span>
+                                </span>
+                            </h1>
+                        </div>
+
+                        <!-- Editorial Lead Paragraph -->
+                        <p class="text-lg sm:text-xl text-zinc-500 font-light max-w-xl leading-relaxed animate-in active delay-300">
+                            Um sistema de design focado em <span class="text-black font-medium">espaço negativo branco</span>, tipografia vazada transparente (<code class="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-800">-webkit-text-stroke</code> &amp; <code class="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-800">mix-blend-difference</code>) e física de micro-interações.
+                        </p>
+
+                        <!-- Creative Button Bar (DS5 .btn-beam-wrapper + DS7 .btn-glow + DS2 .beam-btn + DS5 .btn-outline) -->
+                        <div class="flex flex-wrap items-center gap-4 pt-2 animate-in active delay-400">
+                            <!-- 1. DS5 Signature Conic Beam Button (Dark Inner) -->
+                            <a href="#components" class="btn-beam-wrapper">
+                                <span class="btn-beam-border"></span>
+                                <span class="btn-beam-inner bg-black text-white hover:bg-zinc-900 transition-colors">
+                                    <span>Explore Components</span>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+                                </span>
+                            </a>
+
+                            <!-- 2. DS2 / DS11 White Ring Conic Beam Button -->
+                            <button type="button" onclick="toggleHeroBlend()" class="beam-btn group">
+                                <span class="beam-spinner"></span>
+                                <span class="beam-btn-content flex items-center gap-2">
+                                    <iconify-icon icon="solar:magic-stick-3-bold-duotone" class="text-base"></iconify-icon>
+                                    <span>Alternar Lettering</span>
+                                </span>
+                            </button>
+
+                            <!-- 3. DS7 Radial Glow Pill Button -->
+                            <button type="button" onclick="cycleHeroSlide()" class="btn-outline btn-base rounded-full px-6 btn-glow">
+                                <iconify-icon icon="solar:gallery-wide-linear" class="text-base"></iconify-icon>
+                                <span>Bg Slide <span id="slide-indicator">01/03</span></span>
+                            </button>
+                        </div>
+
+                        <!-- Bottom Floating Palette Strip (from design_system7.html) -->
+                        <div class="pt-4 flex flex-wrap items-center gap-6 animate-in active delay-500">
+                            <div class="inline-flex items-center gap-4 p-3 pr-5 rounded-2xl glass-card">
+                                <div class="flex -space-x-1.5">
+                                    <div class="w-7 h-7 rounded-full bg-white border border-zinc-200 shadow-sm"></div>
+                                    <div class="w-7 h-7 rounded-full bg-[#FAFAFA] border border-zinc-200 shadow-sm"></div>
+                                    <div class="w-7 h-7 rounded-full bg-zinc-200 border border-white shadow-sm"></div>
+                                    <div class="w-7 h-7 rounded-full bg-black border border-white shadow-sm"></div>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider block text-black">White Monochrome + Accents</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">DS5 × DS2 × DS7 × DS11</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT 5 COLUMNS: HYBRID 3D STACK WINDOW (DS11) + STAGGERED 2x2 FLASHLIGHT PLAYGROUND (DS5) -->
+                    <div class="lg:col-span-5 flex flex-col gap-6 animate-in active delay-500">
+
+                        <!-- Top: Simulated 3D Card Stack Window (from design_system11.html + DS7 Image Lens) -->
+                        <div class="relative h-[270px] w-full perspective-1000 pt-6">
+                            <!-- Card 3 (Back Layer) -->
+                            <div class="absolute top-0 inset-x-8 h-[220px] bg-zinc-100/80 rounded-2xl border border-zinc-200/80 shadow-sm transform -translate-y-4 scale-[0.92] opacity-60 transition-all duration-500"></div>
+                            <!-- Card 2 (Middle Layer) -->
+                            <div class="absolute top-3 inset-x-4 h-[220px] bg-white/90 rounded-2xl border border-zinc-200 shadow-md transform -translate-y-2 scale-[0.96] opacity-85 transition-all duration-500"></div>
+                            <!-- Card 1 (Front Interactive Flashlight Window) -->
+                            <div class="flashlight-card relative h-[230px] w-full bg-white rounded-2xl shadow-xl flex flex-col justify-between overflow-hidden group">
+                                <!-- Window Top Bar -->
+                                <div class="h-9 border-b border-zinc-100 flex items-center px-4 gap-2 bg-white/90 z-10">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-zinc-200 group-hover:bg-red-400 transition-colors"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-zinc-200 group-hover:bg-amber-400 transition-colors"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-zinc-200 group-hover:bg-emerald-400 transition-colors"></div>
+                                    <span class="ml-auto text-[10px] font-mono text-zinc-400">System02_Optical.js</span>
+                                </div>
+
+                                <!-- Window Body with Architectural Image & Transparent Mix-Blend Overlay -->
+                                <div class="relative flex-1 p-6 flex items-center justify-between gap-4 overflow-hidden">
+                                    <img id="hero-card-preview"
+                                         src="templates/digital-architect.aura.build/assets/c7fa69dd-d7fb-48f2-a866-ef3663_f6b789593f38.webp"
+                                         alt="Architectural Preview"
+                                         class="absolute inset-0 w-full h-full object-cover grayscale opacity-15 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700 pointer-events-none" />
+
+                                    <div class="relative z-10">
+                                        <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                                            3D Stack + Flashlight
+                                        </span>
+                                        <h3 class="text-2xl font-bold tracking-tight text-black mt-2">
+                                            Optical <span class="text-stroke-transparent">Layering</span>
+                                        </h3>
+                                        <p class="text-xs text-zinc-500 mt-1 max-w-[220px]">
+                                            Passe o cursor para rastrear a luz radial e revelar a camada 3D.
+                                        </p>
+                                    </div>
+
+                                    <div class="relative z-10 w-14 h-14 bg-black text-white rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shrink-0">
+                                        <iconify-icon icon="solar:stars-minimalistic-bold" class="text-2xl animate-pulse"></iconify-icon>
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Shimmer Progress Bar (from design_system11.html) -->
+                                <div class="h-1 w-full bg-zinc-100 overflow-hidden relative z-10">
+                                    <div class="h-full bg-black w-1/2 animate-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom: Signature 2x2 Staggered Flashlight Cards Playground (Directly from design_system5.html) -->
+                        <div class="grid grid-cols-2 gap-4 perspective-1000">
+                            <!-- Card 01 -->
+                            <a href="#typography" class="flashlight-card p-5 flex flex-col justify-between min-h-[135px] group cursor-pointer hover:rotate-1 transition-transform">
+                                <div class="flex justify-between items-start">
+                                    <iconify-icon icon="solar:palette-bold-duotone" class="text-3xl text-zinc-300 group-hover:text-black transition-colors"></iconify-icon>
+                                    <span class="text-xl font-bold text-stroke-transparent">01</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono uppercase text-zinc-400">Optical Type</span>
+                                    <h3 class="font-bold text-sm text-black mt-0.5">Foundations</h3>
+                                </div>
+                            </a>
+
+                            <!-- Card 02 (Staggered mt-6) -->
+                            <a href="#components" class="flashlight-card p-5 flex flex-col justify-between min-h-[135px] group cursor-pointer mt-6 hover:-rotate-1 transition-transform">
+                                <div class="flex justify-between items-start">
+                                    <iconify-icon icon="solar:cube-bold-duotone" class="text-3xl text-zinc-300 group-hover:text-black transition-colors"></iconify-icon>
+                                    <span class="text-xl font-bold text-stroke-transparent">02</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono uppercase text-zinc-400">Interactive UI</span>
+                                    <h3 class="font-bold text-sm text-black mt-0.5">Components</h3>
+                                </div>
+                            </a>
+
+                            <!-- Card 03 -->
+                            <a href="#colors" class="flashlight-card p-5 flex flex-col justify-between min-h-[135px] group cursor-pointer hover:-rotate-1 transition-transform">
+                                <div class="flex justify-between items-start">
+                                    <iconify-icon icon="solar:magic-stick-3-bold-duotone" class="text-3xl text-zinc-300 group-hover:text-black transition-colors"></iconify-icon>
+                                    <span class="text-xl font-bold text-stroke-transparent">03</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono uppercase text-zinc-400">Beam &amp; Glow</span>
+                                    <h3 class="font-bold text-sm text-black mt-0.5">Effects</h3>
+                                </div>
+                            </a>
+
+                            <!-- Card 04 (Staggered mt-6) -->
+                            <a href="#icons" class="flashlight-card p-5 flex flex-col justify-between min-h-[135px] group cursor-pointer mt-6 hover:rotate-1 transition-transform">
+                                <div class="flex justify-between items-start">
+                                    <iconify-icon icon="solar:code-square-bold-duotone" class="text-3xl text-zinc-300 group-hover:text-black transition-colors"></iconify-icon>
+                                    <span class="text-xl font-bold text-stroke-transparent">04</span>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono uppercase text-zinc-400">Ready Tokens</span>
+                                    <h3 class="font-bold text-sm text-black mt-0.5">Export</h3>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Bottom First-Fold Foundation Marquee (from design_system7.html & design_system11.html) -->
+            <div class="relative z-20 border-t border-zinc-200/80 bg-white/85 backdrop-blur-md py-4 overflow-hidden">
+                <div class="marquee-container opacity-60 hover:opacity-100 transition-opacity duration-500">
+                    <div class="marquee-content items-center">
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">TYPOGRAPHY</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-black">PURE WHITE</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">FLASHLIGHT</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-black">BEAM BORDER</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">3D PERSPECTIVE</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-black">MIX-BLEND</span>
+                    </div>
+                    <div class="marquee-content items-center" aria-hidden="true">
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">TYPOGRAPHY</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-black">PURE WHITE</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">FLASHLIGHT</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-black">BEAM BORDER</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">3D PERSPECTIVE</span>
+                        <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-black">MIX-BLEND</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             2. TYPOGRAPHY & TRANSPARENT LETTERING (DS5 + DS2 + DS7 + DS11)
+             ========================================================================= -->
+        <section id="typography" class="section-padding border-b border-zinc-200/80 bg-white relative">
+            <div class="container-xl">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                    <div>
+                        <span class="font-mono text-xs uppercase tracking-widest text-zinc-400">02 // Typography &amp; Lettering</span>
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mt-2">Type Scale &amp; Transparent Modes</h2>
+                    </div>
+                    <p class="text-sm text-zinc-500 font-mono">
+                        .text-stroke-transparent | .text-transparent-stroke | .text-stroke-outline
+                    </p>
+                </div>
+
+                <!-- 3 Interactive Transparent Lettering Modes Banner -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                    <!-- Mode 1: DS5 .text-stroke-transparent -->
+                    <div class="flashlight-card p-8 group hover-stroke-fill">
+                        <span class="text-xs font-mono text-zinc-400 block mb-3">01. DS5 Wireframe Stroke</span>
+                        <div class="text-6xl md:text-7xl font-bold tracking-tighter text-stroke-transparent">
+                            Aa<span class="text-zinc-200">Bb</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-4">Contorno transparente que acende em preto puro (<code class="font-mono">#000</code>) no hover.</p>
+                    </div>
+
+                    <!-- Mode 2: DS2 .text-transparent-stroke with data-text liquid wipe -->
+                    <div class="flashlight-card p-8 group">
+                        <span class="text-xs font-mono text-zinc-400 block mb-3">02. DS2 Liquid Wipe Fill</span>
+                        <div class="text-6xl md:text-7xl font-bold tracking-tighter text-transparent-stroke" data-text="PURE.V8">
+                            PURE.V8
+                        </div>
+                        <p class="text-xs text-zinc-500 mt-4">Preenchimento progressivo horizontal via <code class="font-mono">attr(data-text)</code> no hover.</p>
+                    </div>
+
+                    <!-- Mode 3: DS7 .transparent-text-layer (mix-blend-difference) -->
+                    <div class="relative rounded-2xl overflow-hidden border border-zinc-200 p-8 flex flex-col justify-between min-h-[190px] group">
+                        <img src="templates/digital-architect.aura.build/assets/6c710de5-9712-4c8e-a7db-59ac54_b647957b5aa5.webp"
+                             alt="Optical Background"
+                             class="absolute inset-0 w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                        <span class="relative z-10 text-xs font-mono text-white mix-blend-difference">03. DS7 Optical Difference</span>
+                        <div class="relative z-10 text-5xl md:text-6xl font-bold tracking-tighter transparent-text-layer">
+                            VISION
+                        </div>
+                        <p class="relative z-10 text-xs text-white mix-blend-difference">Camada óptica com <code class="font-mono">mix-blend-mode: difference</code>.</p>
+                    </div>
+                </div>
+
+                <!-- Main Type Scale & Font Families Grid (from design_system5.html & design_system11.html) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Left 8 Cols: Headings Scale -->
+                    <div class="lg:col-span-8 space-y-8">
+                        <div class="flex flex-col sm:flex-row sm:items-baseline border-b border-zinc-100 pb-6 group">
+                            <span class="w-36 text-xs font-mono text-zinc-400 shrink-0">Display H1</span>
+                            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform">
+                                Digital <span class="text-stroke-outline">Architect</span>
+                            </h1>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-baseline border-b border-zinc-100 pb-6 group">
+                            <span class="w-36 text-xs font-mono text-zinc-400 shrink-0">Heading H2</span>
+                            <h2 class="text-4xl md:text-5xl font-semibold tracking-tight group-hover:translate-x-2 transition-transform">
+                                Design <span class="text-stroke-transparent">Audit</span> &amp; Motion
+                            </h2>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-baseline border-b border-zinc-100 pb-6 group">
+                            <span class="w-36 text-xs font-mono text-zinc-400 shrink-0">Heading H3</span>
+                            <h3 class="text-2xl md:text-3xl font-medium tracking-tight group-hover:translate-x-2 transition-transform">
+                                Systematic Component Architecture
+                            </h3>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                            <div>
+                                <span class="text-xs font-mono text-zinc-400 block mb-2">Body Large (20px / 1.6)</span>
+                                <p class="text-lg text-zinc-800 leading-relaxed">
+                                    Design is intelligence made visible. <span class="text-zinc-400">Built for lead editorial paragraphs.</span>
+                                </p>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono text-zinc-400 block mb-2">Body Default (16px / 1.5)</span>
+                                <p class="text-base text-zinc-600 leading-relaxed">
+                                    Good design is obvious. Great design is transparent. Standard size for documentation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right 4 Cols: Font Families Card (from design_system5.html) -->
+                    <div class="lg:col-span-4 bg-zinc-50 p-8 rounded-2xl border border-zinc-200/80 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-mono text-xs uppercase tracking-widest text-zinc-400 mb-6">Font Families</h4>
+                            <div class="mb-8 pb-6 border-b border-zinc-200">
+                                <p class="text-5xl font-extrabold tracking-tighter mb-2">Ag</p>
+                                <p class="font-bold text-black">Inter</p>
+                                <p class="text-xs text-zinc-500">Primary Geometric Sans-Serif (200–900)</p>
+                            </div>
+                            <div>
+                                <p class="text-5xl font-mono font-medium mb-2">{}</p>
+                                <p class="font-mono font-semibold text-black">JetBrains Mono</p>
+                                <p class="text-xs text-zinc-500">Technical Labels, Specs &amp; Code</p>
+                            </div>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-zinc-200 flex items-center justify-between text-xs font-mono text-zinc-400">
+                            <span>TRACKING: -0.04em</span>
+                            <span>ANTIALIASED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             3. COLOR SYSTEM (DS5 LOOPED MARQUEE WATERMARK + DS11 NEUTRAL RAMP & SEMANTICS)
+             ========================================================================= -->
+        <section id="colors" class="section-padding bg-zinc-50/80 border-b border-zinc-200/80 relative overflow-hidden">
+            <!-- Looped Giant Marquee Background Watermark (from design_system5.html) -->
+            <div class="absolute top-8 opacity-[0.035] text-[9rem] md:text-[11rem] font-extrabold whitespace-nowrap select-none pointer-events-none overflow-hidden w-full">
+                <div style="animation: marquee 22s linear infinite; display: inline-block;">
+                    COLOR PALETTE SYSTEM COLOR PALETTE SYSTEM COLOR PALETTE SYSTEM
+                </div>
+            </div>
+
+            <div class="container-xl relative z-10">
+                <div class="mb-16">
+                    <span class="font-mono text-xs uppercase tracking-widest text-zinc-400">03 // Colors &amp; Surfaces</span>
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mt-2">Palette &amp; Surface Roles</h2>
+                </div>
+
+                <!-- 6 Swatch Cards (from design_system5.html) -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 mb-12">
+                    <!-- Surface White -->
+                    <div class="group cursor-pointer">
+                        <div class="aspect-[3/4] bg-white border border-zinc-200 rounded-2xl mb-3 shadow-sm group-hover:scale-105 transition-transform p-5 flex flex-col justify-between">
+                            <span class="text-xs font-mono text-zinc-400">01</span>
+                            <span class="text-3xl font-bold text-stroke-transparent">FFF</span>
+                        </div>
+                        <p class="font-mono text-xs font-bold">Pure Surface</p>
+                        <p class="font-mono text-xs text-zinc-400">#FFFFFF</p>
+                    </div>
+
+                    <!-- Primary Black -->
+                    <div class="group cursor-pointer">
+                        <div class="aspect-[3/4] bg-black rounded-2xl mb-3 shadow-xl group-hover:scale-105 transition-transform p-5 flex flex-col justify-between text-white">
+                            <span class="text-xs font-mono text-zinc-500">02</span>
+                            <span class="text-3xl font-bold opacity-30">000</span>
+                        </div>
+                        <p class="font-mono text-xs font-bold">Primary Ink</p>
+                        <p class="font-mono text-xs text-zinc-400">#000000</p>
+                    </div>
+
+                    <!-- Zinc 100 -->
+                    <div class="group cursor-pointer">
+                        <div class="aspect-[3/4] bg-zinc-100 border border-zinc-200/80 rounded-2xl mb-3 group-hover:scale-105 transition-transform p-5 flex flex-col justify-between">
+                            <span class="text-xs font-mono text-zinc-400">03</span>
+                            <span class="text-3xl font-bold text-stroke-transparent">F4F</span>
+                        </div>
+                        <p class="font-mono text-xs font-bold">Zinc 100</p>
+                        <p class="font-mono text-xs text-zinc-400">#F4F4F5</p>
+                    </div>
+
+                    <!-- Stone Light (DS7) -->
+                    <div class="group cursor-pointer">
+                        <div class="aspect-[3/4] bg-[#EAEAE5] border border-stone-300/80 rounded-2xl mb-3 group-hover:scale-105 transition-transform p-5 flex flex-col justify-between">
+                            <span class="text-xs font-mono text-stone-500">04</span>
+                            <span class="text-3xl font-bold text-stroke-transparent">EAE</span>
+                        </div>
+                        <p class="font-mono text-xs font-bold">Aura Stone</p>
+                        <p class="font-mono text-xs text-zinc-400">#EAEAE5</p>
+                    </div>
+
+                    <!-- Accent Indigo / Blue (DS5 & DS11) -->
+                    <div class="group cursor-pointer">
+                        <div class="aspect-[3/4] bg-blue-600 rounded-2xl mb-3 group-hover:scale-105 transition-transform shadow-lg shadow-blue-200 p-5 flex flex-col justify-between text-white">
+                            <span class="text-xs font-mono text-blue-200">05</span>
+                            <span class="text-3xl font-bold opacity-40">256</span>
+                        </div>
+                        <p class="font-mono text-xs font-bold">Accent Blue</p>
+                        <p class="font-mono text-xs text-zinc-400">#2563EB</p>
+                    </div>
+
+                    <!-- Success Emerald (DS5 & DS11) -->
+                    <div class="group cursor-pointer">
+                        <div class="aspect-[3/4] bg-emerald-500 rounded-2xl mb-3 group-hover:scale-105 transition-transform shadow-lg shadow-emerald-200 p-5 flex flex-col justify-between text-white">
+                            <span class="text-xs font-mono text-emerald-100">06</span>
+                            <span class="text-3xl font-bold opacity-40">10B</span>
+                        </div>
+                        <p class="font-mono text-xs font-bold">Success</p>
+                        <p class="font-mono text-xs text-zinc-400">#10B981</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             4. COMPONENT LIBRARY & INTERACTIVE SANDBOX (DS5 + DS2 + DS7 + DS11)
+             ========================================================================= -->
+        <section id="components" class="section-padding bg-white border-b border-zinc-200/80">
+            <div class="container-xl">
+                <div class="flex justify-between items-end mb-16">
+                    <div>
+                        <span class="font-mono text-xs uppercase tracking-widest text-zinc-400">04 // Interface Architecture</span>
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mt-2">Component Library</h2>
+                    </div>
+                    <div class="hidden md:flex bg-zinc-100 p-1 rounded-full">
+                        <span class="px-5 py-1.5 rounded-full bg-white shadow-sm text-xs font-medium text-black">All Modules</span>
+                        <span class="px-5 py-1.5 rounded-full text-xs font-medium text-zinc-500">Interactive</span>
+                    </div>
+                </div>
+
+                <!-- Row 1: Inputs, Buttons, Badges & Tooltip Sandbox -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+
+                    <!-- Column 1: Interactive Inputs & Button Variants (DS5 + DS2 + DS11) -->
+                    <div class="space-y-10 p-8 rounded-2xl border border-zinc-200/80 bg-zinc-50/40">
+                        <!-- Animated Inputs -->
+                        <div>
+                            <h4 class="text-xs font-mono uppercase tracking-widest text-zinc-400 mb-4">01 // Interactive Inputs (.input-animated)</h4>
+                            <div class="input-group">
+                                <input type="text" placeholder="Enter your email address..." class="input-animated" />
+                                <div class="input-border-bottom"></div>
+                            </div>
+                            <div class="input-group mt-4">
+                                <input type="text" placeholder="Search system tokens..." class="input-animated" />
+                                <div class="input-border-bottom"></div>
+                            </div>
+                        </div>
+
+                        <!-- Button Architecture -->
+                        <div>
+                            <h4 class="text-xs font-mono uppercase tracking-widest text-zinc-400 mb-4">02 // Button Variants (Beam, Glow, Primary, Outline)</h4>
+                            <div class="flex flex-wrap gap-3 items-center">
+                                <button type="button" class="btn-primary btn-base rounded-full">Primary Action</button>
+                                <button type="button" class="btn-outline btn-base rounded-full">Secondary</button>
+                                <button type="button" class="px-5 py-2.5 bg-stone-900 text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-stone-700 transition-all btn-glow">
+                                    Glow Button
+                                </button>
+                            </div>
+                            <div class="mt-4 flex flex-wrap gap-4 items-center">
+                                <div class="btn-beam-wrapper">
+                                    <span class="btn-beam-border"></span>
+                                    <span class="btn-beam-inner">
+                                        <span>Generative Button</span>
+                                        <iconify-icon icon="solar:stars-minimalistic-bold" class="text-amber-500"></iconify-icon>
+                                    </span>
+                                </div>
+
+                                <button type="button" class="beam-btn group">
+                                    <span class="beam-spinner"></span>
+                                    <span class="beam-btn-content flex items-center gap-2">
+                                        <iconify-icon icon="solar:magic-stick-3-linear"></iconify-icon>
+                                        <span>AI Generate</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Status Badges & Tooltip Sandbox (from DS5 & DS11) -->
+                        <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-zinc-200/80">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 rounded-full border border-zinc-200 bg-white text-[10px] uppercase font-mono tracking-wider">v5.0.0</span>
+                                <span class="px-2.5 py-1 rounded-full border border-black bg-black text-white text-[10px] uppercase font-mono tracking-wider inline-flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
+                                    Live
+                                </span>
+                                <span class="px-2.5 py-1 rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-[10px] uppercase font-mono tracking-wider">Beta</span>
+                            </div>
+
+                            <!-- Tooltip Demo (from design_system11.html) -->
+                            <div class="relative group">
+                                <button type="button" class="w-9 h-9 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 hover:text-black hover:border-black transition-all text-xs font-mono">
+                                    ?
+                                </button>
+                                <div class="absolute bottom-full mb-2 right-0 px-3 py-1.5 bg-black text-white text-[10px] font-mono rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                    Hover Tooltip Spec
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Complex Cards (DS5 Profile Card + Statistic Cards + DS2 Glow Card) -->
+                    <div class="space-y-6">
+                        <!-- Profile Card (from design_system5.html with local architectural portrait) -->
+                        <div class="flashlight-card p-0 flex flex-col sm:flex-row overflow-hidden">
+                            <div class="w-full sm:w-2/5 bg-zinc-100 min-h-[180px] relative overflow-hidden group">
+                                <img src="assets/overview/assets/portrait-person.jpg"
+                                     class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                     alt="Lead Design Architect" />
+                            </div>
+                            <div class="p-6 sm:w-3/5 flex flex-col justify-center">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-black">Sarah Connor</h3>
+                                        <p class="text-xs font-mono text-zinc-400">Lead Design Architect</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-stroke-transparent">01</span>
+                                </div>
+                                <p class="text-sm text-zinc-500 mt-2 leading-relaxed">
+                                    "Design is the intermediary between information and understanding."
+                                </p>
+                                <div class="mt-4 flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                    <span class="text-xs font-mono text-zinc-400">Available for Architecture Review</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2 Statistic Flashlight Cards (from design_system5.html) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="flashlight-card p-6">
+                                <div class="flex justify-between mb-4">
+                                    <iconify-icon icon="solar:chart-2-bold-duotone" class="text-2xl text-blue-600"></iconify-icon>
+                                    <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+12%</span>
+                                </div>
+                                <h3 class="text-3xl font-bold tracking-tight">8,234</h3>
+                                <p class="text-xs font-mono text-zinc-400 mt-1">ACTIVE USERS</p>
+                            </div>
+
+                            <div class="flashlight-card p-6">
+                                <div class="flex justify-between mb-4">
+                                    <iconify-icon icon="solar:stopwatch-play-bold-duotone" class="text-2xl text-purple-600"></iconify-icon>
+                                    <span class="text-xs font-mono text-zinc-400">AVG</span>
+                                </div>
+                                <h3 class="text-3xl font-bold tracking-tight">1.2s</h3>
+                                <p class="text-xs font-mono text-zinc-400 mt-1">REVEAL DURATION</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: DS7 Interactive Media Card + DS2 Glow Card + DS7 Dark Mode Card -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- DS7 Interactive Card with Hover Blur & Arrow Circle -->
+                    <div class="p-7 bg-white rounded-2xl shadow-sm border border-zinc-200/80 hover:shadow-xl transition-all duration-500 group">
+                        <div class="w-full aspect-video bg-zinc-100 rounded-xl overflow-hidden mb-6 relative">
+                            <img src="templates/digital-architect.aura.build/assets/4b7d31e6-5b45-47eb-9853-96bbb9_bf1aa5f9d2cf.webp"
+                                 class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                 alt="Interactive Card" />
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/20 backdrop-blur-sm">
+                                <span class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-black shadow-lg">
+                                    <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl"></iconify-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono text-zinc-400 uppercase tracking-widest">DS7 Module</span>
+                        <h3 class="text-xl font-bold mt-1 mb-1">Interactive Media Card</h3>
+                        <p class="text-sm text-zinc-500">Hover remove o filtro grayscale e revela o botão flutuante em vidro.</p>
+                    </div>
+
+                    <!-- DS2 Glow Card (.glow-card) -->
+                    <div class="glow-card bg-white p-8 rounded-2xl flex flex-col justify-between group cursor-pointer border border-zinc-200/80">
+                        <div>
+                            <div class="flex items-start justify-between mb-6">
+                                <div class="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                                    <iconify-icon icon="solar:graph-up-linear" class="text-xl"></iconify-icon>
+                                </div>
+                                <span class="text-3xl font-bold text-stroke-transparent">V8</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Analytics Glow Card</h3>
+                            <p class="text-sm text-zinc-500 leading-relaxed">
+                                Utiliza as variáveis <code class="font-mono text-xs">--x</code> e <code class="font-mono text-xs">--y</code> da classe <code class="font-mono text-xs">.glow-card</code> do AURA V8.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider pt-6">
+                            <span>View Telemetry</span>
+                            <iconify-icon icon="solar:arrow-right-linear" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                        </div>
+                    </div>
+
+                    <!-- DS7 Dark Mode Component Card -->
+                    <div class="p-8 bg-stone-900 text-white rounded-2xl shadow-lg flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-56 h-56 bg-stone-800 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-60 pointer-events-none"></div>
+                        <div class="relative z-10">
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 block mb-2">Contrast Module</span>
+                            <h3 class="text-xl font-bold mb-6">Dark Surface Specs</h3>
+                            <ul class="space-y-3.5">
+                                <li class="flex items-center gap-3 opacity-75 hover:opacity-100 transition-opacity cursor-pointer">
+                                    <iconify-icon class="text-emerald-400 text-lg" icon="solar:check-circle-bold"></iconify-icon>
+                                    <span class="text-sm">Status Indicators</span>
+                                </li>
+                                <li class="flex items-center gap-3 opacity-75 hover:opacity-100 transition-opacity cursor-pointer">
+                                    <iconify-icon class="text-blue-400 text-lg" icon="solar:graph-up-linear"></iconify-icon>
+                                    <span class="text-sm">Data Visualization</span>
+                                </li>
+                                <li class="flex items-center gap-3 opacity-75 hover:opacity-100 transition-opacity cursor-pointer">
+                                    <iconify-icon class="text-purple-400 text-lg" icon="solar:bell-bing-linear"></iconify-icon>
+                                    <span class="text-sm">Notification Badges</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 pt-5 border-t border-white/10 flex items-center justify-between relative z-10">
+                            <span class="text-xs font-mono text-white/60">AURA.SYS // DARK</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             5. ICONOGRAPHY SYSTEM (DS5 + DS2 + DS11)
+             ========================================================================= -->
+        <section id="icons" class="py-20 bg-zinc-50 border-b border-zinc-200/80">
+            <div class="container-xl">
+                <div class="flex flex-wrap justify-between items-end mb-12 gap-4">
+                    <div>
+                        <span class="text-xs font-mono uppercase tracking-widest text-zinc-400">05 // Vector Assets</span>
+                        <h2 class="text-3xl md:text-4xl font-bold mt-2">Solar Iconography System</h2>
+                    </div>
+                    <span class="text-xs font-mono text-zinc-400">Hover micro-interactions</span>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="bg-white p-8 rounded-xl border border-zinc-200/80 flex flex-col items-center gap-4 hover:border-black transition-all group">
+                        <iconify-icon icon="solar:home-smile-linear" class="text-3xl text-zinc-500 group-hover:text-black group-hover:scale-110 transition-all"></iconify-icon>
+                        <span class="text-[10px] font-mono text-zinc-400">home-smile</span>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-zinc-200/80 flex flex-col items-center gap-4 hover:border-black transition-all group">
+                        <iconify-icon icon="solar:settings-minimalistic-linear" class="text-3xl text-zinc-500 group-hover:text-black group-hover:rotate-90 transition-all duration-500"></iconify-icon>
+                        <span class="text-[10px] font-mono text-zinc-400">settings</span>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-zinc-200/80 flex flex-col items-center gap-4 hover:border-black transition-all group">
+                        <iconify-icon icon="solar:shield-check-linear" class="text-3xl text-zinc-500 group-hover:text-black group-hover:scale-110 transition-all"></iconify-icon>
+                        <span class="text-[10px] font-mono text-zinc-400">shield-check</span>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-zinc-200/80 flex flex-col items-center gap-4 hover:border-black transition-all group">
+                        <iconify-icon icon="solar:users-group-rounded-linear" class="text-3xl text-zinc-500 group-hover:text-black group-hover:scale-110 transition-all"></iconify-icon>
+                        <span class="text-[10px] font-mono text-zinc-400">users-group</span>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl border border-zinc-200/80 flex flex-col items-center gap-4 hover:border-black transition-all group">
+                        <iconify-icon icon="solar:cloud-upload-linear" class="text-3xl text-zinc-500 group-hover:text-black group-hover:-translate-y-1 transition-all"></iconify-icon>
+                        <span class="text-[10px] font-mono text-zinc-400">cloud-upload</span>
+                    </div>
+                    <div class="bg-black p-8 rounded-xl border border-black flex flex-col items-center gap-4 group">
+                        <iconify-icon icon="solar:stars-line-duotone" class="text-3xl text-white animate-spin-slow"></iconify-icon>
+                        <span class="text-[10px] font-mono text-white/60">stars-magic</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Strip from design_system2.html -->
+        <div class="overflow-hidden py-8 bg-black text-white/40 text-xs font-mono uppercase tracking-[0.3em]">
+            <div class="marquee-track">
+                <span class="mx-8">• SYSTEM 02 BASE</span>
+                <span class="mx-8">• AURA V8 MOTION</span>
+                <span class="mx-8">• AURA V3 LENS</span>
+                <span class="mx-8">• AURA V7 3D STACK</span>
+                <span class="mx-8">• PURE WHITE &amp; TRANSPARENT</span>
+                <span class="mx-8">• SYSTEM 02 BASE</span>
+                <span class="mx-8">• AURA V8 MOTION</span>
+                <span class="mx-8">• AURA V3 LENS</span>
+                <span class="mx-8">• AURA V7 3D STACK</span>
+                <span class="mx-8">• PURE WHITE &amp; TRANSPARENT</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- =========================================================================
+         MONUMENTAL WHITE & TRANSPARENT FOOTER (FROM design_system7.html & design_system5.html)
+         ========================================================================= -->
+    <footer class="bg-white pt-16 pb-12 border-t border-zinc-200 text-center overflow-hidden">
+        <div class="container-xl">
+            <h2 class="text-[14vw] leading-none font-extrabold tracking-tighter text-transparent-stroke text-stroke-transparent select-none cursor-default" data-text="SYSTEM // 01">
+                SYSTEM // 01
+            </h2>
+            <div class="mt-8 pt-8 border-t border-zinc-100 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-zinc-400 font-mono">
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-black rounded-sm"></div>
+                    <span class="font-bold text-black">DESIGN SYSTEM OFICIAL 1</span>
+                </div>
+                <span>COMBINING DS5 + DS2 + DS7 + DS11 • 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         UNIFIED JAVASCRIPT ENGINE (PRESERVING ALL HANDLERS FROM DS5, DS2, DS7, DS11)
+         ========================================================================= -->
+    <script>
+        // 1. Hero Carousel Slide Controller (from design_system7.html)
+        const slideImages = [
+            "templates/digital-architect.aura.build/assets/c7fa69dd-d7fb-48f2-a866-ef3663_f6b789593f38.webp",
+            "templates/digital-architect.aura.build/assets/6c710de5-9712-4c8e-a7db-59ac54_b647957b5aa5.webp",
+            "templates/digital-architect.aura.build/assets/62cc53b7-3355-4618-b7fa-3283f6_a6d3415bc434.webp"
+        ];
+        let currentSlide = 0;
+
+        function cycleHeroSlide() {
+            const slides = document.querySelectorAll('#hero-carousel-bg .carousel-slide');
+            const indicator = document.getElementById('slide-indicator');
+            const cardPreview = document.getElementById('hero-card-preview');
+            if (!slides.length) return;
+
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+
+            if (indicator) {
+                indicator.textContent = `0${currentSlide + 1}/0${slides.length}`;
+            }
+            if (cardPreview && slideImages[currentSlide]) {
+                cardPreview.src = slideImages[currentSlide];
+            }
+        }
+
+        // 2. Interactive Hero Atmosphere Mode Switcher (Pure White DS5 / Optical Carousel DS7 / Mix-Blend)
+        function setAtmosphere(mode, btn) {
+            document.querySelectorAll('.atmo-btn').forEach(b => {
+                b.classList.remove('bg-white', 'shadow-sm', 'font-medium', 'text-black');
+                b.classList.add('text-zinc-500');
+            });
+            if (btn) {
+                btn.classList.add('bg-white', 'shadow-sm', 'font-medium', 'text-black');
+                btn.classList.remove('text-zinc-500');
+            }
+
+            const bg = document.getElementById('hero-carousel-bg');
+            const veil = document.getElementById('hero-white-veil');
+            const textCol = document.getElementById('hero-text-col');
+
+            if (mode === 'white') {
+                if (bg) bg.style.opacity = '0.22';
+                if (veil) veil.style.background = 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 50%, rgba(255,255,255,1) 100%)';
+                if (textCol) textCol.classList.remove('transparent-text-layer');
+            } else if (mode === 'carousel') {
+                if (bg) bg.style.opacity = '0.85';
+                if (veil) veil.style.background = 'linear-gradient(to bottom, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.95) 100%)';
+                if (textCol) textCol.classList.remove('transparent-text-layer');
+            } else if (mode === 'invert') {
+                if (bg) bg.style.opacity = '1';
+                if (veil) veil.style.background = 'linear-gradient(to bottom, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.85) 100%)';
+                if (textCol) textCol.classList.add('transparent-text-layer');
+            }
+        }
+
+        // Toggle Transparent Lettering Fill/Stroke on CTA click
+        let strokeFilled = false;
+        function toggleHeroBlend() {
+            const word = document.getElementById('hero-stroke-word');
+            if (!word) return;
+            strokeFilled = !strokeFilled;
+            if (strokeFilled) {
+                word.style.color = '#000000';
+                word.style.webkitTextStroke = '1.5px #000000';
+            } else {
+                word.style.color = 'transparent';
+                word.style.webkitTextStroke = '1.5px rgba(0, 0, 0, 0.25)';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initial Load Reveals (DS2, DS5, DS7, DS11)
+            setTimeout(() => {
+                const header = document.querySelector('header.nav-load');
+                if (header) header.classList.add('loaded', 'active');
+
+                const heroTitle = document.getElementById('hero-title');
+                if (heroTitle) {
+                    heroTitle.classList.add('reveal-active', 'active');
+                }
+            }, 150);
+
+            // 2. Auto-advance Hero Carousel (from design_system7.html)
+            setInterval(cycleHeroSlide, 4800);
+
+            // 3. Unified Flashlight & Glow Card Mouse Tracking (DS5, DS2, DS11)
+            const interactiveCards = document.querySelectorAll('.flashlight-card, .glow-card');
+            interactiveCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                    card.style.setProperty('--x', `${x}px`);
+                    card.style.setProperty('--y', `${y}px`);
+                });
+            });
+
+            // 4. Unified IntersectionObserver for .animate-in, .motion-enter, .animate-on-scroll, .reveal, .text-reveal-wrapper
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active', 'reveal-active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.animate-in, .motion-enter, .animate-on-scroll, .reveal, .text-reveal-wrapper, h1, h2').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+
+</html>
+
