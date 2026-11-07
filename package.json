@@ -1,0 +1,20 @@
+{
+  "name": "artools-pro",
+  "version": "1.0.0",
+  "description": "ARTOOLS.PRO — A caneta mais tecnológica do mundo",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve .",
+    "build": "echo 'Static production build ready'"
+  },
+  "keywords": [
+    "artools",
+    "precision-pen",
+    "swiss-engineering",
+    "gsap",
+    "interactive-web"
+  ],
+  "author": "ARTOOLS.PRO",
+  "license": "UNLICENSED"
+}
