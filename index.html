@@ -212,10 +212,10 @@
     <main>
         <section id="hero-pin-section" class="relative w-full h-screen overflow-hidden bg-[#ecece8]">
 
-            <!-- CAMADA DE PROFUNDIDADE -1: MARCA D'ÁGUA GIGANTE EM PARALLAX (Move-se mais devagar no scroll) -->
-            <div id="bg-watermark-parallax" class="absolute inset-x-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none flex justify-center overflow-hidden opacity-40">
-                <span class="text-[19vw] font-black tracking-[-0.06em] leading-none text-stroke-transparent whitespace-nowrap">
-                    PRECISION // 01
+            <!-- CAMADA DE PROFUNDIDADE -1: MARCA D'ÁGUA GIGANTE EM PARALLAX (ESTILO AURAL) -->
+            <div id="bg-watermark-parallax" class="absolute inset-x-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none flex justify-center items-center overflow-hidden">
+                <span class="text-[17vw] sm:text-[21vw] font-black tracking-[0.16em] sm:tracking-[0.22em] leading-none text-[#18181b]/[0.06] whitespace-nowrap select-none">
+                    A R T O O L S
                 </span>
             </div>
 
@@ -243,17 +243,17 @@
                  Cada elemento sobe em velocidade diferente (Parallax Real) ao rolar.
                  ================================================================= -->
             <div id="stage-1" class="story-stage">
-                <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 pt-8">
+                <div class="w-full max-w-[1440px] mx-auto px-5 sm:px-12 lg:px-20 pt-20 sm:pt-10">
                     <div id="stage-1-blend-target" class="max-w-3xl story-interactive">
 
                         <!-- Pílula Superior do Design System -->
-                        <div id="p1-badge" class="gsap-intro inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/90 border border-zinc-200/90 shadow-2xs mb-6">
+                        <div id="p1-badge" class="gsap-intro inline-flex items-center gap-2.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/90 border border-zinc-200/90 shadow-2xs mb-4 sm:mb-6">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-700">SÉRIE MONOLÍTICA // LOTE 01</span>
+                            <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-zinc-700">SÉRIE MONOLÍTICA // LOTE 01</span>
                         </div>
 
                         <!-- Título em Grande Escala com Linha Central Vazada (-webkit-text-stroke) -->
-                        <h1 id="p1-title" class="group font-sans text-4xl sm:text-6xl md:text-7xl lg:text-[5.15rem] font-extrabold tracking-[-0.04em] leading-[1.02] text-[#18181b] select-none cursor-default">
+                        <h1 id="p1-title" class="group font-sans text-3xl sm:text-5xl md:text-7xl lg:text-[5.15rem] font-extrabold tracking-[-0.04em] leading-[1.05] sm:leading-[1.02] text-[#18181b] select-none cursor-default">
                             <span class="gsap-intro block">A caneta</span>
                             <span class="gsap-intro block my-0.5">
                                 <span class="text-transparent-stroke">mais tecnológica</span>
@@ -261,23 +261,31 @@
                             <span class="gsap-intro block">do mundo.</span>
                         </h1>
 
-                        <!-- Parágrafo Editorial -->
-                        <p id="p1-desc" class="gsap-intro mt-6 mb-9 text-base sm:text-lg text-[#71717a] font-light leading-[1.6] max-w-[450px]">
-                            A Artools Precision Pen redefine o equilíbrio entre peso, fluxo e design. Feita para criadores que exigem perfeição em cada traço.
-                        </p>
+                        <!-- Parágrafo Editorial com Toque Aural (Sans + Serif Itálico) -->
+                        <div id="p1-desc" class="gsap-intro mt-4 sm:mt-6 mb-6 sm:mb-8 space-y-1">
+                            <p class="text-sm sm:text-base md:text-lg text-zinc-600 font-light leading-relaxed max-w-[480px]">
+                                Alumínio aeroespacial, safira e nanocarbono,
+                            </p>
+                            <p class="font-serif italic text-lg sm:text-2xl text-zinc-900 tracking-normal">
+                                feita para criar.
+                            </p>
+                        </div>
 
-                        <!-- Botões Magnéticos Alinhados Horizontalmente -->
-                        <div id="p1-cta" class="gsap-intro flex flex-wrap items-center gap-4">
+                        <!-- Botões estilo Aural (Dual CTA: Reservar Edição + Ver em 360°) -->
+                        <div id="p1-cta" class="gsap-intro flex flex-wrap items-center gap-3 sm:gap-4">
                             <button type="button" onclick="scrollToBuy()" class="btn-beam-wrapper magnetic-btn" data-strength="0.32">
                                 <span class="btn-beam-border"></span>
-                                <span class="btn-beam-inner">
-                                    <span>Comprar Agora</span>
+                                <span class="btn-beam-inner !bg-zinc-950 hover:!bg-black !text-white !py-2.5 !pl-5 !pr-2 !rounded-full flex items-center gap-3 shadow-lg">
+                                    <span class="font-sans font-medium text-xs sm:text-sm tracking-tight">Reservar edição</span>
+                                    <span class="w-6 h-6 rounded-full bg-white text-zinc-950 flex items-center justify-center text-xs">
+                                        <iconify-icon icon="solar:arrow-right-linear" class="text-xs"></iconify-icon>
+                                    </span>
                                 </span>
                             </button>
 
-                            <button type="button" onclick="scrollToStage(0.48)" class="btn-pill-light magnetic-btn group" data-strength="0.24">
-                                <span>Explorar</span>
-                                <span class="inline-block text-sm transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+                            <button type="button" onclick="scrollToStage(0.48)" class="btn-pill-light magnetic-btn group !bg-white/80 hover:!bg-white !backdrop-blur-md !border-zinc-300/80 !text-zinc-900 !py-2.5 !px-5 !rounded-full flex items-center gap-2 shadow-sm text-xs sm:text-sm font-medium" data-strength="0.24">
+                                <span>Ver em 360°</span>
+                                <iconify-icon icon="solar:arrow-down-linear" class="text-sm transition-transform duration-300 group-hover:translate-y-0.5"></iconify-icon>
                             </button>
                         </div>
 
@@ -291,43 +299,43 @@
                  nas laterais enquanto a caneta gira no centro!
                  ================================================================= -->
             <div id="stage-2" class="story-stage pointer-events-none" style="opacity: 0;">
-                <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+                <div class="w-full max-w-[1440px] mx-auto px-5 sm:px-12 lg:px-20 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8 pt-16 sm:pt-0">
 
                     <!-- Coluna Esquerda: Título de Engenharia + Card Flashlight 01 -->
-                    <div id="p2-left" class="max-w-md space-y-6 story-interactive">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black text-white text-[10px] font-mono uppercase tracking-widest">
+                    <div id="p2-left" class="max-w-md space-y-4 sm:space-y-6 story-interactive">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black text-white text-[9px] sm:text-[10px] font-mono uppercase tracking-widest">
                             <span>02 // ENGENHARIA AEROESPACIAL</span>
                         </div>
 
-                        <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.02] text-[#18181b]">
+                        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05] sm:leading-[1.02] text-[#18181b]">
                             Equilíbrio áureo.<br />
                             <span class="text-stroke-outline">Corpo monolítico.</span>
                         </h2>
 
-                        <div class="flashlight-card p-6 space-y-3">
+                        <div class="flashlight-card p-4 sm:p-6 space-y-2.5 sm:space-y-3">
                             <div class="flex items-center justify-between">
-                                <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
-                                    <iconify-icon icon="solar:scale-bold-duotone" class="text-xl"></iconify-icon>
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center">
+                                    <iconify-icon icon="solar:scale-bold-duotone" class="text-lg sm:text-xl"></iconify-icon>
                                 </div>
-                                <span class="text-2xl font-black text-stroke-transparent font-mono">24.0g</span>
+                                <span class="text-xl sm:text-2xl font-black text-stroke-transparent font-mono">24.0g</span>
                             </div>
-                            <h3 class="text-base font-bold text-black">Centro de Massa Calibrado</h3>
+                            <h3 class="text-sm sm:text-base font-bold text-black">Centro de Massa Calibrado</h3>
                             <p class="text-xs sm:text-sm text-zinc-500 leading-relaxed">
                                 Usinada a partir de um bloco sólido de Titânio Grau 5 com tolerância de <code class="font-mono text-black bg-zinc-100 px-1.5 py-0.5 rounded">±0.002mm</code> para eliminar qualquer fadiga muscular.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Coluna Direita (Deslocada para baixo em Parallax): Card Flashlight 02 -->
-                    <div id="p2-right" class="max-w-xs w-full lg:mt-40 story-interactive">
-                        <div class="flashlight-card p-6 space-y-3">
+                    <!-- Coluna Direita (Deslocada para baixo em Parallax): Card Flashlight 02 (Oculto em telas ultra-pequenas para evitar sobreposição vertical) -->
+                    <div id="p2-right" class="max-w-xs w-full hidden sm:block lg:mt-40 story-interactive">
+                        <div class="flashlight-card p-4 sm:p-6 space-y-2.5 sm:space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[10px] uppercase tracking-wider">
+                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
                                     Zero-Gravity Flow
                                 </span>
-                                <span class="text-xl font-black text-stroke-transparent font-mono">02</span>
+                                <span class="text-lg sm:text-xl font-black text-stroke-transparent font-mono">02</span>
                             </div>
-                            <h3 class="text-base font-bold text-black">Câmara Pressurizada</h3>
+                            <h3 class="text-sm sm:text-base font-bold text-black">Câmara Pressurizada</h3>
                             <p class="text-xs text-zinc-500 leading-relaxed">
                                 Fluxo hermético de nanoriço japonês que responde instantaneamente na vertical, horizontal ou em micro-traços rápidos.
                             </p>
@@ -342,49 +350,49 @@
                  Macro da Ponta 0.18mm + Cards Bento Finais e Call to Action
                  ================================================================= -->
             <div id="stage-3" class="story-stage pointer-events-none" style="opacity: 0;">
-                <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8">
+                <div class="w-full max-w-[1440px] mx-auto px-5 sm:px-12 lg:px-20 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 sm:gap-8 pt-16 sm:pt-0">
 
                     <!-- Esquerda: Tipografia Monumental de Fechamento -->
-                    <div id="p3-left" class="max-w-lg space-y-6 story-interactive">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-300 bg-white/90 text-[10px] font-mono uppercase tracking-widest text-zinc-700">
+                    <div id="p3-left" class="max-w-lg space-y-4 sm:space-y-6 story-interactive">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-300 bg-white/90 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-zinc-700">
                             <span>03 // PRECISÃO MICRO-CÔNICA</span>
                         </div>
 
-                        <h2 class="text-4xl sm:text-6xl font-black tracking-tighter leading-[0.95] text-[#18181b]">
+                        <h2 class="text-3xl sm:text-6xl font-black tracking-tight leading-tight sm:leading-[0.95] text-[#18181b]">
                             PERFEIÇÃO EM<br />
                             <span class="text-stroke-outline">CADA TRAÇO.</span>
                         </h2>
 
-                        <p class="text-sm sm:text-base text-zinc-600 font-light leading-relaxed max-w-md">
+                        <p class="text-xs sm:text-base text-zinc-600 font-light leading-relaxed max-w-md">
                             A ponta híbrida de <strong class="text-black font-semibold">0.18mm em tungstênio polido</strong> desliza sem atrito, entregando linhas arquitetônicas com densidade óptica constante.
                         </p>
 
-                        <div class="flex flex-wrap items-center gap-4 pt-1">
+                        <div class="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
                             <button type="button" onclick="scrollToBuy()" class="btn-beam-wrapper magnetic-btn" data-strength="0.32">
                                 <span class="btn-beam-border"></span>
                                 <span class="btn-beam-inner">
                                     <span>Reservar Edição 01 — R$ 1.490</span>
-                                    <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="text-base sm:text-lg"></iconify-icon>
                                 </span>
                             </button>
                             <button type="button" onclick="scrollToStage(0)" class="btn-pill-light magnetic-btn" data-strength="0.22">
-                                <iconify-icon icon="solar:restart-bold" class="text-base"></iconify-icon>
+                                <iconify-icon icon="solar:restart-bold" class="text-sm sm:text-base"></iconify-icon>
                                 <span>Rever Giro</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Direita: Mini Grid Bento 2 Colunas (Especificações Finais) -->
-                    <div id="p3-right" class="grid grid-cols-2 gap-3.5 max-w-sm w-full story-interactive">
-                        <div class="flashlight-card p-4">
-                            <span class="font-mono text-[10px] uppercase text-zinc-400 block">Diâmetro Ponta</span>
-                            <span class="text-2xl font-black text-black tracking-tight mt-1 block">0.18mm</span>
-                            <span class="text-[11px] text-zinc-500">Esfera de Tungstênio</span>
+                    <div id="p3-right" class="grid grid-cols-2 gap-2.5 sm:gap-3.5 max-w-sm w-full story-interactive">
+                        <div class="flashlight-card p-3 sm:p-4">
+                            <span class="font-mono text-[9px] sm:text-[10px] uppercase text-zinc-400 block">Diâmetro Ponta</span>
+                            <span class="text-xl sm:text-2xl font-black text-black tracking-tight mt-1 block">0.18mm</span>
+                            <span class="text-[10px] sm:text-[11px] text-zinc-500">Esfera de Tungstênio</span>
                         </div>
-                        <div class="flashlight-card p-4">
-                            <span class="font-mono text-[10px] uppercase text-zinc-400 block">Autonomia</span>
-                            <span class="text-2xl font-black text-black tracking-tight mt-1 block">14.5km</span>
-                            <span class="text-[11px] text-zinc-500">Tinta Arquival Preta</span>
+                        <div class="flashlight-card p-3 sm:p-4">
+                            <span class="font-mono text-[9px] sm:text-[10px] uppercase text-zinc-400 block">Autonomia</span>
+                            <span class="text-xl sm:text-2xl font-black text-black tracking-tight mt-1 block">14.5km</span>
+                            <span class="text-[10px] sm:text-[11px] text-zinc-500">Tinta Arquival Preta</span>
                         </div>
                     </div>
 
@@ -406,18 +414,58 @@
             </aside>
 
             <!-- =================================================================
-                 INDICADOR INFERIOR CENTRAL ("SCROLL TO CONTROL" — Da Referência!)
+                 TIMELINE SCRUBBER PLAYER DOCK (IDÊNTICO AO BENCHMARK AURAL)
+                 Sincronizado a 60fps com a rotação 3D da caneta via GSAP Scrub
                  ================================================================= -->
-            <div
-                id="scroll-hint"
-                class="gsap-intro absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 select-none pointer-events-none"
-            >
-                <span id="scroll-hint-label" class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.26em] text-[#71717a]">
-                    SCROLL TO CONTROL
-                </span>
-                <div class="w-px h-7 bg-zinc-300 overflow-hidden relative">
-                    <div class="w-full h-full bg-zinc-700 animate-scroll-line"></div>
+            <div id="hero-timeline-wrapper" class="gsap-intro absolute bottom-4 sm:bottom-6 inset-x-0 z-30 flex flex-col items-center pointer-events-none px-4">
+                
+                <!-- Micro-indicador "SCROLL TO PLAY" com ícone de mouse sutil -->
+                <div id="scroll-to-play-hint" class="flex items-center gap-1.5 mb-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.22em] text-zinc-500 transition-opacity">
+                    <svg class="w-3 h-3 text-zinc-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                    <span>SCROLL TO PLAY</span>
                 </div>
+
+                <!-- Cápsula Interativa de Scrubber / Player Timeline -->
+                <div id="hero-timeline-capsule" class="pointer-events-auto flex items-center gap-2.5 sm:gap-4 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#121215]/90 border border-white/10 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.35)] text-zinc-300 w-full max-w-[340px] sm:max-w-md md:max-w-lg transition-transform hover:scale-[1.01]">
+                    
+                    <!-- Botão Play / Pause Auto-Giro -->
+                    <button type="button" id="hero-play-btn" onclick="toggleAutoRotation()" class="flex items-center gap-2 shrink-0 group/play cursor-pointer focus:outline-none" title="Reproduzir Giro Contínuo">
+                        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-zinc-950 flex items-center justify-center transition-transform group-hover/play:scale-110 active:scale-95 shadow-sm">
+                            <iconify-icon id="hero-play-icon" icon="solar:play-bold" class="text-xs"></iconify-icon>
+                        </span>
+                        <div class="text-left hidden sm:block leading-tight">
+                            <div class="text-[9px] font-mono font-bold text-white tracking-widest uppercase" id="hero-stage-badge">INTRO</div>
+                            <div class="text-[8px] font-mono text-zinc-400">360° SPIN</div>
+                        </div>
+                    </button>
+
+                    <!-- Pista de Scrub Interativa (Arrastável / Clicável) -->
+                    <div id="hero-scrub-track" class="relative flex-1 h-6 flex items-center cursor-pointer group/track" onclick="handleScrubTrackClick(event)">
+                        <!-- Linha de fundo da pista -->
+                        <div class="w-full h-[2px] bg-white/20 rounded-full relative overflow-hidden">
+                            <!-- Barra de progresso preenchida -->
+                            <div id="hero-scrub-progress" class="h-full bg-white rounded-full transition-[width] duration-75" style="width: 0%;"></div>
+                        </div>
+                        <!-- Marcador / Thumb Playhead -->
+                        <div id="hero-scrub-thumb" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] border border-zinc-900 group-hover/track:scale-125 transition-transform" style="left: 0%;"></div>
+                    </div>
+
+                    <!-- Marcador de Tempo / Frame Contínuo -->
+                    <div class="shrink-0 font-mono text-[9px] sm:text-[10px] text-zinc-400 tracking-wider">
+                        <span id="hero-timecode-cur" class="text-zinc-200 font-semibold">00:00</span>
+                        <span class="text-zinc-600">/</span>
+                        <span id="hero-timecode-total">02:40</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Selo de Assinatura no Canto Inferior Direito (Estilo "Made in Aura" do Benchmark) -->
+            <div class="absolute bottom-5 right-6 lg:right-12 z-30 hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121215]/80 backdrop-blur-md border border-white/10 text-[10px] font-mono text-zinc-400 uppercase tracking-wider select-none">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Swiss Engineered // Artools</span>
             </div>
 
         </section>
@@ -467,18 +515,18 @@
             <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
 
                 <!-- CABEÇALHO EDITORIAL (IDÊNTICO AO SEGUNDO ANEXO) -->
-                <div class="mb-16 md:mb-20 reveal-up">
-                    <div class="inline-flex items-center gap-2 mb-5">
+                <div class="mb-12 sm:mb-16 md:mb-20 reveal-up">
+                    <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2 h-2 bg-black rounded-full animate-pulse"></span>
-                        <span class="text-xs font-mono uppercase tracking-[0.22em] text-zinc-400">Technology // Artools.Pro</span>
+                        <span class="text-[10px] sm:text-xs font-mono uppercase tracking-[0.22em] text-zinc-400">Technology // Artools.Pro</span>
                     </div>
 
-                    <h2 class="font-sans text-5xl md:text-7xl lg:text-[5.2rem] font-bold tracking-tight leading-[0.94] text-black">
+                    <h2 class="font-sans text-3xl sm:text-5xl md:text-7xl lg:text-[5.2rem] font-bold tracking-tight leading-[0.98] sm:leading-[0.94] text-black">
                         Engenharia Suíça.<br />
                         <span class="text-stroke-outline text-zinc-400 font-normal">Precisão Molecular.</span>
                     </h2>
 
-                    <p class="mt-7 text-base md:text-xl text-zinc-500 max-w-2xl font-light leading-relaxed">
+                    <p class="mt-4 sm:mt-7 text-sm sm:text-base md:text-xl text-zinc-500 max-w-2xl font-light leading-relaxed">
                         Nossa arquitetura de fluxo proprietária sincroniza a deposição de tinta em tempo real. Construída sobre um chassi de alumínio aeroespacial usinado em CNC de 5 eixos.
                     </p>
                 </div>
@@ -545,37 +593,37 @@
                             </div>
 
                             <!-- Floating Glassmorphism Badge 1 (Superior Esquerdo — Idêntico ao Anexo 02) -->
-                            <div id="hud-glass-badge-top" class="absolute top-6 left-6 p-4 border border-white/70 rounded-2xl backdrop-blur-md bg-white/70 shadow-lg text-zinc-900 hover:bg-white/90 transition-all cursor-pointer z-20">
-                                <iconify-icon icon="solar:database-bold-duotone" class="text-2xl text-black mb-1.5 block"></iconify-icon>
-                                <div id="hud-glass-core-label" class="text-[10px] font-mono font-bold text-zinc-800 tracking-widest uppercase">Core_Alu_7075-T6</div>
-                                <div class="h-1 w-24 bg-black/20 mt-2 rounded-full overflow-hidden">
+                            <div id="hud-glass-badge-top" class="absolute top-3 left-3 sm:top-6 sm:left-6 p-2.5 sm:p-4 border border-white/70 rounded-xl sm:rounded-2xl backdrop-blur-md bg-white/70 shadow-lg text-zinc-900 hover:bg-white/90 transition-all cursor-pointer z-20">
+                                <iconify-icon icon="solar:database-bold-duotone" class="text-lg sm:text-2xl text-black mb-1 block"></iconify-icon>
+                                <div id="hud-glass-core-label" class="text-[9px] sm:text-[10px] font-mono font-bold text-zinc-800 tracking-widest uppercase">Core_Alu_7075-T6</div>
+                                <div class="h-1 w-16 sm:w-24 bg-black/20 mt-1.5 sm:mt-2 rounded-full overflow-hidden">
                                     <div id="hud-glass-core-bar" class="h-full w-[88%] bg-black rounded-full transition-all duration-500"></div>
                                 </div>
                             </div>
 
                             <!-- Floating Glassmorphism Badge 2 (Inferior Direito — Idêntico ao Anexo 02) -->
-                            <div id="hud-glass-badge-bot" class="absolute bottom-6 right-6 p-4 border border-white/70 rounded-2xl backdrop-blur-md bg-white/70 shadow-lg text-right hover:bg-white/90 transition-all cursor-pointer z-20">
-                                <div id="hud-glass-tip-val" class="text-3xl font-black text-black leading-none tracking-tight">
-                                    0.1<span class="text-xs font-mono font-semibold text-zinc-500 align-top ml-1">mm</span>
+                            <div id="hud-glass-badge-bot" class="absolute bottom-3 right-3 sm:bottom-6 sm:right-6 p-2.5 sm:p-4 border border-white/70 rounded-xl sm:rounded-2xl backdrop-blur-md bg-white/70 shadow-lg text-right hover:bg-white/90 transition-all cursor-pointer z-20">
+                                <div id="hud-glass-tip-val" class="text-xl sm:text-3xl font-black text-black leading-none tracking-tight">
+                                    0.1<span class="text-[10px] sm:text-xs font-mono font-semibold text-zinc-500 align-top ml-1">mm</span>
                                 </div>
-                                <div id="hud-glass-tip-label" class="text-[10px] font-mono text-zinc-700 tracking-widest uppercase mt-1">
+                                <div id="hud-glass-tip-label" class="text-[8px] sm:text-[10px] font-mono text-zinc-700 tracking-widest uppercase mt-1">
                                     Tip_Precision // Swiss CNC
                                 </div>
                             </div>
 
                             <!-- Telemetria Óptica Dinâmica no Rodapé Esquerdo (Modo Macro) -->
-                            <div id="macro-telemetry-badge" class="absolute bottom-6 left-6 z-20 px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-white font-mono text-[9px] tracking-wider uppercase flex items-center gap-2 pointer-events-none opacity-85">
+                            <div id="macro-telemetry-badge" class="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 z-20 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-white font-mono text-[8px] sm:text-[9px] tracking-wider uppercase flex items-center gap-1.5 sm:gap-2 pointer-events-none opacity-85">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                                 <span id="macro-coords-val">OPTICAL MACRO 10X // ±0.0008mm</span>
                             </div>
 
                             <!-- Seletor de Lentes Flutuante (Superior Direito — APENAS MACRO E STUDIO) -->
-                            <div class="absolute top-6 right-6 z-30 flex items-center gap-1.5 p-1 rounded-full bg-white/80 backdrop-blur-md border border-white/80 shadow-md text-xs font-mono">
-                                <button type="button" onclick="switchTechVisual('macro', this)" class="tech-lens-pill active px-3.5 py-1 rounded-full bg-black text-white font-medium cursor-pointer transition-all flex items-center gap-1.5">
+                            <div class="absolute top-3 right-3 sm:top-6 sm:right-6 z-30 flex items-center gap-1 p-0.5 sm:p-1 rounded-full bg-white/80 backdrop-blur-md border border-white/80 shadow-md text-[10px] sm:text-xs font-mono">
+                                <button type="button" onclick="switchTechVisual('macro', this)" class="tech-lens-pill active px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-black text-white font-medium cursor-pointer transition-all flex items-center gap-1 sm:gap-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                                     <span>Macro 10x</span>
                                 </button>
-                                <button type="button" onclick="switchTechVisual('studio', this)" class="tech-lens-pill px-3.5 py-1 rounded-full text-zinc-600 hover:text-black cursor-pointer transition-all flex items-center gap-1.5">
+                                <button type="button" onclick="switchTechVisual('studio', this)" class="tech-lens-pill px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full text-zinc-600 hover:text-black cursor-pointer transition-all flex items-center gap-1 sm:gap-1.5">
                                     <iconify-icon icon="solar:camera-minimalistic-linear" class="text-xs"></iconify-icon>
                                     <span>Studio 360°</span>
                                 </button>
@@ -665,7 +713,7 @@
                 </div>
 
                 <!-- PRANCHETA INTERATIVA AO VIVO (CANVAS DE ARQUITETURA PARA TESTAR O TRAÇO 0.1MM) -->
-                <div id="scratchpad-section" class="reveal-up p-7 sm:p-9 bg-white rounded-3xl border border-zinc-200 shadow-xl max-w-4xl mx-auto">
+                <div id="scratchpad-section" class="reveal-up p-5 sm:p-9 bg-white rounded-2xl sm:rounded-3xl border border-zinc-200 shadow-xl max-w-4xl mx-auto">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
                         <div>
                             <div class="flex items-center gap-2">
@@ -744,19 +792,19 @@
             <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
 
                 <!-- CABEÇALHO EDITORIAL DA TERCEIRA DOBRA -->
-                <div class="mb-16 md:mb-20 reveal-up">
+                <div class="mb-12 sm:mb-16 md:mb-20 reveal-up">
                     <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                        <span class="text-xs font-mono uppercase tracking-[0.24em] text-zinc-400">03 // Atelier &amp; Performance Lab</span>
-                        <span class="px-2.5 py-0.5 rounded-full bg-zinc-100 text-[10px] font-mono text-zinc-600 border border-zinc-200 uppercase">Zurich Accredited</span>
+                        <span class="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-zinc-400">03 // Atelier &amp; Performance Lab</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-zinc-100 text-[9px] sm:text-[10px] font-mono text-zinc-600 border border-zinc-200 uppercase">Zurich Accredited</span>
                     </div>
 
-                    <h2 class="font-sans text-5xl md:text-7xl lg:text-[5.2rem] font-bold tracking-tight leading-[0.94] text-black">
+                    <h2 class="font-sans text-3xl sm:text-5xl md:text-7xl lg:text-[5.2rem] font-bold tracking-tight leading-[0.98] sm:leading-[0.94] text-black">
                         Calibração &amp; Atelier.<br />
                         <span class="text-stroke-outline text-zinc-400 font-normal">Customização Sub-Mícron.</span>
                     </h2>
 
-                    <p class="mt-6 text-base md:text-xl text-zinc-500 max-w-3xl font-light leading-relaxed">
+                    <p class="mt-4 sm:mt-6 text-sm sm:text-base md:text-xl text-zinc-500 max-w-3xl font-light leading-relaxed">
                         Cada instrumento é calibrado sob demanda na Suíça. Escolha o diâmetro da ponta, a formulação da tinta de nanocarbono e personalize o chassi de alumínio aeroespacial 7075-T6 com sua assinatura gravada a laser em tempo real.
                     </p>
                 </div>
@@ -838,28 +886,28 @@
                                 </div>
 
                                 <!-- HUD Badges de Telemetria Dinâmica do Configurador -->
-                                <div class="absolute top-5 left-5 p-3 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-sm flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs font-mono font-bold" id="hud-nib-display">
+                                <div class="absolute top-3 left-3 sm:top-5 sm:left-5 p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-white/85 backdrop-blur-md border border-white/90 shadow-sm flex items-center gap-2 sm:gap-3">
+                                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-black text-white flex items-center justify-center text-[10px] sm:text-xs font-mono font-bold" id="hud-nib-display">
                                         0.1
                                     </div>
                                     <div>
-                                        <div class="text-[9px] font-mono uppercase text-zinc-400 tracking-widest">Ponta Selecionada</div>
-                                        <div class="text-xs font-mono font-bold text-black" id="hud-nib-name">0.10mm Micro-Linha</div>
+                                        <div class="text-[8px] sm:text-[9px] font-mono uppercase text-zinc-400 tracking-widest">Ponta Selecionada</div>
+                                        <div class="text-[11px] sm:text-xs font-mono font-bold text-black" id="hud-nib-name">0.10mm Micro-Linha</div>
                                     </div>
                                 </div>
 
-                                <div class="absolute bottom-5 right-5 p-3 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-sm flex items-center gap-2.5">
-                                    <span class="w-3 h-3 rounded-full bg-black shadow-sm" id="hud-ink-dot"></span>
+                                <div class="absolute bottom-3 right-3 sm:bottom-5 sm:right-5 p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-white/85 backdrop-blur-md border border-white/90 shadow-sm flex items-center gap-2 sm:gap-2.5">
+                                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-black shadow-sm" id="hud-ink-dot"></span>
                                     <div class="text-right">
-                                        <div class="text-[9px] font-mono uppercase text-zinc-400 tracking-widest">Química da Tinta</div>
-                                        <div class="text-xs font-mono font-bold text-black" id="hud-ink-name">Obsidiana Fosca Aeroespacial</div>
+                                        <div class="text-[8px] sm:text-[9px] font-mono uppercase text-zinc-400 tracking-widest">Química da Tinta</div>
+                                        <div class="text-[11px] sm:text-xs font-mono font-bold text-black" id="hud-ink-name">Obsidiana Fosca</div>
                                     </div>
                                 </div>
 
                             </div>
 
                             <!-- Painel Inferior de Customização Tátil -->
-                            <div class="p-6 sm:p-8 bg-white border-t border-zinc-200/90 space-y-6">
+                            <div class="p-5 sm:p-8 bg-white border-t border-zinc-200/90 space-y-5 sm:space-y-6">
 
                                 <!-- Controle 1: Calibre da Ponta -->
                                 <div>
@@ -1140,17 +1188,17 @@
 
                 <!-- CABEÇALHO EDITORIAL EM ESTILO CINEMATOGRÁFICO -->
                 <div class="text-center mb-10 md:mb-14 reveal-up max-w-3xl">
-                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 mb-6 shadow-lg">
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 mb-4 sm:mb-6 shadow-lg">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                        <span class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.24em] text-zinc-300 font-semibold">04 // FÍSICA CINEMÁTICA • 60 FPS RAW</span>
+                        <span class="font-mono text-[9px] sm:text-xs uppercase tracking-[0.24em] text-zinc-300 font-semibold">04 // FÍSICA CINEMÁTICA • 60 FPS RAW</span>
                     </div>
 
-                    <h2 class="font-sans text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.98] text-white">
+                    <h2 class="font-sans text-3xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.02] sm:leading-[0.98] text-white">
                         Sinfonia do Traço.<br />
                         <span class="text-transparent-stroke-white">Fluidez sem Gravidade.</span>
                     </h2>
 
-                    <p class="mt-5 text-base sm:text-lg text-zinc-400 font-light leading-relaxed max-w-2xl mx-auto">
+                    <p class="mt-4 sm:mt-5 text-sm sm:text-lg text-zinc-400 font-light leading-relaxed max-w-2xl mx-auto">
                         Cada movimento capturado em tempo real. Veja a perfeita sincronia entre a engenharia mecânica suíça e a física de nanopartículas no momento exato em que a ideia se torna matéria.
                     </p>
                 </div>
@@ -1170,7 +1218,7 @@
                     <!-- 3. CORPO PRINCIPAL DO CARD GLOW (Glass-Panel + Flashlight Tracking + Masked Border Gradient) -->
                     <div
                         id="cinematic-glow-box"
-                        class="relative glass-panel flashlight-glow-box rounded-[28px] p-7 sm:p-10 md:p-12 overflow-hidden border border-white/15 shadow-2xl backdrop-blur-2xl bg-neutral-950/85 transition-all duration-500 group-hover:border-white/30"
+                        class="relative glass-panel flashlight-glow-box rounded-2xl sm:rounded-[28px] p-5 sm:p-8 md:p-12 overflow-hidden border border-white/15 shadow-2xl backdrop-blur-2xl bg-neutral-950/85 transition-all duration-500 group-hover:border-white/30"
                         style="--border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.05)); --border-radius-before: 28px;"
                         onmousemove="const rect = this.getBoundingClientRect(); this.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`); this.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);"
                     >
@@ -1289,10 +1337,10 @@
                             <button
                                 type="button"
                                 onclick="scrollToBuy()"
-                                class="group/beam relative z-10 flex items-center justify-center overflow-hidden rounded-full p-[1px] leading-none transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_25px_rgba(255,255,255,0.25)]"
+                                class="group/beam relative z-10 flex items-center justify-center overflow-hidden rounded-full p-[1px] leading-none transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_25px_rgba(255,255,255,0.25)] w-full sm:w-auto"
                             >
                                 <span class="absolute inset-[-1000%] animate-beam-spin bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)]"></span>
-                                <span class="relative flex h-full w-full items-center rounded-full bg-black py-3 px-6 sm:py-3.5 sm:px-7 ring-1 ring-white/20">
+                                <span class="relative flex h-full w-full items-center justify-center rounded-full bg-black py-3 px-6 sm:py-3.5 sm:px-7 ring-1 ring-white/20">
                                     <span class="absolute inset-0 overflow-hidden rounded-full">
                                         <span class="absolute top-0 left-0 h-full w-full -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover/beam:animate-[shimmer_1.5s_infinite] group-hover/beam:opacity-100"></span>
                                     </span>
@@ -1316,9 +1364,9 @@
         <section id="writing-experience" class="relative z-20 bg-[#fafaf9] py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
             <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
 
-                <div class="text-center mb-20 reveal-up">
-                    <span class="text-xs font-mono uppercase tracking-[0.25em] text-zinc-400 mb-4 block">ARCHITECTURE OF THOUGHT</span>
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tight text-black max-w-3xl mx-auto leading-tight">
+                <div class="text-center mb-12 sm:mb-16 md:mb-20 reveal-up">
+                    <span class="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-zinc-400 mb-3 sm:mb-4 block">ARCHITECTURE OF THOUGHT</span>
+                    <h2 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-black max-w-3xl mx-auto leading-tight">
                         A ferramenta invisível para<br />
                         <span class="text-stroke-outline text-zinc-400 font-normal">ideias tangíveis.</span>
                     </h2>
@@ -1327,49 +1375,49 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     <!-- Flashlight Card 1: Fluxo Contínuo -->
-                    <div class="flashlight-card h-[380px] p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-100">
+                    <div class="flashlight-card h-auto min-h-[290px] sm:h-[380px] p-6 sm:p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-100">
                         <div>
-                            <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
-                                <iconify-icon icon="solar:pen-new-square-linear" class="text-2xl"></iconify-icon>
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-5 sm:mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                                <iconify-icon icon="solar:pen-new-square-linear" class="text-xl sm:text-2xl"></iconify-icon>
                             </div>
-                            <h3 class="text-2xl font-bold mb-3 text-black">Fluxo Contínuo</h3>
-                            <p class="text-zinc-500 text-sm leading-relaxed">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-black">Fluxo Contínuo</h3>
+                            <p class="text-zinc-500 text-xs sm:text-sm leading-relaxed">
                                 A tinta flui sem interrupções, permitindo que seus pensamentos corram livremente para o papel sem fricção.
                             </p>
                         </div>
-                        <div class="h-1 w-full bg-zinc-100 mt-8 overflow-hidden rounded-full">
+                        <div class="h-1 w-full bg-zinc-100 mt-6 sm:mt-8 overflow-hidden rounded-full">
                             <div class="h-full bg-black w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
                         </div>
                     </div>
 
                     <!-- Flashlight Card 2: Silêncio Absoluto -->
-                    <div class="flashlight-card h-[380px] p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-200">
+                    <div class="flashlight-card h-auto min-h-[290px] sm:h-[380px] p-6 sm:p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-200">
                         <div>
-                            <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
-                                <iconify-icon icon="solar:soundwave-square-linear" class="text-2xl"></iconify-icon>
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-5 sm:mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                                <iconify-icon icon="solar:soundwave-square-linear" class="text-xl sm:text-2xl"></iconify-icon>
                             </div>
-                            <h3 class="text-2xl font-bold mb-3 text-black">Silêncio Absoluto</h3>
-                            <p class="text-zinc-500 text-sm leading-relaxed">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-black">Silêncio Absoluto</h3>
+                            <p class="text-zinc-500 text-xs sm:text-sm leading-relaxed">
                                 Mecanismo de amortecimento interno e ponta selada. Escreva em qualquer ambiente com discrição total.
                             </p>
                         </div>
-                        <div class="h-1 w-full bg-zinc-100 mt-8 overflow-hidden rounded-full">
+                        <div class="h-1 w-full bg-zinc-100 mt-6 sm:mt-8 overflow-hidden rounded-full">
                             <div class="h-full bg-black w-0 group-hover:w-full transition-all duration-700 ease-out delay-100"></div>
                         </div>
                     </div>
 
                     <!-- Flashlight Card 3: Equilíbrio Neutro -->
-                    <div class="flashlight-card h-[380px] p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-300">
+                    <div class="flashlight-card h-auto min-h-[290px] sm:h-[380px] p-6 sm:p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-300">
                         <div>
-                            <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
-                                <iconify-icon icon="solar:scale-linear" class="text-2xl"></iconify-icon>
+                            <div class="w-11 h-11 sm:w-12 sm:h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-5 sm:mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                                <iconify-icon icon="solar:scale-linear" class="text-xl sm:text-2xl"></iconify-icon>
                             </div>
-                            <h3 class="text-2xl font-bold mb-3 text-black">Equilíbrio Neutro</h3>
-                            <p class="text-zinc-500 text-sm leading-relaxed">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-black">Equilíbrio Neutro</h3>
+                            <p class="text-zinc-500 text-xs sm:text-sm leading-relaxed">
                                 Centro de gravidade estudado para repousar na junção da mão, reduzindo a fadiga muscular em 40%.
                             </p>
                         </div>
-                        <div class="h-1 w-full bg-zinc-100 mt-8 overflow-hidden rounded-full">
+                        <div class="h-1 w-full bg-zinc-100 mt-6 sm:mt-8 overflow-hidden rounded-full">
                             <div class="h-full bg-black w-0 group-hover:w-full transition-all duration-700 ease-out delay-200"></div>
                         </div>
                     </div>
@@ -1382,17 +1430,17 @@
         <!-- =========================================================================
              4. CINEMATIC SHOWCASE COM GLOW BEAM CARD (SEÇÃO 04 DO ANEXO 02 & DESIGN SYSTEM)
              ========================================================================= -->
-        <section id="comprar" class="relative z-30 py-28 md:py-36 bg-[#060608] text-white overflow-hidden flex items-center justify-center">
+        <section id="comprar" class="relative z-30 py-20 sm:py-28 md:py-36 bg-[#060608] text-white overflow-hidden flex items-center justify-center">
 
             <!-- Fundo com Aura Luminosa Difusa -->
             <div class="absolute inset-0 bg-radial-gradient pointer-events-none opacity-40">
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-700 rounded-full blur-[140px]"></div>
             </div>
 
-            <div class="max-w-[1440px] mx-auto px-6 relative z-10 flex flex-col items-center">
+            <div class="max-w-[1440px] w-full mx-auto px-5 sm:px-6 relative z-10 flex flex-col items-center">
 
                 <!-- Glowing Card de Luxo com Feixe Rotativo Conic (Herdado de design_system_oficial1.html) -->
-                <div class="relative group reveal-zoom">
+                <div class="relative group reveal-zoom w-full max-w-lg">
                     <!-- Camada de Brilho de Fundo -->
                     <div class="absolute -inset-1 bg-gradient-to-r from-zinc-100 to-zinc-500 rounded-3xl blur-lg opacity-25 group-hover:opacity-60 transition duration-700"></div>
 
@@ -1402,21 +1450,21 @@
                     </div>
 
                     <!-- Conteúdo Interno do Card -->
-                    <div class="relative px-10 sm:px-16 py-14 sm:py-20 bg-black/90 backdrop-blur-2xl border border-white/10 rounded-3xl flex flex-col items-center justify-center text-center shadow-2xl max-w-lg">
-                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black mb-6 shadow-[0_0_30px_rgba(255,255,255,0.35)] group-hover:scale-110 transition-transform duration-500">
-                            <iconify-icon icon="solar:crown-star-bold-duotone" class="text-3xl"></iconify-icon>
+                    <div class="relative px-6 sm:px-16 py-10 sm:py-20 bg-black/90 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl flex flex-col items-center justify-center text-center shadow-2xl w-full">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center text-black mb-5 sm:mb-6 shadow-[0_0_30px_rgba(255,255,255,0.35)] group-hover:scale-110 transition-transform duration-500">
+                            <iconify-icon icon="solar:crown-star-bold-duotone" class="text-2xl sm:text-3xl"></iconify-icon>
                         </div>
 
-                        <h2 class="font-sans text-4xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                        <h2 class="font-sans text-3xl sm:text-5xl font-black text-white tracking-tight mb-2">
                             Artools<span class="font-light text-zinc-400">Pro</span>
                         </h2>
-                        <div class="h-px w-14 bg-zinc-700 my-4"></div>
-                        <p class="font-mono text-xs uppercase tracking-[0.3em] text-zinc-400 mb-8">Signature Series • 2026</p>
+                        <div class="h-px w-14 bg-zinc-700 my-3 sm:my-4"></div>
+                        <p class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-zinc-400 mb-6 sm:mb-8">Signature Series • 2026</p>
 
                         <!-- Botão com Feixe Magnético -->
-                        <button type="button" onclick="alert('Pedido da Artools Precision Pen iniciado!')" class="btn-beam-wrapper magnetic-btn" data-strength="0.32">
+                        <button type="button" onclick="alert('Pedido da Artools Precision Pen iniciado!')" class="btn-beam-wrapper magnetic-btn w-full sm:w-auto" data-strength="0.32">
                             <span class="btn-beam-border"></span>
-                            <span class="btn-beam-inner text-sm px-8 py-3.5">
+                            <span class="btn-beam-inner text-xs sm:text-sm px-6 sm:px-8 py-3.5 w-full flex items-center justify-center gap-2">
                                 <span>Reservar Agora — R$ 1.490</span>
                                 <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
                             </span>
@@ -1450,10 +1498,10 @@
         <!-- Grade Guia Sutil no Footer -->
         <div class="absolute inset-0 bg-grid-architectural opacity-5 pointer-events-none" style="filter: invert(1);"></div>
 
-        <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 py-20 lg:py-24 relative z-10">
+        <div class="max-w-[1440px] mx-auto px-5 sm:px-12 lg:px-20 py-14 sm:py-20 lg:py-24 pb-[max(2.5rem,env(safe-area-inset-bottom))] relative z-10">
 
             <!-- LINHA 1: GRID 4 COLUNAS -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-14 pb-16 border-b border-white/10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-14 pb-12 sm:pb-16 border-b border-white/10">
 
                 <!-- Coluna 1 (4 Cols): Marca & Manifesto Monolítico -->
                 <div class="lg:col-span-4 space-y-6">
@@ -1569,7 +1617,7 @@
                 <button
                     type="button"
                     onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-                    class="magnetic-btn flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white transition-all cursor-pointer text-xs"
+                    class="magnetic-btn flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white transition-all cursor-pointer text-xs w-full sm:w-auto"
                 >
                     <span>Voltar ao Topo</span>
                     <iconify-icon icon="solar:arrow-up-linear" class="text-sm"></iconify-icon>

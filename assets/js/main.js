@@ -664,7 +664,130 @@
             scrollToBuy();
         }
 
-        // ExportaÃ§Ã£o explÃ­cita de mÃ©todos para window (Garante acessibilidade global imediata)
+        // =========================================================================
+        // 4.5 MOTOR DA TIMELINE SCRUBBER PLAYER (IDÊNTICO AO BENCHMARK AURAL)
+        // =========================================================================
+        let isAutoRotating = false;
+        let autoRotateTween = null;
+
+        function updateHeroScrubberUI(progress) {
+            const scrubProgress = document.getElementById('hero-scrub-progress');
+            const scrubThumb = document.getElementById('hero-scrub-thumb');
+            const curTimeEl = document.getElementById('hero-timecode-cur');
+            const totalTimeEl = document.getElementById('hero-timecode-total');
+            const stageBadge = document.getElementById('hero-stage-badge');
+
+            const pct = Math.min(Math.max(progress * 100, 0), 100);
+
+            if (scrubProgress) scrubProgress.style.width = `${pct}%`;
+            if (scrubThumb) scrubThumb.style.left = `${pct}%`;
+
+            // Formatação do timecode (Ex: 00:00 / 02:40 baseado em 160 segundos de rotação virtual)
+            const totalSec = 160;
+            const curSec = Math.floor(progress * totalSec);
+            const curM = Math.floor(curSec / 60);
+            const curS = curSec % 60;
+            const curStr = `${curM < 10 ? '0' : ''}${curM}:${curS < 10 ? '0' : ''}${curS}`;
+            if (curTimeEl) curTimeEl.textContent = curStr;
+            if (totalTimeEl) totalTimeEl.textContent = '02:40';
+
+            // Badge descritivo da etapa
+            if (stageBadge) {
+                if (progress < 0.36) {
+                    stageBadge.textContent = 'INTRO';
+                } else if (progress < 0.70) {
+                    stageBadge.textContent = '360° SPIN';
+                } else {
+                    stageBadge.textContent = 'MACRO NIB';
+                }
+            }
+        }
+
+        function toggleAutoRotation() {
+            if (!masterScrollTrigger) return;
+            const playIcon = document.getElementById('hero-play-icon');
+
+            if (isAutoRotating) {
+                isAutoRotating = false;
+                if (autoRotateTween) autoRotateTween.kill();
+                if (playIcon) playIcon.setAttribute('icon', 'solar:play-bold');
+            } else {
+                isAutoRotating = true;
+                if (playIcon) playIcon.setAttribute('icon', 'solar:pause-bold');
+
+                if (masterScrollTrigger.progress > 0.95) {
+                    window.scrollTo({ top: masterScrollTrigger.start, behavior: 'instant' });
+                }
+
+                const currentY = window.scrollY;
+                const targetY = masterScrollTrigger.end;
+                const remainingDist = Math.max(targetY - currentY, 100);
+                const totalDist = masterScrollTrigger.end - masterScrollTrigger.start;
+                const duration = Math.max((remainingDist / totalDist) * 9, 2.5);
+
+                autoRotateTween = gsap.to(window, {
+                    scrollTo: targetY,
+                    duration: duration,
+                    ease: 'none',
+                    onUpdate: () => {
+                        if (!isAutoRotating && autoRotateTween) autoRotateTween.kill();
+                    },
+                    onComplete: () => {
+                        isAutoRotating = false;
+                        if (playIcon) playIcon.setAttribute('icon', 'solar:play-bold');
+                    }
+                });
+            }
+        }
+
+        function handleScrubTrackClick(event) {
+            const track = document.getElementById('hero-scrub-track');
+            if (!track || !masterScrollTrigger) return;
+            const rect = track.getBoundingClientRect();
+            const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+            const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+            scrollToStage(ratio);
+            updateHeroScrubberUI(ratio);
+        }
+
+        function initHeroScrubberDrag() {
+            const track = document.getElementById('hero-scrub-track');
+            if (!track) return;
+
+            let isDragging = false;
+
+            const onMove = (e) => {
+                if (!isDragging || !masterScrollTrigger) return;
+                const rect = track.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+                const targetY = masterScrollTrigger.start + (masterScrollTrigger.end - masterScrollTrigger.start) * ratio;
+                window.scrollTo({ top: targetY, behavior: 'auto' });
+                updateHeroScrubberUI(ratio);
+            };
+
+            const onEnd = () => {
+                isDragging = false;
+                window.removeEventListener('mousemove', onMove);
+                window.removeEventListener('mouseup', onEnd);
+                window.removeEventListener('touchmove', onMove);
+                window.removeEventListener('touchend', onEnd);
+            };
+
+            track.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onEnd);
+            });
+
+            track.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                window.addEventListener('touchmove', onMove, { passive: true });
+                window.addEventListener('touchend', onEnd);
+            }, { passive: true });
+        }
+
+        // Exportação explícita de métodos para window (Garante acessibilidade global imediata)
         window.selectTechFeature = selectTechFeature;
         window.switchTechVisual = switchTechVisual;
         window.initScratchpad = initScratchpad;
@@ -689,12 +812,25 @@
         window.updateNavDockFlashlight = updateNavDockFlashlight;
         window.moveNavDockSlider = moveNavDockSlider;
         window.resetNavDockSliderToActive = resetNavDockSliderToActive;
+        window.toggleAutoRotation = toggleAutoRotation;
+        window.handleScrubTrackClick = handleScrubTrackClick;
+        window.updateHeroScrubberUI = updateHeroScrubberUI;
 
         document.addEventListener('DOMContentLoaded', () => {
             // Limpa memória de scroll do ScrollTrigger e força o topo absoluto
             ScrollTrigger.clearScrollMemory('manual');
             window.scrollTo(0, 0);
             initNavDockInteractions();
+            initHeroScrubberDrag();
+
+            // Fechar menu mobile ao tocar fora
+            document.addEventListener('click', (e) => {
+                const drawer = document.getElementById('mobile-nav-drawer');
+                const toggleBtn = e.target.closest('button[onclick*="toggleMobileNav"]');
+                if (drawer && drawer.classList.contains('open') && !drawer.contains(e.target) && !toggleBtn) {
+                    toggleMobileNav();
+                }
+            });
 
             const video = document.getElementById('pen-video');
             const sideProgressFill = document.getElementById('side-progress-fill');
@@ -786,6 +922,8 @@
                             if (stageNumber) {
                                 stageNumber.textContent = self.progress < 0.36 ? '01' : (self.progress < 0.70 ? '02' : '03');
                             }
+                            // Atualiza a Timeline Scrubber Player estilo Aural
+                            updateHeroScrubberUI(self.progress);
                         }
                     }
                 });

@@ -1013,3 +1013,48 @@
         ::-webkit-scrollbar-track { background: #ecece8; }
         ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #71717a; }
+
+        /* =========================================================================
+           8. OTIMIZAÇÕES MOBILE & RESPONSIVIDADE TOUCH (IOS / ANDROID SAFE AREAS)
+           ========================================================================= */
+        @media (max-width: 767px) {
+            /* Área de toque e ergonomia mobile */
+            button, a, input, select {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            /* Prevenir qualquer jitter de overflow horizontal em telas móveis */
+            body, html {
+                overflow-x: hidden !important;
+                width: 100%;
+            }
+
+            /* Timeline Scrubber Capsule no mobile */
+            #hero-timeline-capsule {
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+
+            /* Mobile Nav Drawer Glassmorphism Dropdown */
+            #mobile-nav-drawer.open {
+                transform: translateY(0) !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+
+            /* Otimização de toque em botões magnéticos no touch screen */
+            .magnetic-btn {
+                transform: none !important;
+            }
+        }
+
+        /* Suporte a Notch e Safe Areas Modernas (iPhone / iPad / Dynamic Island) */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            #navbar {
+                padding-top: max(0.85rem, env(safe-area-inset-top));
+            }
+            #site-footer {
+                padding-bottom: max(2rem, env(safe-area-inset-bottom));
+            }
+        }
