@@ -738,6 +738,96 @@
             100% { left: 100%; opacity: 0; }
         }
 
+        /* =========================================================================
+           6. GLOW EFFECT & BEAM BORDER SYSTEM (REF: ANIMATIONS-GEMINI)
+           ========================================================================= */
+        [style*="--border-gradient"]::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: var(--border-radius-before, inherit);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            background: var(--border-gradient);
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: rgba(18, 18, 20, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        /* Flashlight Glow Effect (animations-gemini Slide 7) */
+        .flashlight-glow-box {
+            position: relative;
+        }
+
+        .flashlight-glow-box::before {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            border-radius: inherit;
+            background: radial-gradient(
+                750px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 255, 255, 0.16),
+                transparent 45%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .flashlight-glow-box:hover::before {
+            opacity: 1;
+        }
+
+        /* Shimmer Animation Keyframe (animations-gemini) */
+        @keyframes shimmer {
+            from { transform: translateX(-100%) skewX(-15deg); }
+            to { transform: translateX(200%) skewX(-15deg); }
+        }
+
+        /* Ambient Glow Pulse */
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.55; transform: scale(1); filter: blur(36px); }
+            50% { opacity: 0.95; transform: scale(1.03); filter: blur(48px); }
+        }
+
+        .animate-glow-pulse {
+            animation: glowPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes beamSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-beam-spin {
+            animation: beamSpin 3.5s linear infinite;
+        }
+
+        .text-transparent-stroke-white {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.45);
+            background-image: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            display: inline-block;
+            transition: background-size 0.75s var(--ease-out-expo), -webkit-text-stroke 0.45s var(--ease-out-expo);
+        }
+
+        .group:hover .text-transparent-stroke-white,
+        .text-transparent-stroke-white:hover {
+            background-size: 100% 100%;
+            -webkit-text-stroke: 1.5px #ffffff;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #ecece8; }
@@ -769,8 +859,9 @@
                 <button type="button" onclick="scrollToStage(0)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">01. Hero</button>
                 <button type="button" onclick="scrollToStage(0.48)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">02. Giro 3D</button>
                 <button type="button" onclick="scrollToSecondFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">03. Engenharia</button>
-                <button type="button" onclick="scrollToThirdFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase text-black font-semibold">04. Atelier</button>
-                <button type="button" onclick="scrollToBuy()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">05. Reservar</button>
+                <button type="button" onclick="scrollToThirdFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">04. Atelier</button>
+                <button type="button" onclick="scrollToFourthFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase text-black font-semibold">05. Cinema</button>
+                <button type="button" onclick="scrollToBuy()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">06. Reservar</button>
             </nav>
 
             <!-- Status de Otimização 60fps + Mix-Blend + Sacola -->
@@ -1638,6 +1729,217 @@
         </section>
 
         <!-- =========================================================================
+             4. QUARTA DOBRA — CINEMÁTICA & FÍSICA DO TRAÇO COM VÍDEO E GLOW BOX
+             - Fundo com Vídeo em Loop Contínuo: assets/raw_files/video.mp4
+             - Vinheta Cinematográfica Dark e Máscara Radial de Alto Contraste
+             - Caixa Central Monumental com Efeito de Glow (Inspirado em animations-gemini):
+               * Camada de Aura Expansiva Difusa (glowPulse)
+               * Camada de Feixe Giratório 360° Conic (Beam Animation)
+               * Flashlight Dinâmico (--mouse-x, --mouse-y)
+               * Borda com Gradiente Mascarado (--border-gradient)
+               * Interior Glassmorphic Dark com Tipografia Suíça e Telemetria Molecular
+             - Destaque: "Zero-Friction Fluid Dynamics // Deposição Molecular Quântica"
+             - Controles: Alternador de Áudio/ASMR do Traço, Telemetria e Botão Shimmer Beam
+             ========================================================================= -->
+        <section id="quarta-dobra" class="relative z-30 min-h-screen py-20 md:py-28 overflow-hidden flex items-center justify-center bg-black text-white selection:bg-white selection:text-black border-t border-b border-white/10">
+
+            <!-- PALCO DO VÍDEO DE FUNDO (video.mp4) -->
+            <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <video
+                    id="quarta-dobra-video"
+                    src="assets/raw_files/video.mp4"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="w-full h-full object-cover scale-105 filter brightness-[0.72] contrast-[1.18] transition-transform duration-1000 ease-out"
+                ></video>
+
+                <!-- Vinheta Radial Central para Foco Máximo no Box com Glow -->
+                <div class="absolute inset-0 pointer-events-none z-10"
+                     style="background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.78) 60%, #030304 100%);">
+                </div>
+
+                <!-- Grade Arquitetônica Escura no Fundo do Vídeo (DS Monotone) -->
+                <div class="absolute inset-0 bg-grid-architectural opacity-15 pointer-events-none z-10" style="filter: invert(1);"></div>
+            </div>
+
+            <!-- CONTEÚDO PRINCIPAL (RELATIVO Z-20) -->
+            <div class="max-w-[1440px] w-full mx-auto px-6 sm:px-12 lg:px-20 relative z-20 flex flex-col items-center">
+
+                <!-- CABEÇALHO EDITORIAL EM ESTILO CINEMATOGRÁFICO -->
+                <div class="text-center mb-10 md:mb-14 reveal-up max-w-3xl">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 mb-6 shadow-lg">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.24em] text-zinc-300 font-semibold">04 // FÍSICA CINEMÁTICA • 60 FPS RAW</span>
+                    </div>
+
+                    <h2 class="font-sans text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.98] text-white">
+                        Sinfonia do Traço.<br />
+                        <span class="text-transparent-stroke-white">Fluidez sem Gravidade.</span>
+                    </h2>
+
+                    <p class="mt-5 text-base sm:text-lg text-zinc-400 font-light leading-relaxed max-w-2xl mx-auto">
+                        Cada movimento capturado em tempo real. Veja a perfeita sincronia entre a engenharia mecânica suíça e a física de nanopartículas no momento exato em que a ideia se torna matéria.
+                    </p>
+                </div>
+
+                <!-- O BOX MONUMENTAL COM EFEITO DE GLOW (REF: animations-gemini/index.html) -->
+                <div class="w-full max-w-4xl relative group reveal-zoom">
+
+                    <!-- 1. CAMADA DE AURA DIFUSA / HALO DE GLOW EXPANSIVO (animations-gemini -inset-2 blur-xl) -->
+                    <div class="absolute -inset-3 sm:-inset-5 bg-gradient-to-r from-emerald-500/30 via-white/20 to-cyan-500/25 rounded-[32px] blur-2xl opacity-65 group-hover:opacity-100 transition-all duration-700 pointer-events-none animate-glow-pulse"></div>
+                    <div class="absolute -inset-8 bg-white/5 rounded-[40px] blur-3xl pointer-events-none"></div>
+
+                    <!-- 2. CAMADA DE FEIXE CONIC GIRATÓRIO (Beam Animation 360° Spin Layer de animations-gemini) -->
+                    <div class="absolute -inset-[1.5px] rounded-[30px] overflow-hidden pointer-events-none transition-opacity duration-500 opacity-80 group-hover:opacity-100">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320%] h-[320%] bg-[conic-gradient(from_0deg,transparent_0_330deg,rgba(255,255,255,0.95)_360deg)] animate-beam-spin"></div>
+                    </div>
+
+                    <!-- 3. CORPO PRINCIPAL DO CARD GLOW (Glass-Panel + Flashlight Tracking + Masked Border Gradient) -->
+                    <div
+                        id="cinematic-glow-box"
+                        class="relative glass-panel flashlight-glow-box rounded-[28px] p-7 sm:p-10 md:p-12 overflow-hidden border border-white/15 shadow-2xl backdrop-blur-2xl bg-neutral-950/85 transition-all duration-500 group-hover:border-white/30"
+                        style="--border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.05)); --border-radius-before: 28px;"
+                        onmousemove="const rect = this.getBoundingClientRect(); this.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`); this.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);"
+                    >
+                        <!-- Shimmer highlight streak no topo do card -->
+                        <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none"></div>
+
+                        <!-- CONTEÚDO SUPERIOR DO BOX: Selo de Engenharia & Telemetria do Vídeo -->
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 relative z-10">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-inner">
+                                    <iconify-icon icon="solar:atom-bold-duotone" class="text-2xl text-emerald-400"></iconify-icon>
+                                </div>
+                                <div>
+                                    <div class="font-mono text-[10px] uppercase tracking-widest text-emerald-400 font-bold flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        AVANÇO TECNOLÓGICO PATENTEADO
+                                    </div>
+                                    <div class="font-sans text-sm font-semibold text-white tracking-wide">
+                                        Sistema de Deposição Molecular Quântica (SMDQ)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Telemetria do Vídeo ao Vivo & Controle de Áudio -->
+                            <div class="flex items-center gap-2.5">
+                                <button
+                                    type="button"
+                                    id="video-sound-toggle-btn"
+                                    onclick="toggleQuartaAudio()"
+                                    class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-2 cursor-pointer shadow-sm group/sound"
+                                    title="Alternar Áudio / Experiência Acústica ASMR"
+                                >
+                                    <span id="sound-live-dot" class="w-2 h-2 rounded-full bg-zinc-500 transition-colors"></span>
+                                    <iconify-icon id="video-sound-icon" icon="solar:muted-bold" class="text-base text-zinc-400 group-hover/sound:text-white transition-colors"></iconify-icon>
+                                    <span id="video-sound-label">MUTED [0dB]</span>
+                                </button>
+
+                                <div class="px-3 py-1.5 rounded-xl bg-black/60 border border-white/10 text-[11px] font-mono text-zinc-400 hidden sm:flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span id="video-timecode">00:02 / 00:07</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CORPO DO BOX: MANIFESTO DA TECNOLOGIA EM DESTAQUE -->
+                        <div class="py-6 md:py-8 relative z-10">
+                            <div class="inline-block font-mono text-xs text-zinc-400 uppercase tracking-[0.2em] mb-2.5">
+                                Breakthrough // 0g Contact Mechanics
+                            </div>
+                            
+                            <h3 class="font-sans text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                                Zero Resistência ao Escrever.<br />
+                                <span class="text-zinc-400 font-light">A tinta atinge o papel antes do metal tocá-lo.</span>
+                            </h3>
+
+                            <p class="mt-4 text-sm sm:text-base text-zinc-300 leading-relaxed font-light max-w-2xl">
+                                Enquanto canetas comuns demandam entre 15g e 30g de pressão manual contínua gerando fadiga no pulso, a <strong class="text-white font-medium">Artools Pro</strong> opera com um menisco capilar hiperbólico calibrado a <strong class="text-emerald-400 font-mono font-semibold">12 nanômetros</strong> da superfície celulósica. A gravidade da própria mão é o suficiente para criar linhas pretas contínuas de saturação óptica absoluta.
+                            </p>
+                        </div>
+
+                        <!-- GRID DE 3 MÉTRICAS QUANTITATIVAS NO BOX (COM GLOW E BORDAS SUTIS) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-5 border-t border-white/10 relative z-10">
+
+                            <!-- Métrica 1: Coeficiente de Arrasto Zero -->
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-300 group/metric">
+                                <div class="flex items-center justify-between text-zinc-500 mb-2">
+                                    <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Arrasto Mecânico</span>
+                                    <iconify-icon icon="solar:wind-bold-duotone" class="text-emerald-400 text-base"></iconify-icon>
+                                </div>
+                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-emerald-400 transition-colors">
+                                    0.00 <span class="text-xs font-mono font-normal text-zinc-400">g/cm²</span>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 mt-1">
+                                    Sensação de flutuação hidrodinâmica pura.
+                                </p>
+                            </div>
+
+                            <!-- Métrica 2: Latência de Resposta -->
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-300 group/metric">
+                                <div class="flex items-center justify-between text-zinc-500 mb-2">
+                                    <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Latência de Início</span>
+                                    <iconify-icon icon="solar:bolt-bold-duotone" class="text-yellow-400 text-base"></iconify-icon>
+                                </div>
+                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-yellow-400 transition-colors">
+                                    &lt; 0.001 <span class="text-xs font-mono font-normal text-zinc-400">s</span>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 mt-1">
+                                    Fluxo instantâneo desde o 1º milímetro.
+                                </p>
+                            </div>
+
+                            <!-- Métrica 3: Ângulo Livre de Operação -->
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-300 group/metric">
+                                <div class="flex items-center justify-between text-zinc-500 mb-2">
+                                    <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Ângulo Operacional</span>
+                                    <iconify-icon icon="solar:compass-bold-duotone" class="text-cyan-400 text-base"></iconify-icon>
+                                </div>
+                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-cyan-400 transition-colors">
+                                    15° a 90° <span class="text-xs font-mono font-normal text-zinc-400">360°</span>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 mt-1">
+                                    Zero falha mesmo em traços rasantes.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- RODAPÉ INTERATIVO DO GLOW BOX COM BOTÃO BEAM ANIMADO -->
+                        <div class="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-5 relative z-10">
+                            <div class="flex items-center gap-3 text-xs font-mono text-zinc-400">
+                                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span>TESTADO E HOMOLOGADO EM LABORATÓRIO SUÍÇO</span>
+                            </div>
+
+                            <!-- Botão com Shimmer Beam (Inspirado no Slide 3 de animations-gemini) -->
+                            <button
+                                type="button"
+                                onclick="scrollToBuy()"
+                                class="group/beam relative z-10 flex items-center justify-center overflow-hidden rounded-full p-[1px] leading-none transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-[0_0_25px_rgba(255,255,255,0.25)]"
+                            >
+                                <span class="absolute inset-[-1000%] animate-beam-spin bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)]"></span>
+                                <span class="relative flex h-full w-full items-center rounded-full bg-black py-3 px-6 sm:py-3.5 sm:px-7 ring-1 ring-white/20">
+                                    <span class="absolute inset-0 overflow-hidden rounded-full">
+                                        <span class="absolute top-0 left-0 h-full w-full -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover/beam:animate-[shimmer_1.5s_infinite] group-hover/beam:opacity-100"></span>
+                                    </span>
+                                    <span class="relative z-10 flex items-center gap-2">
+                                        <span class="text-xs sm:text-sm font-semibold tracking-wide text-white uppercase font-mono">Garantir a Sua Edição</span>
+                                        <iconify-icon icon="solar:arrow-right-bold" class="text-base text-zinc-300 group-hover/beam:translate-x-1 group-hover/beam:text-white transition-transform"></iconify-icon>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
              4. SEÇÃO DE EXPERIÊNCIA DE ESCRITA — FLASHLIGHT CARDS (SEÇÃO 04 DO ANEXO 02 & DS)
              ========================================================================= -->
         <section id="writing-experience" class="relative z-20 bg-[#f9f9f8] py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
@@ -2092,6 +2394,80 @@
             }
         }
 
+        function scrollToFourthFold() {
+            const fold4 = document.getElementById('quarta-dobra');
+            if (fold4) {
+                fold4.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        let asmrAudioCtx = null;
+        let asmrGain = null;
+
+        function toggleQuartaAudio() {
+            const video = document.getElementById('quarta-dobra-video');
+            const label = document.getElementById('video-sound-label');
+            const icon = document.getElementById('video-sound-icon');
+            const dot = document.getElementById('sound-live-dot');
+
+            // Inicializa áudio ASMR sintetizado do atrito da ponta de tungstênio sobre celulose
+            if (!asmrAudioCtx) {
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    asmrAudioCtx = new AudioContext();
+
+                    const bufferSize = asmrAudioCtx.sampleRate * 2;
+                    const noiseBuffer = asmrAudioCtx.createBuffer(1, bufferSize, asmrAudioCtx.sampleRate);
+                    const output = noiseBuffer.getChannelData(0);
+                    let b0 = 0, b1 = 0, b2 = 0;
+                    for (let i = 0; i < bufferSize; i++) {
+                        const white = Math.random() * 2 - 1;
+                        b0 = 0.99886 * b0 + white * 0.0555179;
+                        b1 = 0.99332 * b1 + white * 0.0750759;
+                        b2 = 0.96900 * b2 + white * 0.1538520;
+                        output[i] = (b0 + b1 + b2) * 0.08;
+                    }
+
+                    const noiseSource = asmrAudioCtx.createBufferSource();
+                    noiseSource.buffer = noiseBuffer;
+                    noiseSource.loop = true;
+
+                    const filter = asmrAudioCtx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.value = 2800;
+                    filter.Q.value = 1.4;
+
+                    asmrGain = asmrAudioCtx.createGain();
+                    asmrGain.gain.setValueAtTime(0, asmrAudioCtx.currentTime);
+
+                    noiseSource.connect(filter);
+                    filter.connect(asmrGain);
+                    asmrGain.connect(asmrAudioCtx.destination);
+                    noiseSource.start(0);
+                } catch (e) {
+                    console.warn('ASMR Audio Context error:', e);
+                }
+            }
+
+            if (asmrAudioCtx && asmrAudioCtx.state === 'suspended') {
+                asmrAudioCtx.resume();
+            }
+
+            const isMuted = !asmrGain || asmrGain.gain.value < 0.01;
+
+            if (isMuted && asmrGain) {
+                asmrGain.gain.linearRampToValueAtTime(0.045, asmrAudioCtx.currentTime + 0.3);
+                if (label) label.textContent = 'ASMR [32dB ATELIER]';
+                if (icon) icon.setAttribute('icon', 'solar:volume-loud-bold');
+                if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+            } else if (asmrGain) {
+                asmrGain.gain.linearRampToValueAtTime(0, asmrAudioCtx.currentTime + 0.2);
+                if (label) label.textContent = 'MUTED [0dB]';
+                if (icon) icon.setAttribute('icon', 'solar:muted-bold');
+                if (dot) dot.className = 'w-2 h-2 rounded-full bg-zinc-500 transition-colors';
+            }
+        }
+
         function handleEngravingInput(val) {
             const display = document.getElementById('live-engraved-text');
             const beam = document.getElementById('laser-engrave-beam');
@@ -2189,6 +2565,8 @@
         window.scrollToStage = scrollToStage;
         window.scrollToSecondFold = scrollToSecondFold;
         window.scrollToThirdFold = scrollToThirdFold;
+        window.scrollToFourthFold = scrollToFourthFold;
+        window.toggleQuartaAudio = toggleQuartaAudio;
         window.scrollToBuy = scrollToBuy;
         window.toggleMixBlend = toggleMixBlend;
         window.handleEngravingInput = handleEngravingInput;
@@ -2389,7 +2767,7 @@
                 });
             });
 
-            const flashlightCards = document.querySelectorAll('.flashlight-card');
+            const flashlightCards = document.querySelectorAll('.flashlight-card, .flashlight-glow-box');
             flashlightCards.forEach((card) => {
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
@@ -2397,6 +2775,22 @@
                     card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
                 });
             });
+
+            // Garante autoplay contínuo do vídeo de fundo da Quarta Dobra e sincronização do timecode
+            const quartaVideo = document.getElementById('quarta-dobra-video');
+            const timecodeEl = document.getElementById('video-timecode');
+            if (quartaVideo) {
+                quartaVideo.play().catch(() => {});
+                quartaVideo.addEventListener('timeupdate', () => {
+                    if (timecodeEl && quartaVideo.duration) {
+                        const cur = Math.floor(quartaVideo.currentTime);
+                        const dur = Math.floor(quartaVideo.duration);
+                        const curStr = cur < 10 ? `0${cur}` : `${cur}`;
+                        const durStr = dur < 10 ? `0${dur}` : `${dur}`;
+                        timecodeEl.textContent = `00:${curStr} / 00:${durStr}`;
+                    }
+                });
+            }
 
             /* ---------------------------------------------------------------------
                5. SEGUNDA DOBRA E SEÇÕES SUBSEQUENTES: SISTEMA DE REVELAÇÃO INFALÍVEL
