@@ -43,8 +43,7 @@ O projeto foi construído seguindo os mais rigorosos padrões da arquitetura e t
 
 ```
 artools/
-├── index.html                      # Ponto de entrada canônico de produção
-├── index-site.html                 # Cópia idêntica de compatibilidade
+├── index.html                      # Ponto de entrada canônico único de produção na raiz
 ├── robots.txt                      # Diretrizes de rastreamento para buscadores
 ├── sitemap.xml                     # Mapa do site indexável
 ├── vercel.json                     # Configuração otimizada para deploy na Vercel
@@ -53,13 +52,25 @@ artools/
 ├── .gitignore                      # Filtro profissional de arquivos de sistema e temporários
 ├── README.md                       # Documentação técnica do projeto
 └── assets/
-    ├── raw_files/                  # Vídeos 60fps e fotografias macro de alta resolução
-    │   ├── videoof.mp4             # Vídeo do Hero 3D Scrub
-    │   ├── video.mp4               # Vídeo da Quarta Dobra Cinematográfica
+    ├── css/                        # Folhas de estilo modularizadas
+    │   └── style.css               # Estilos globais, tokens, tipografia suíça e componentes
+    ├── js/                         # Lógica e animações interativas
+    │   └── main.js                 # Engine GSAP, ScrollTrigger, 3D rotator, Atelier e Web Audio
+    ├── images/                     # Fotografias macro e recursos visuais otimizados
+    │   ├── artools_tech_macro_enhanced.jpg # Fotografia macro 10x
     │   ├── pen_studio_showcase.jpg # Fotografia base para customização do Atelier
-    │   └── artools_tech_macro_enhanced.jpg # Fotografia macro 10x
+    │   ├── pen_real_macro.jpg
+    │   └── artools_tech_feature.png
+    ├── videos/                     # Vídeos 60fps em alta taxa de quadros
+    │   ├── videoof.mp4             # Vídeo do Hero 3D Scrub intra-frame
+    │   ├── videoof_smooth_opt.mp4  # Vídeo otimizado de scrub
+    │   └── video.mp4               # Vídeo da Quarta Dobra Cinematográfica
     └── templates/                  # Sistemas de design, componentes e bibliotecas
-        └── design_system_oficial1.html
+        ├── design_system_oficial1.html
+        ├── animations-gemini/
+        ├── animations-gemini2/
+        ├── digital-architect.aura.build/
+        └── overview/
 ```
 
 ---
