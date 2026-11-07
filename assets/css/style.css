@@ -1047,6 +1047,22 @@
             .magnetic-btn {
                 transform: none !important;
             }
+
+            /* Aceleração de hardware e toque no scrubber do celular */
+            #hero-scrub-track {
+                touch-action: none;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+        }
+
+        /* Camada acelerada por hardware para GPU móvel */
+        #pen-video {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         /* Suporte a Notch e Safe Areas Modernas (iPhone / iPad / Dynamic Island) */
