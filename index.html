@@ -751,7 +751,7 @@
             background: #10b981;
             box-shadow: 0 0 12px 3px #10b981, 0 0 20px 4px rgba(16, 185, 129, 0.4);
             opacity: 0;
-            pointer-events-none;
+            pointer-events: none;
             z-index: 10;
         }
 
@@ -770,7 +770,7 @@
             background: #ffffff;
             box-shadow: 0 0 10px 4px #10b981;
             opacity: 0;
-            pointer-events-none;
+            pointer-events: none;
             z-index: 11;
         }
 
@@ -795,6 +795,7 @@
             inset: 0;
             padding: 1px;
             border-radius: var(--border-radius-before, inherit);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;

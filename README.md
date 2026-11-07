@@ -96,3 +96,4 @@ O projeto está 100% pronto para deploy com 1 clique nas principais plataformas:
 - No repositório GitHub, acesse **Settings** > **Pages**.
 - Selecione a branch `main` e a pasta `/ (root)`.
 - Clique em **Save**. Seu site estará no ar em poucos segundos.
+
