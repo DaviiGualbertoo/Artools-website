@@ -1,4 +1,4 @@
-﻿        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
         }
 
@@ -435,6 +435,41 @@
                 if (icon) icon.setAttribute('icon', 'solar:muted-bold');
                 if (dot) dot.className = 'w-2 h-2 rounded-full bg-zinc-500 transition-colors';
             }
+            updateNavSoundUI();
+        }
+
+        function toggleNavSound() {
+            toggleQuartaAudio();
+        }
+
+        function updateNavSoundUI() {
+            const btn = document.getElementById('nav-sound-btn');
+            const label = document.getElementById('nav-sound-label');
+            const isPlaying = asmrGain && asmrGain.gain.value > 0.01;
+
+            if (btn) {
+                if (isPlaying) {
+                    btn.classList.add('sound-wave-active');
+                    if (label) label.textContent = 'SOUND';
+                } else {
+                    btn.classList.remove('sound-wave-active');
+                    if (label) label.textContent = 'SOUND';
+                }
+            }
+        }
+
+        function toggleMobileNav() {
+            const drawer = document.getElementById('mobile-nav-drawer');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!drawer) return;
+            const isOpen = drawer.classList.contains('open');
+            if (isOpen) {
+                drawer.classList.remove('open');
+                if (icon) icon.setAttribute('icon', 'solar:hamburger-menu-linear');
+            } else {
+                drawer.classList.add('open');
+                if (icon) icon.setAttribute('icon', 'solar:close-circle-linear');
+            }
         }
 
         const penFinishesData = {
@@ -648,6 +683,9 @@
         window.selectInkFormula = selectInkFormula;
         window.testDrySpeed = testDrySpeed;
         window.applyConfigurationAndScroll = applyConfigurationAndScroll;
+        window.toggleNavSound = toggleNavSound;
+        window.toggleMobileNav = toggleMobileNav;
+        window.updateNavScrollSpy = updateNavScrollSpy;
 
         document.addEventListener('DOMContentLoaded', () => {
             // Limpa memÃ³ria de scroll do ScrollTrigger e forÃ§a o topo absoluto
@@ -953,7 +991,58 @@
                 bar.style.width = `${pct}%`;
             }
         }
-        window.addEventListener('scroll', updateScrollProgressBar, { passive: true });
+
+        function updateNavScrollSpy() {
+            const dockItems = document.querySelectorAll('.nav-dock-item');
+            if (!dockItems.length) return;
+
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollRatio = docHeight > 0 ? scrollY / docHeight : 0;
+
+            const fold2 = document.getElementById('segunda-dobra');
+            const fold3 = document.getElementById('terceira-dobra');
+            const fold4 = document.getElementById('quarta-dobra');
+            const buySec = document.getElementById('comprar');
+
+            const f2Top = fold2 ? fold2.offsetTop - 220 : 999999;
+            const f3Top = fold3 ? fold3.offsetTop - 220 : 999999;
+            const f4Top = fold4 ? fold4.offsetTop - 220 : 999999;
+            const buyTop = buySec ? buySec.offsetTop - 220 : 999999;
+
+            let activeTarget = 'hero';
+
+            if (scrollY >= buyTop || scrollRatio > 0.88) {
+                activeTarget = 'specs';
+            } else if (scrollY >= f4Top) {
+                activeTarget = 'cinema';
+            } else if (scrollY >= f3Top) {
+                activeTarget = 'atelier';
+            } else if (scrollY >= f2Top) {
+                activeTarget = 'engenharia';
+            } else if (masterScrollTrigger && masterScrollTrigger.progress > 0.28) {
+                activeTarget = 'giro';
+            } else {
+                activeTarget = 'hero';
+            }
+
+            dockItems.forEach(btn => {
+                if (btn.getAttribute('data-nav-target') === activeTarget) {
+                    btn.classList.add('active');
+                    btn.classList.remove('text-zinc-400');
+                    btn.classList.add('text-white');
+                } else {
+                    btn.classList.remove('active');
+                    btn.classList.remove('text-white');
+                    btn.classList.add('text-zinc-400');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            updateScrollProgressBar();
+            updateNavScrollSpy();
+        }, { passive: true });
 
         function updateDualClocks() {
             try {

@@ -94,57 +94,101 @@
     </div>
 
     <!-- =========================================================================
-         1. HEADER MINIMALISTA FIXO (Fiel à Referência da Artools.Pro + Design System)
+         1. HEADER ESTÉTICO & FLUTUANTE (REF: AURAL DOCK + DESIGN SYSTEM OFICIAL)
          ========================================================================= -->
-    <header id="navbar" class="fixed top-0 left-0 w-full z-50 glass-header">
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-3.5 md:py-4 px-4 sm:px-8 lg:px-12 pointer-events-none">
         <!-- BARRA DE PROGRESSO DE ROLAGEM GLOBAL -->
-        <div id="header-scroll-progress"></div>
+        <div id="header-scroll-progress" class="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-emerald-500 via-zinc-400 to-black z-50 transition-all pointer-events-none"></div>
 
-        <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 h-16 md:h-[72px] flex items-center justify-between">
+        <div class="max-w-[1440px] mx-auto flex items-center justify-between pointer-events-auto">
 
-            <!-- Logo ARTOOLS.PRO -->
-            <button type="button" onclick="scrollToStage(0)" class="shrink-0 flex items-center gap-2.5 group cursor-pointer border-none bg-transparent text-left p-0">
-                <div class="w-8 h-8 bg-[#18181b] text-white rounded-lg flex items-center justify-center shadow-sm group-hover:rotate-90 transition-transform duration-500">
-                    <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-lg"></iconify-icon>
+            <!-- 1. BRAND LOGO (MINIMALISTA COM EXPANSÃO DE TRACKING NO HOVER) -->
+            <button type="button" onclick="scrollToStage(0)" class="shrink-0 flex items-center gap-2.5 group cursor-pointer border-none bg-transparent text-left p-0" aria-label="ARTOOLS.PRO Início">
+                <div class="w-8 h-8 rounded-full bg-zinc-900/90 text-white flex items-center justify-center border border-white/10 shadow-md group-hover:scale-105 group-hover:rotate-90 transition-all duration-500">
+                    <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-sm text-emerald-400"></iconify-icon>
                 </div>
-                <span class="font-sans font-bold tracking-tight text-sm md:text-[15px] text-[#18181b]">
-                    ARTOOLS<span class="font-normal text-[#a1a1aa]">.PRO</span>
+                <span class="font-sans font-bold text-sm md:text-[15px] tracking-[0.24em] uppercase text-zinc-900 group-hover:tracking-[0.32em] transition-all duration-500">
+                    ARTOOLS<span class="text-zinc-400 font-light text-xs tracking-normal">.PRO</span>
                 </span>
             </button>
 
-            <!-- Links de Navegação que levam aos estágios de Parallax e às Dobras -->
-            <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-[11px] font-mono uppercase tracking-[0.18em] text-[#71717a] px-4" aria-label="Navegação Principal">
-                <button type="button" onclick="scrollToStage(0)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">01. Hero</button>
-                <button type="button" onclick="scrollToStage(0.48)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">02. Giro 3D</button>
-                <button type="button" onclick="scrollToSecondFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">03. Engenharia</button>
-                <button type="button" onclick="scrollToThirdFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">04. Atelier</button>
-                <button type="button" onclick="scrollToFourthFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase text-black font-semibold">05. Cinema</button>
-                <button type="button" onclick="scrollToBuy()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">06. Reservar</button>
+            <!-- 2. CAPSULE DOCK NAV CENTRAL (EXACT AURAL CAPSULE STYLE) -->
+            <nav class="hidden md:flex items-center gap-1 bg-zinc-900/90 text-zinc-300 backdrop-blur-xl border border-white/10 rounded-full px-2 py-1.5 shadow-[0_12px_32px_-4px_rgba(0,0,0,0.35)]" aria-label="Navegação Principal">
+                <button type="button" onclick="scrollToStage(0)" data-nav-target="hero" class="nav-dock-item active px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-white cursor-pointer">Design</button>
+                <button type="button" onclick="scrollToStage(0.48)" data-nav-target="giro" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Giro 3D</button>
+                <button type="button" onclick="scrollToSecondFold()" data-nav-target="engenharia" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Engenharia</button>
+                <button type="button" onclick="scrollToThirdFold()" data-nav-target="atelier" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Atelier</button>
+                <button type="button" onclick="scrollToFourthFold()" data-nav-target="cinema" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Cinema</button>
+                <button type="button" onclick="scrollToBuy()" data-nav-target="specs" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Specs</button>
             </nav>
 
-            <!-- Status de Otimização 60fps + Relógio Zurique + Mix-Blend + Sacola -->
-            <div class="shrink-0 flex items-center gap-3 sm:gap-4">
-                <div id="zurich-clock-badge" class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-[10px] font-mono text-zinc-600">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span class="text-zinc-400">ZRH:</span>
-                    <span id="zurich-live-clock" class="font-bold text-zinc-900">--:--:--</span>
-                </div>
-
-                <div id="fps-badge" class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-[10px] font-mono text-zinc-600">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span>60FPS INTRA-KEYFRAME</span>
-                </div>
-
-                <button type="button" onclick="toggleMixBlend()" class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-200 bg-white text-[10px] font-mono uppercase tracking-wider text-zinc-700 hover:border-black transition-colors cursor-pointer">
-                    <iconify-icon icon="solar:Contrast-bold-duotone" class="text-xs"></iconify-icon>
-                    <span>Mix-Blend</span>
+            <!-- 3. CLUSTER DA DIREITA (SOUND EQUALIZER + RESERVAR BEAM BUTTON + MOBILE TRIGGER) -->
+            <div class="shrink-0 flex items-center gap-2.5 sm:gap-3">
+                <!-- Sound Equalizer Pill (Ref: .... SOUND) -->
+                <button id="nav-sound-btn" type="button" onclick="toggleNavSound()" class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 text-zinc-300 hover:text-white border border-white/10 backdrop-blur-xl text-[11px] font-mono tracking-widest uppercase transition-all duration-300 shadow-md hover:scale-[1.03] active:scale-[0.98] cursor-pointer group" aria-label="Alternar Som ASMR">
+                    <span class="flex items-end gap-[3px] h-3 py-[1px]">
+                        <span class="sound-wave-bar w-[2px] h-1.5 bg-zinc-400 rounded-full transition-all"></span>
+                        <span class="sound-wave-bar w-[2px] h-3 bg-zinc-400 rounded-full transition-all"></span>
+                        <span class="sound-wave-bar w-[2px] h-2 bg-zinc-400 rounded-full transition-all"></span>
+                        <span class="sound-wave-bar w-[2px] h-2.5 bg-zinc-400 rounded-full transition-all"></span>
+                    </span>
+                    <span id="nav-sound-label" class="font-medium text-[11px] tracking-widest">SOUND</span>
                 </button>
 
-                <button type="button" onclick="scrollToBuy()" class="text-[#18181b] hover:text-[#71717a] transition-colors flex items-center justify-center cursor-pointer bg-transparent border-none p-0" aria-label="Comprar">
-                    <iconify-icon icon="solar:bag-linear" class="text-[20px]"></iconify-icon>
+                <!-- CTA Button (Ref: Register Interest with arrow + Design System Conic Beam) -->
+                <button type="button" onclick="scrollToBuy()" class="btn-beam-wrapper group" aria-label="Reservar Caneta">
+                    <span class="btn-beam-border"></span>
+                    <span class="btn-beam-inner !bg-white hover:!bg-zinc-100 !text-zinc-950 !py-1 !pl-4 !pr-1.5 !rounded-full flex items-center gap-2.5 shadow-md">
+                        <span class="font-sans font-medium text-[12px] tracking-tight">Reservar</span>
+                        <span class="w-6 h-6 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 group-hover:bg-black transition-all">
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-xs"></iconify-icon>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <button type="button" onclick="toggleMobileNav()" class="md:hidden w-9 h-9 rounded-full bg-zinc-900/90 text-white flex items-center justify-center border border-white/10 backdrop-blur-xl shadow-md cursor-pointer hover:scale-105 active:scale-95 transition-transform" aria-label="Menu de Navegação">
+                    <iconify-icon id="mobile-menu-icon" icon="solar:hamburger-menu-linear" class="text-base"></iconify-icon>
                 </button>
             </div>
 
+        </div>
+
+        <!-- MOBILE NAV DRAWER (Glassmorphism dropdown) -->
+        <div id="mobile-nav-drawer" class="max-w-[420px] mx-auto mt-3 md:hidden bg-zinc-900/95 backdrop-blur-2xl border border-white/15 rounded-3xl p-5 shadow-2xl transition-all duration-300 -translate-y-4 opacity-0 pointer-events-none">
+            <div class="flex flex-col gap-2 font-sans text-xs">
+                <button type="button" onclick="scrollToStage(0); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl text-zinc-200 hover:bg-white/10 transition-colors text-left cursor-pointer">
+                    <span class="font-medium tracking-wide">01. Design</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500"></iconify-icon>
+                </button>
+                <button type="button" onclick="scrollToStage(0.48); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl text-zinc-200 hover:bg-white/10 transition-colors text-left cursor-pointer">
+                    <span class="font-medium tracking-wide">02. Giro 3D</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500"></iconify-icon>
+                </button>
+                <button type="button" onclick="scrollToSecondFold(); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl text-zinc-200 hover:bg-white/10 transition-colors text-left cursor-pointer">
+                    <span class="font-medium tracking-wide">03. Engenharia Suíça</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500"></iconify-icon>
+                </button>
+                <button type="button" onclick="scrollToThirdFold(); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl text-zinc-200 hover:bg-white/10 transition-colors text-left cursor-pointer">
+                    <span class="font-medium tracking-wide">04. Atelier & Laser</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500"></iconify-icon>
+                </button>
+                <button type="button" onclick="scrollToFourthFold(); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl text-zinc-200 hover:bg-white/10 transition-colors text-left cursor-pointer">
+                    <span class="font-medium tracking-wide">05. Cinemática Zero Resistência</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500"></iconify-icon>
+                </button>
+                <button type="button" onclick="scrollToBuy(); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl text-zinc-200 hover:bg-white/10 transition-colors text-left cursor-pointer">
+                    <span class="font-medium tracking-wide">06. Especificações & Compra</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500"></iconify-icon>
+                </button>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>60FPS INTRA-KEYFRAME</span>
+                </span>
+                <span id="zurich-live-clock" class="text-zinc-300 font-bold">--:--:-- CET</span>
+            </div>
         </div>
     </header>
 

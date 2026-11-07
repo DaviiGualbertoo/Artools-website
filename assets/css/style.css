@@ -1,4 +1,4 @@
-﻿        /* =========================================================================
+        /* =========================================================================
            1. TOKENS & VARIÃVEIS HERDADAS DE design_system_oficial1.html
            ========================================================================= */
         :root {
@@ -153,6 +153,56 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* =========================================================================
+           FLOATING PILL CAPSULE DOCK & SOUNDWAVE (REF: AURAL DOCK & SWISS DS)
+           ========================================================================= */
+        .nav-dock-item {
+            position: relative;
+            white-space: nowrap;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-dock-item.active {
+            background: rgba(255, 255, 255, 0.18) !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Soundwave Equalizer Bars (Aural Reference) */
+        @keyframes soundWavePulse {
+            0%, 100% { height: 3.5px; opacity: 0.6; }
+            50% { height: 13px; opacity: 1; }
+        }
+
+        .sound-wave-active .sound-wave-bar {
+            background-color: #10b981 !important;
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+        }
+
+        .sound-wave-active .sound-wave-bar:nth-child(1) {
+            animation: soundWavePulse 0.75s ease-in-out infinite;
+        }
+
+        .sound-wave-active .sound-wave-bar:nth-child(2) {
+            animation: soundWavePulse 0.9s ease-in-out infinite 0.15s;
+        }
+
+        .sound-wave-active .sound-wave-bar:nth-child(3) {
+            animation: soundWavePulse 0.65s ease-in-out infinite 0.3s;
+        }
+
+        .sound-wave-active .sound-wave-bar:nth-child(4) {
+            animation: soundWavePulse 1.05s ease-in-out infinite 0.1s;
+        }
+
+        /* Mobile Drawer State */
+        #mobile-nav-drawer.open {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            pointer-events: auto !important;
         }
 
         /* BotÃ£o PrimÃ¡rio com Feixe CÃ´nico GiratÃ³rio (DS5 .btn-beam-wrapper) */
