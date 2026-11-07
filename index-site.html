@@ -848,6 +848,86 @@
             -webkit-text-stroke: 1.5px #ffffff;
         }
 
+        /* =========================================================================
+           7. TEXTURA TÁTIL & GRADE ARQUITETÔNICA GLOBAL (SWISS MONOLITHIC DS)
+           ========================================================================= */
+        .bg-noise-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.026;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
+        }
+
+        .grid-guide {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+            display: flex;
+            justify-content: space-between;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .grid-line {
+            width: 1px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.035);
+        }
+
+        /* Régua Milimétrica Arquitetônica */
+        .swiss-ruler {
+            width: 100%;
+            height: 18px;
+            background-image: repeating-linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.22) 0,
+                rgba(0, 0, 0, 0.22) 1px,
+                transparent 1px,
+                transparent 12px
+            );
+            position: relative;
+        }
+
+        /* Shimmer Sweep nos Botões Primários */
+        .btn-beam-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.75s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .btn-beam-wrapper:hover::after {
+            left: 150%;
+        }
+
+        /* Reading Progress Bar */
+        #header-scroll-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #10b981 0%, #18181b 100%);
+            width: 0%;
+            transition: width 0.08s ease-out;
+            pointer-events: none;
+            z-index: 60;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #ecece8; }
@@ -858,14 +938,29 @@
 
 <body class="selection:bg-black selection:text-white antialiased">
 
+    <!-- TEXTURA TÁTIL GLOBAL (MICRO-RUÍDO ORGÂNICO DE LUXO / ACABAMENTO ACETINADO) -->
+    <div class="bg-noise-overlay" aria-hidden="true"></div>
+
+    <!-- GRADE ARQUITETÔNICA GUIA SUÍÇA (5 LINHAS VERTICAIS DE ALINHAMENTO MILIMÉTRICO) -->
+    <div class="grid-guide" aria-hidden="true">
+        <div class="grid-line"></div>
+        <div class="grid-line hidden md:block"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line hidden md:block"></div>
+        <div class="grid-line"></div>
+    </div>
+
     <!-- =========================================================================
          1. HEADER MINIMALISTA FIXO (Fiel à Referência da Artools.Pro + Design System)
          ========================================================================= -->
     <header id="navbar" class="fixed top-0 left-0 w-full z-50 glass-header">
+        <!-- BARRA DE PROGRESSO DE ROLAGEM GLOBAL -->
+        <div id="header-scroll-progress"></div>
+
         <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 h-16 md:h-[72px] flex items-center justify-between">
 
             <!-- Logo ARTOOLS.PRO -->
-            <button type="button" onclick="scrollToStage(0)" class="flex items-center gap-2.5 group cursor-pointer border-none bg-transparent text-left p-0">
+            <button type="button" onclick="scrollToStage(0)" class="shrink-0 flex items-center gap-2.5 group cursor-pointer border-none bg-transparent text-left p-0">
                 <div class="w-8 h-8 bg-[#18181b] text-white rounded-lg flex items-center justify-center shadow-sm group-hover:rotate-90 transition-transform duration-500">
                     <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-lg"></iconify-icon>
                 </div>
@@ -875,7 +970,7 @@
             </button>
 
             <!-- Links de Navegação que levam aos estágios de Parallax e às Dobras -->
-            <nav class="hidden md:flex items-center gap-7 text-[11px] font-mono uppercase tracking-[0.2em] text-[#71717a]" aria-label="Navegação Principal">
+            <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-[11px] font-mono uppercase tracking-[0.18em] text-[#71717a] px-4" aria-label="Navegação Principal">
                 <button type="button" onclick="scrollToStage(0)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">01. Hero</button>
                 <button type="button" onclick="scrollToStage(0.48)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">02. Giro 3D</button>
                 <button type="button" onclick="scrollToSecondFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">03. Engenharia</button>
@@ -884,8 +979,14 @@
                 <button type="button" onclick="scrollToBuy()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">06. Reservar</button>
             </nav>
 
-            <!-- Status de Otimização 60fps + Mix-Blend + Sacola -->
-            <div class="flex items-center gap-4">
+            <!-- Status de Otimização 60fps + Relógio Zurique + Mix-Blend + Sacola -->
+            <div class="shrink-0 flex items-center gap-3 sm:gap-4">
+                <div id="zurich-clock-badge" class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-[10px] font-mono text-zinc-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span class="text-zinc-400">ZRH:</span>
+                    <span id="zurich-live-clock" class="font-bold text-zinc-900">--:--:--</span>
+                </div>
+
                 <div id="fps-badge" class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-[10px] font-mono text-zinc-600">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     <span>60FPS INTRA-KEYFRAME</span>
@@ -1122,10 +1223,17 @@
 
         </section>
 
+        <!-- RÉGUA MILIMÉTRICA ARQUITETÔNICA (CALIBRAÇÃO PRECISA DE design_system_oficial1.html) -->
+        <div class="relative z-30 bg-[#fafaf9] border-t border-zinc-200/90 px-6 py-2 overflow-hidden flex items-center justify-between font-mono text-[9px] text-zinc-400 select-none">
+            <span>+ 00.00mm [BASE]</span>
+            <div class="swiss-ruler mx-4 opacity-40"></div>
+            <span>+ 140.00mm [CHASSI COMPLETO]</span>
+        </div>
+
         <!-- =========================================================================
              FAIXA DIVISÓRIA: MARQUEE ARQUITETÔNICO (Herdado de design_system_oficial1.html)
              ========================================================================= -->
-        <div class="relative z-30 border-y border-zinc-200/90 bg-white py-5 overflow-hidden select-none">
+        <div class="relative z-30 border-y border-zinc-200/90 bg-[#fafaf9] py-5 overflow-hidden select-none">
             <div class="marquee-track items-center">
                 <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">ALUMÍNIO AEROESPACIAL 7075-T6</span>
                 <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-[#18181b]">ENGENHARIA SUÍÇA SUB-MÍCRON</span>
@@ -1145,7 +1253,7 @@
              - Coluna Direita 5 Colunas com Lista Vertical Interativa (01 a 04)
              - Prancheta Interativa de Traço ao Vivo (Live Canvas Scratchpad)
              ========================================================================= -->
-        <section id="segunda-dobra" class="relative z-30 bg-stone-50/95 py-24 md:py-32 overflow-hidden border-b border-zinc-200/90 selection:bg-black selection:text-white">
+        <section id="segunda-dobra" class="relative z-30 bg-[#fafaf9] py-24 md:py-32 overflow-hidden border-b border-zinc-200/90 selection:bg-black selection:text-white">
 
             <!-- Fundo Arquitetônico com Grade Sutil e Ruído (.bg-grid de design_system_oficial1.html) -->
             <div class="absolute inset-0 pointer-events-none bg-grid-architectural opacity-50"
@@ -1407,6 +1515,13 @@
             </div>
         </section>
 
+        <!-- DIVISOR MILIMÉTRICO ENTRE ENGENHARIA E ATELIER (SWISS ACCREDITED) -->
+        <div class="relative z-30 bg-[#fafaf9] border-t border-zinc-200/90 px-6 py-2 overflow-hidden flex items-center justify-between font-mono text-[9px] text-zinc-400 select-none">
+            <span>+ 0.100mm CALIBRAÇÃO</span>
+            <div class="swiss-ruler mx-4 opacity-40"></div>
+            <span>ZURICH ACCREDITED // ISO 14145-2</span>
+        </div>
+
         <!-- =========================================================================
              3. TERCEIRA DOBRA — ATELIER & LABORATÓRIO DE CALIBRAÇÃO (CUSTOMIZAÇÃO & BENCHMARK)
              - Baseado no Design System Oficial (DS5 + DS2 + DS7 + DS11)
@@ -1415,7 +1530,7 @@
              - Bento Grid de Benchmarks Científicos (0.04s Secagem, 14.5km, 572 MPa, 100 Anos)
              - Marquee Contínuo de Certificações Internacionais (Zurich / ISO 14145-2)
              ========================================================================= -->
-        <section id="terceira-dobra" class="relative z-30 bg-white py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
+        <section id="terceira-dobra" class="relative z-30 bg-[#fafaf9] py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
 
             <!-- Fundo Arquitetônico com Grade Sutil do Design System -->
             <div class="absolute inset-0 pointer-events-none bg-grid-architectural opacity-40"
@@ -1696,9 +1811,9 @@
                         <div class="flashlight-card p-7 group">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-500">
-                                    <iconify-icon icon="solar:pen-new-round-bold-duotone" class="text-2xl text-blue-500"></iconify-icon>
+                                    <iconify-icon icon="solar:pen-new-round-bold-duotone" class="text-2xl text-zinc-900 group-hover:text-white transition-colors"></iconify-icon>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-mono uppercase font-bold tracking-wider">
+                                <span class="px-2.5 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-800 text-[10px] font-mono uppercase font-bold tracking-wider">
                                     Capilaridade Assistida
                                 </span>
                             </div>
@@ -1718,7 +1833,7 @@
                             <!-- Benchmark 03: 572 MPa Resistência Torsional -->
                             <div class="flashlight-card p-6 group">
                                 <div class="flex items-center justify-between mb-3">
-                                    <iconify-icon icon="solar:shield-star-bold-duotone" class="text-xl text-zinc-800"></iconify-icon>
+                                    <iconify-icon icon="solar:shield-star-bold-duotone" class="text-xl text-zinc-800 group-hover:text-black"></iconify-icon>
                                     <span class="text-[10px] font-mono text-zinc-400">7075-T6</span>
                                 </div>
                                 <div class="text-2xl font-black text-black font-sans">572 MPa</div>
@@ -1731,8 +1846,8 @@
                             <!-- Benchmark 04: 100+ Anos Longevidade Arquival -->
                             <div class="flashlight-card p-6 group">
                                 <div class="flex items-center justify-between mb-3">
-                                    <iconify-icon icon="solar:dropper-minimalistic-2-bold-duotone" class="text-xl text-purple-600"></iconify-icon>
-                                    <span class="text-[10px] font-mono text-emerald-600">ISO 14145</span>
+                                    <iconify-icon icon="solar:dropper-minimalistic-2-bold-duotone" class="text-xl text-zinc-800 group-hover:text-black"></iconify-icon>
+                                    <span class="text-[10px] font-mono text-emerald-600 font-bold">ISO 14145-2</span>
                                 </div>
                                 <div class="text-2xl font-black text-black font-sans">100+ Anos</div>
                                 <h4 class="text-xs font-bold text-zinc-800 mt-1">Longevidade Arquival</h4>
@@ -1938,9 +2053,9 @@
                             <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-300 group/metric">
                                 <div class="flex items-center justify-between text-zinc-500 mb-2">
                                     <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Latência de Início</span>
-                                    <iconify-icon icon="solar:bolt-bold-duotone" class="text-yellow-400 text-base"></iconify-icon>
+                                    <iconify-icon icon="solar:bolt-bold-duotone" class="text-emerald-400 text-base"></iconify-icon>
                                 </div>
-                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-yellow-400 transition-colors">
+                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-emerald-400 transition-colors">
                                     &lt; 0.001 <span class="text-xs font-mono font-normal text-zinc-400">s</span>
                                 </div>
                                 <p class="text-[11px] text-zinc-400 mt-1">
@@ -1952,9 +2067,9 @@
                             <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-300 group/metric">
                                 <div class="flex items-center justify-between text-zinc-500 mb-2">
                                     <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Ângulo Operacional</span>
-                                    <iconify-icon icon="solar:compass-bold-duotone" class="text-cyan-400 text-base"></iconify-icon>
+                                    <iconify-icon icon="solar:compass-bold-duotone" class="text-emerald-400 text-base"></iconify-icon>
                                 </div>
-                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-cyan-400 transition-colors">
+                                <div class="text-3xl font-black font-sans text-white tracking-tight group-hover/metric:text-emerald-400 transition-colors">
                                     15° a 90° <span class="text-xs font-mono font-normal text-zinc-400">360°</span>
                                 </div>
                                 <p class="text-[11px] text-zinc-400 mt-1">
@@ -1999,7 +2114,7 @@
         <!-- =========================================================================
              4. SEÇÃO DE EXPERIÊNCIA DE ESCRITA — FLASHLIGHT CARDS (SEÇÃO 04 DO ANEXO 02 & DS)
              ========================================================================= -->
-        <section id="writing-experience" class="relative z-20 bg-[#f9f9f8] py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
+        <section id="writing-experience" class="relative z-20 bg-[#fafaf9] py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
             <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
 
                 <div class="text-center mb-20 reveal-up">
@@ -2068,7 +2183,7 @@
         <!-- =========================================================================
              4. CINEMATIC SHOWCASE COM GLOW BEAM CARD (SEÇÃO 04 DO ANEXO 02 & DESIGN SYSTEM)
              ========================================================================= -->
-        <section id="comprar" class="relative z-30 py-28 md:py-36 bg-[#09090b] text-white overflow-hidden flex items-center justify-center">
+        <section id="comprar" class="relative z-30 py-28 md:py-36 bg-[#060608] text-white overflow-hidden flex items-center justify-center">
 
             <!-- Fundo com Aura Luminosa Difusa -->
             <div class="absolute inset-0 bg-radial-gradient pointer-events-none opacity-40">
@@ -2117,6 +2232,154 @@
             </div>
         </section>
     </main>
+
+    <!-- =========================================================================
+         5. FOOTER MONOLÍTICO DE LUXO (PADRÃO INTERNACIONAL SWISS ARCHITECTURE)
+         - Grid Editorial 4 Colunas com Tipografia Monumental
+         - Consulta de Autenticidade e Validador de Número de Série em Tempo Real
+         - Relógios de Fuso Horário Duplo (Zurique CET & São Paulo BRT)
+         - Selos de Homologação ISO 14145-2 & Alumínio 7075-T6
+         - Botão Magnético de Retorno ao Topo
+         ========================================================================= -->
+    <footer id="site-footer" class="relative z-30 bg-[#040405] text-white border-t border-white/10 overflow-hidden select-none">
+        
+        <!-- Marca d'Água Monumental de Fundo -->
+        <div class="absolute bottom-0 right-0 pointer-events-none select-none opacity-[0.025] z-0 overflow-hidden leading-none">
+            <span class="font-sans font-black text-[22vw] text-white tracking-tighter">ARTOOLS</span>
+        </div>
+
+        <!-- Grade Guia Sutil no Footer -->
+        <div class="absolute inset-0 bg-grid-architectural opacity-5 pointer-events-none" style="filter: invert(1);"></div>
+
+        <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 py-20 lg:py-24 relative z-10">
+
+            <!-- LINHA 1: GRID 4 COLUNAS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-14 pb-16 border-b border-white/10">
+
+                <!-- Coluna 1 (4 Cols): Marca & Manifesto Monolítico -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-bold">
+                            <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-lg"></iconify-icon>
+                        </div>
+                        <span class="font-sans font-black tracking-tight text-lg text-white">
+                            ARTOOLS<span class="font-normal text-zinc-400">.PRO</span>
+                        </span>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed font-light max-w-sm">
+                        O ápice da engenharia mecânica suíça aplicado à escrita. Projetada com precisão sub-mícron em bloco maciço de Alumínio 7075-T6 e tinta de nanopartículas com secagem em 0.04s.
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-zinc-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>LOTE 01 DISPONÍVEL • 500 UNIDADES</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Coluna 2 (2 Cols): Navegação Arquitetônica -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="font-mono text-xs uppercase tracking-[0.2em] text-zinc-400 font-bold">Navegação</div>
+                    <ul class="space-y-2.5 text-xs font-mono text-zinc-400">
+                        <li><button type="button" onclick="scrollToStage(0)" class="hover:text-white transition-colors cursor-pointer">01 // Hero 3D</button></li>
+                        <li><button type="button" onclick="scrollToStage(0.48)" class="hover:text-white transition-colors cursor-pointer">02 // Giro 360°</button></li>
+                        <li><button type="button" onclick="scrollToSecondFold()" class="hover:text-white transition-colors cursor-pointer">03 // Engenharia</button></li>
+                        <li><button type="button" onclick="scrollToThirdFold()" class="hover:text-white transition-colors cursor-pointer">04 // Atelier Custom</button></li>
+                        <li><button type="button" onclick="scrollToFourthFold()" class="hover:text-white transition-colors cursor-pointer">05 // Cinema 60FPS</button></li>
+                        <li><button type="button" onclick="scrollToBuy()" class="hover:text-white transition-colors cursor-pointer">06 // Reservar</button></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3 (3 Cols): Especificações Técnicas -->
+                <div class="lg:col-span-3 space-y-4">
+                    <div class="font-mono text-xs uppercase tracking-[0.2em] text-zinc-400 font-bold">Especificações</div>
+                    <ul class="space-y-2.5 text-xs font-mono text-zinc-400">
+                        <li class="flex items-center justify-between border-b border-white/5 pb-1">
+                            <span>Chassi:</span>
+                            <span class="text-white font-medium">Alumínio 7075-T6</span>
+                        </li>
+                        <li class="flex items-center justify-between border-b border-white/5 pb-1">
+                            <span>Calibres:</span>
+                            <span class="text-white font-medium">0.10 | 0.30 | 0.50mm</span>
+                        </li>
+                        <li class="flex items-center justify-between border-b border-white/5 pb-1">
+                            <span>Autonomia:</span>
+                            <span class="text-white font-medium">14.500 metros</span>
+                        </li>
+                        <li class="flex items-center justify-between border-b border-white/5 pb-1">
+                            <span>Secagem:</span>
+                            <span class="text-emerald-400 font-semibold">0.04 segundos</span>
+                        </li>
+                        <li class="flex items-center justify-between border-b border-white/5 pb-1">
+                            <span>Norma:</span>
+                            <span class="text-white font-medium">ISO 14145-2</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 4 (3 Cols): Consulta de Autenticidade de Série -->
+                <div class="lg:col-span-3 space-y-4">
+                    <div class="font-mono text-xs uppercase tracking-[0.2em] text-zinc-400 font-bold">Validar Autenticidade</div>
+                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                        Consulte o registro do seu instrumento gravado a laser no laboratório:
+                    </p>
+                    <div class="space-y-2">
+                        <div class="relative">
+                            <input
+                                id="footer-serial-input"
+                                type="text"
+                                placeholder="Ex: GUALBERTO ou SN-0142"
+                                class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-400 transition-colors uppercase"
+                                oninput="validateSerialNumber(this.value)"
+                            />
+                            <div class="absolute right-2.5 top-1/2 -translate-y-1/2">
+                                <iconify-icon icon="solar:check-circle-bold" id="serial-status-icon" class="text-zinc-500 text-sm"></iconify-icon>
+                            </div>
+                        </div>
+                        <div id="serial-validation-msg" class="text-[10px] font-mono text-zinc-500">
+                            * Digite para consultar a autenticidade da série
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- LINHA 2: BARRA DE TELEMETRIA, FUSOS HORÁRIOS & RETORNO AO TOPO -->
+            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-zinc-500">
+
+                <!-- Fusos Horários em Tempo Real -->
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>ZRH: <strong id="clock-zurich-footer" class="text-zinc-300 font-bold">--:--:--</strong> CET</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-zinc-600"></span>
+                        <span>SP: <strong id="clock-sp-footer" class="text-zinc-300 font-bold">--:--:--</strong> BRT</span>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="text-center">
+                    <span>© 2026 ARTOOLS.PRO — PRECISION WRITING INSTRUMENTS.</span>
+                </div>
+
+                <!-- Botão Retornar ao Topo -->
+                <button
+                    type="button"
+                    onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                    class="magnetic-btn flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white transition-all cursor-pointer text-xs"
+                >
+                    <span>Voltar ao Topo</span>
+                    <iconify-icon icon="solar:arrow-up-linear" class="text-sm"></iconify-icon>
+                </button>
+
+            </div>
+
+        </div>
+    </footer>
 
     <!-- =========================================================================
          4. ENGINE JAVASCRIPT DE ALTA PERFORMANCE (60FPS INTRA-FRAME SCRUB + PARALLAX APPLE)
@@ -2279,8 +2542,40 @@
         };
 
         // =========================================================================
-        // 4.2 PRANCHETA VIRTUAL DE TESTE DE TRAÇO 0.1MM (CANVAS SCRATCHPAD)
+        // 4.2 PRANCHETA VIRTUAL DE TESTE DE TRAÇO 0.1MM (CANVAS SCRATCHPAD) & ÁUDIO ASMR
         // =========================================================================
+        function playPenStrokeSound(intensity = 0.5) {
+            try {
+                if (!asmrAudioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    asmrAudioCtx = new AudioContext();
+                }
+                if (asmrAudioCtx.state === 'suspended') {
+                    asmrAudioCtx.resume();
+                }
+                const dur = 0.05 + Math.random() * 0.03;
+                const bufferSize = Math.floor(asmrAudioCtx.sampleRate * dur);
+                const buffer = asmrAudioCtx.createBuffer(1, bufferSize, asmrAudioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35));
+                }
+                const noise = asmrAudioCtx.createBufferSource();
+                noise.buffer = buffer;
+                const filter = asmrAudioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 2800 + Math.random() * 600;
+                filter.Q.value = 2.5;
+                const gain = asmrAudioCtx.createGain();
+                gain.gain.value = 0.028 * intensity;
+                gain.gain.exponentialRampToValueAtTime(0.0001, asmrAudioCtx.currentTime + dur);
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(asmrAudioCtx.destination);
+                noise.start();
+            } catch (e) {}
+        }
+
         let padCanvas = null;
         let padCtx = null;
         let padDrawing = false;
@@ -2343,6 +2638,10 @@
                 const dy = pos.y - padLastY;
                 const stepPx = Math.sqrt(dx * dx + dy * dy);
                 padTotalDist += (stepPx / 37.8);
+
+                if (stepPx > 3) {
+                    playPenStrokeSound(Math.min(stepPx / 14, 1));
+                }
 
                 const counter = document.getElementById('pad-dist-counter');
                 if (counter) counter.textContent = `${padTotalDist.toFixed(1)} cm`;
@@ -3028,6 +3327,73 @@
                 });
             }, 600);
         });
+
+        // =========================================================================
+        // 6. MICRO-INTERAÇÕES: BARRA DE LEITURA, FUSO HORÁRIO DUPLO & VALIDADOR
+        // =========================================================================
+        function updateScrollProgressBar() {
+            const bar = document.getElementById('header-scroll-progress');
+            if (!bar) return;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollTotal > 0) {
+                const pct = Math.min(Math.max((window.scrollY / scrollTotal) * 100, 0), 100);
+                bar.style.width = `${pct}%`;
+            }
+        }
+        window.addEventListener('scroll', updateScrollProgressBar, { passive: true });
+
+        function updateDualClocks() {
+            try {
+                const now = new Date();
+                const zrhFormatter = new Intl.DateTimeFormat('pt-BR', {
+                    timeZone: 'Europe/Zurich',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+                });
+                const spFormatter = new Intl.DateTimeFormat('pt-BR', {
+                    timeZone: 'America/Sao_Paulo',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+                });
+                const zrhStr = zrhFormatter.format(now);
+                const spStr = spFormatter.format(now);
+
+                const zrhEl = document.getElementById('zurich-live-clock');
+                const zrhFootEl = document.getElementById('clock-zurich-footer');
+                const spFootEl = document.getElementById('clock-sp-footer');
+
+                if (zrhEl) zrhEl.textContent = zrhStr;
+                if (zrhFootEl) zrhFootEl.textContent = zrhStr;
+                if (spFootEl) spFootEl.textContent = spStr;
+            } catch (e) {}
+        }
+        setInterval(updateDualClocks, 1000);
+        updateDualClocks();
+
+        // Validador de Número de Série no Footer
+        function validateSerialNumber(val) {
+            const icon = document.getElementById('serial-status-icon');
+            const msg = document.getElementById('serial-validation-msg');
+            const trimmed = (val || '').trim().toUpperCase();
+            if (!trimmed) {
+                if (icon) {
+                    icon.setAttribute('icon', 'solar:check-circle-bold');
+                    icon.className = 'text-zinc-500 text-sm';
+                }
+                if (msg) {
+                    msg.textContent = '* Digite para consultar a autenticidade da série';
+                    msg.className = 'text-[10px] font-mono text-zinc-500';
+                }
+                return;
+            }
+            if (icon) {
+                icon.setAttribute('icon', 'solar:shield-check-bold');
+                icon.className = 'text-emerald-400 text-sm animate-pulse';
+            }
+            if (msg) {
+                msg.textContent = `✓ REGISTRO VALIDADO: ${trimmed} • TOLERÂNCIA SUÍÇA ±0.0008MM HOMOLOGADA`;
+                msg.className = 'text-[10px] font-mono text-emerald-400 font-semibold';
+            }
+            playPenStrokeSound(0.4);
+        }
 
         // Garantia adicional contra rolagem residual em reloads
         window.addEventListener('load', () => {
