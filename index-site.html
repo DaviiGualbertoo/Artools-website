@@ -334,6 +334,410 @@
             animation: scrollLine 1.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
         }
 
+        /* =========================================================================
+           5. SEGUNDA DOBRA: MARQUEE, 3D STACK, HOTSPOTS ANATÔMICOS & SHIMMER (DS OFICIAL)
+           ========================================================================= */
+        @keyframes marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee-scroll 36s linear infinite;
+        }
+
+        @keyframes shimmer-sweep {
+            0% { transform: translateX(-150%) skewX(-15deg); }
+            100% { transform: translateX(150%) skewX(-15deg); }
+        }
+
+        .animate-shimmer {
+            animation: shimmer-sweep 2.6s infinite;
+        }
+
+        .bg-grid-architectural {
+            background-size: 44px 44px;
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+        }
+
+        .perspective-1200 {
+            perspective: 1200px;
+        }
+
+        /* Modos Ópticos e Zoom Dinâmico da Fotografia da Caneta na 2ª Dobra */
+        .pen-showcase-img {
+            transition: transform 0.85s var(--ease-out-expo), filter 0.65s var(--ease-out-expo), opacity 0.4s ease;
+            transform-origin: center center;
+            will-change: transform, filter;
+        }
+
+        .pen-showcase-img.mode-xray {
+            filter: invert(1) grayscale(1) contrast(1.35) brightness(0.95);
+        }
+
+        .pen-showcase-img.mode-blueprint {
+            filter: grayscale(100%) contrast(1.18) brightness(1.04);
+        }
+
+        /* Foco Óptico Dinâmico ao Selecionar cada Card */
+        .focal-target-0 { transform: scale(1.42) translate(19%, 17%); }  /* Cap & Visor de Safira */
+        .focal-target-1 { transform: scale(1.28) translate(3%, 3%); }    /* Corpo Alumínio 7075-T6 */
+        .focal-target-2 { transform: scale(1.38) translate(-10%, -8%); }  /* Tinta Nano-Pigmentum */
+        .focal-target-3 { transform: scale(1.58) translate(-25%, -21%); } /* Ponta Suíça 0.1mm */
+        .focal-target-4 { transform: scale(1) translate(0%, 0%); }        /* Visão Geral 360° */
+
+        /* Laser Scanner Técnico que cruza a caneta */
+        .pen-laser-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.9) 50%, transparent 100%);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.8), 0 0 24px rgba(16, 185, 129, 0.4);
+            pointer-events: none;
+            z-index: 15;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .pen-laser-line.scanning {
+            opacity: 1;
+            animation: laserSweep 2.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes laserSweep {
+            0% { top: 8%; opacity: 0.2; }
+            50% { opacity: 0.95; }
+            100% { top: 92%; opacity: 0.2; }
+        }
+
+        /* Pins Anatômicos Pulsantes sobre a Caneta */
+        .anatomy-hotspot {
+            position: absolute;
+            width: 2.25rem;
+            height: 2.25rem;
+            margin-left: -1.125rem;
+            margin-top: -1.125rem;
+            border-radius: 9999px;
+            background: rgba(24, 24, 27, 0.92);
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 25;
+            border: 2px solid #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: transform 0.35s var(--ease-bounce), background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .anatomy-hotspot::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 9999px;
+            border: 1.5px solid rgba(24, 24, 27, 0.45);
+            animation: hotspotPulse 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            pointer-events: none;
+        }
+
+        .anatomy-hotspot:hover,
+        .anatomy-hotspot.active {
+            transform: scale(1.22);
+            background: #000000;
+            box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.25), 0 12px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .anatomy-hotspot.active::after {
+            border-color: #10b981;
+        }
+
+        @keyframes hotspotPulse {
+            0% { transform: scale(0.85); opacity: 0.9; }
+            100% { transform: scale(1.65); opacity: 0; }
+        }
+
+        /* Item da Lista de Especificação Interativa */
+        .spec-selector-card {
+            transition: all 0.4s var(--ease-out-expo);
+            border: 1px solid rgba(228, 228, 231, 0.9);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .spec-selector-card.active {
+            border-color: #18181b;
+            background: #ffffff;
+            box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.08);
+            transform: translateX(4px);
+        }
+
+        /* Deck de Tabs Segmentadas */
+        .deck-tab-btn {
+            color: #71717a;
+            background: transparent;
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .deck-tab-btn:hover {
+            color: #18181b;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .deck-tab-btn.active {
+            background: #18181b;
+            color: #ffffff;
+            border-color: #18181b;
+            box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        .deck-tab-btn.active iconify-icon {
+            color: #ffffff !important;
+        }
+
+        /* Card Panels com Transição Suave */
+        .interactive-card-panel {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .interactive-card-panel.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botões de Micro-Simulação Interativa */
+        .sim-btn-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1rem;
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: #d4d4d8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sim-btn-pill:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .sim-btn-pill.active {
+            background: #ffffff;
+            color: #09090b;
+            border-color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Quick Zoom Pills sobre a Imagem */
+        .focal-quick-btn {
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(228, 228, 231, 0.9);
+            color: #27272a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .focal-quick-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #000000;
+            transform: translateY(-1px);
+        }
+
+        .focal-quick-btn.active {
+            background: #18181b;
+            color: #ffffff;
+            border-color: #18181b;
+        }
+
+        /* Canvas da Prancheta Interativa de Traço 0.1mm */
+        #stroke-scratchpad {
+            touch-action: none;
+            cursor: crosshair;
+            background-color: #fbfbfa;
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+
+        /* REVEAL ANIMATIONS (SISTEMA DE REVELAÇÃO INFALÍVEL DO DESIGN SYSTEM) */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(32px);
+            filter: blur(12px);
+            transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), filter 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
+        }
+
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .reveal-zoom {
+            opacity: 0;
+            transform: scale(0.95);
+            filter: blur(10px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity, filter;
+        }
+
+        .reveal-zoom.active {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+        }
+
+        /* TECH FEATURE CARDS (LISTA VERTICAL IDÊNTICA AO SEGUNDO ANEXO) */
+        .tech-feature-card {
+            background: transparent;
+            border: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tech-feature-card:hover,
+        .tech-feature-card.active {
+            background: #ffffff;
+            border-color: rgba(228, 228, 231, 0.95);
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.07);
+            transform: translateX(6px);
+        }
+
+        .tech-feature-card.active .tech-feature-border,
+        .tech-feature-card:hover .tech-feature-border {
+            border-color: #18181b !important;
+            color: #18181b !important;
+        }
+
+        .tech-feature-card.active .tech-feature-num,
+        .tech-feature-card:hover .tech-feature-num {
+            color: #18181b !important;
+            transform: scale(1.18);
+        }
+
+        /* ROTATING BEAM CARD ANIMATION */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-spin-slow {
+            animation: spinSlow 7s linear infinite;
+        }
+
+        /* ATELIER & CONFIGURATOR INPUTS (HERDADO DE DS5 & DS11) */
+        .input-group {
+            position: relative;
+        }
+
+        .input-animated {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: #f4f4f5;
+            border: 1px solid rgba(228, 228, 231, 0.95);
+            border-bottom: 2px solid rgba(212, 212, 216, 0.8);
+            border-radius: 1rem;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.875rem;
+            color: #18181b;
+        }
+
+        .input-animated:focus {
+            background: #ffffff;
+            border-color: #18181b;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-border-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            height: 2px;
+            width: 0%;
+            background: #10b981;
+            transform: translateX(-50%);
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 9999px;
+        }
+
+        .input-animated:focus + .input-border-bottom {
+            width: 92%;
+        }
+
+        /* MARQUEE CONTINUOUS SCROLL (DS5 & DS7) */
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 2rem;
+            mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
+
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            min-width: 100%;
+            gap: 3rem;
+            animation: scrollMarquee 32s linear infinite;
+        }
+
+        @keyframes scrollMarquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* LASER ENGRAVING GLOW & SWEEP */
+        .laser-sweep-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #10b981;
+            box-shadow: 0 0 14px 3px #10b981;
+            opacity: 0;
+            pointer-events-none;
+            transition: opacity 0.2s;
+        }
+
+        .laser-sweep-line.active {
+            opacity: 1;
+            animation: laserSweepAnim 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes laserSweepAnim {
+            0% { left: 0%; opacity: 1; }
+            50% { left: 100%; opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #ecece8; }
@@ -360,11 +764,13 @@
                 </span>
             </button>
 
-            <!-- Links de Navegação que levam aos estágios de Parallax da Caneta -->
-            <nav class="hidden md:flex items-center gap-9 text-[11px] font-mono uppercase tracking-[0.22em] text-[#71717a]" aria-label="Navegação Principal">
-                <button type="button" onclick="scrollToStage(0)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">Design</button>
-                <button type="button" onclick="scrollToStage(0.48)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">Technology</button>
-                <button type="button" onclick="scrollToStage(0.88)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">Specs</button>
+            <!-- Links de Navegação que levam aos estágios de Parallax e às Dobras -->
+            <nav class="hidden md:flex items-center gap-7 text-[11px] font-mono uppercase tracking-[0.2em] text-[#71717a]" aria-label="Navegação Principal">
+                <button type="button" onclick="scrollToStage(0)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">01. Hero</button>
+                <button type="button" onclick="scrollToStage(0.48)" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">02. Giro 3D</button>
+                <button type="button" onclick="scrollToSecondFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">03. Engenharia</button>
+                <button type="button" onclick="scrollToThirdFold()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase text-black font-semibold">04. Atelier</button>
+                <button type="button" onclick="scrollToBuy()" class="hover:text-[#09090b] transition-colors cursor-pointer uppercase">05. Reservar</button>
             </nav>
 
             <!-- Status de Otimização 60fps + Mix-Blend + Sacola -->
@@ -606,29 +1012,749 @@
         </section>
 
         <!-- =========================================================================
-             3. SEÇÃO DE FECHAMENTO PÓS-PIN (Para ancorar o botão Comprar Agora)
+             FAIXA DIVISÓRIA: MARQUEE ARQUITETÔNICO (Herdado de design_system_oficial1.html)
              ========================================================================= -->
-        <section id="comprar" class="relative z-30 bg-white border-t border-zinc-200/80 py-20">
-            <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-                <div>
-                    <span class="font-mono text-xs uppercase tracking-[0.24em] text-zinc-400">ARTOOLS.PRO // OFICIAL</span>
-                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-black mt-2">
-                        A SUA PRÓXIMA <span class="text-stroke-outline">OBRA-PRIMA.</span>
+        <div class="relative z-30 border-y border-zinc-200/90 bg-white py-5 overflow-hidden select-none">
+            <div class="marquee-track items-center">
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">ALUMÍNIO AEROESPACIAL 7075-T6</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-[#18181b]">ENGENHARIA SUÍÇA SUB-MÍCRON</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">TINTA QUÂNTICA NANO-PIGMENTUM™</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-[#18181b]">PONTA HÍBRIDA 0.1MM SAFIRA</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">ALUMÍNIO AEROESPACIAL 7075-T6</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-[#18181b]">ENGENHARIA SUÍÇA SUB-MÍCRON</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-stroke-transparent">TINTA QUÂNTICA NANO-PIGMENTUM™</span>
+                <span class="text-2xl md:text-4xl font-black uppercase tracking-tighter mx-10 text-[#18181b]">PONTA HÍBRIDA 0.1MM SAFIRA</span>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             2. SEGUNDA DOBRA — ENGENHARIA SUÍÇA & PRECISÃO MOLECULAR
+             - Fiel ao Layout de Referência (Anexo 02) + Design System Oficial
+             - Palco Óptico 7 Colunas com Imagem Macro, 3D Stack, Scanline e Badges Glassmorphism
+             - Coluna Direita 5 Colunas com Lista Vertical Interativa (01 a 04)
+             - Prancheta Interativa de Traço ao Vivo (Live Canvas Scratchpad)
+             ========================================================================= -->
+        <section id="segunda-dobra" class="relative z-30 bg-stone-50/95 py-24 md:py-32 overflow-hidden border-b border-zinc-200/90 selection:bg-black selection:text-white">
+
+            <!-- Fundo Arquitetônico com Grade Sutil e Ruído (.bg-grid de design_system_oficial1.html) -->
+            <div class="absolute inset-0 pointer-events-none bg-grid-architectural opacity-50"
+                 style="mask-image: radial-gradient(circle at 50% 45%, black 40%, transparent 85%); -webkit-mask-image: radial-gradient(circle at 50% 45%, black 40%, transparent 85%);">
+            </div>
+
+            <!-- Marca d'água Gigante em Parallax no Fundo (Idêntica ao Anexo 02) -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-16 pointer-events-none select-none opacity-[0.032] z-0 overflow-hidden">
+                <span class="font-sans font-black text-[14rem] lg:text-[18rem] leading-none text-black tracking-tighter">PRECISION</span>
+            </div>
+
+            <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
+
+                <!-- CABEÇALHO EDITORIAL (IDÊNTICO AO SEGUNDO ANEXO) -->
+                <div class="mb-16 md:mb-20 reveal-up">
+                    <div class="inline-flex items-center gap-2 mb-5">
+                        <span class="w-2 h-2 bg-black rounded-full animate-pulse"></span>
+                        <span class="text-xs font-mono uppercase tracking-[0.22em] text-zinc-400">Technology // Artools.Pro</span>
+                    </div>
+
+                    <h2 class="font-sans text-5xl md:text-7xl lg:text-[5.2rem] font-bold tracking-tight leading-[0.94] text-black">
+                        Engenharia Suíça.<br />
+                        <span class="text-stroke-outline text-zinc-400 font-normal">Precisão Molecular.</span>
+                    </h2>
+
+                    <p class="mt-7 text-base md:text-xl text-zinc-500 max-w-2xl font-light leading-relaxed">
+                        Nossa arquitetura de fluxo proprietária sincroniza a deposição de tinta em tempo real. Construída sobre um chassi de alumínio aeroespacial usinado em CNC de 5 eixos.
+                    </p>
+                </div>
+
+                <!-- PALCO PRINCIPAL DE 12 COLUNAS (7 COLS VISUAL + 5 COLS LISTA INTERATIVA) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-20">
+
+                    <!-- COLUNA ESQUERDA (7 COLUNAS): IMAGEM MACRO + 3D STACK + SCANLINE + GLASSMORPHISM HUD -->
+                    <div class="lg:col-span-7 relative group perspective-1000 reveal-zoom">
+
+                        <!-- Camada Traseira Rotacionada do 3D Stack (Fiel ao Anexo 02) -->
+                        <div class="absolute inset-0 bg-zinc-200/60 rounded-3xl transform rotate-2 scale-[0.98] transition-transform duration-700 group-hover:rotate-1 pointer-events-none"></div>
+
+                        <!-- Card Principal em Aspect 4/3 com Sombra Cinematográfica -->
+                        <div id="tech-feature-card" class="relative rounded-3xl overflow-hidden aspect-[4/3] bg-white shadow-2xl border border-zinc-200/90 transform transition-all duration-700 group-hover:-translate-y-1.5 cursor-crosshair">
+
+                            <!-- Scanline Laser Beam Effect (Feixe Luminoso no Hover) -->
+                            <div id="macro-scanline" class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/20 to-transparent z-20 translate-y-[-100%] group-hover:translate-y-[100%] transition-transform duration-[1.6s] ease-in-out pointer-events-none"></div>
+
+                            <!-- Fotografia da Caneta (Versão Macro Aprimorada de Ultra-Resolução) -->
+                            <div class="w-full h-full overflow-hidden relative">
+                                <img
+                                    id="tech-feature-img"
+                                    src="assets/raw_files/artools_tech_macro_enhanced.jpg"
+                                    alt="Artools Detalhe de Engenharia Macro 10x"
+                                    class="w-full h-full object-cover transition-transform duration-300 ease-out select-none"
+                                />
+                            </div>
+
+                            <!-- Hotspots Interativos de Precisão Óptica (Visíveis no modo Macro) -->
+                            <div id="macro-hotspots-layer" class="absolute inset-0 z-20 pointer-events-none transition-opacity duration-500">
+                                <!-- Hotspot 01: Ponta 0.1mm -->
+                                <button type="button" onclick="selectTechFeature(1)" class="pointer-events-auto absolute top-[58%] left-[23%] -translate-x-1/2 -translate-y-1/2 group/pin cursor-pointer focus:outline-none" title="Ponta Suíça 0.1mm">
+                                    <span class="relative flex h-6 w-6 items-center justify-center">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-5 w-5 bg-black/85 text-white border border-white/60 shadow-lg items-center justify-center text-[9px] font-mono font-bold">01</span>
+                                    </span>
+                                    <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2.5 py-1 rounded-lg bg-black/90 backdrop-blur-md text-white text-[10px] font-mono whitespace-nowrap opacity-0 group-hover/pin:opacity-100 transition-opacity shadow-xl border border-white/20">
+                                        Ponta 0.1mm // Carboneto de Tungstênio
+                                    </span>
+                                </button>
+
+                                <!-- Hotspot 02: Grip Recartilhado CNC -->
+                                <button type="button" onclick="selectTechFeature(2)" class="pointer-events-auto absolute top-[48%] left-[48%] -translate-x-1/2 -translate-y-1/2 group/pin cursor-pointer focus:outline-none" title="Grip Recartilhado Ra 0.8µm">
+                                    <span class="relative flex h-6 w-6 items-center justify-center">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-5 w-5 bg-black/85 text-white border border-white/60 shadow-lg items-center justify-center text-[9px] font-mono font-bold">02</span>
+                                    </span>
+                                    <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2.5 py-1 rounded-lg bg-black/90 backdrop-blur-md text-white text-[10px] font-mono whitespace-nowrap opacity-0 group-hover/pin:opacity-100 transition-opacity shadow-xl border border-white/20">
+                                        Grip CNC 5-Eixos // Ra 0.8µm
+                                    </span>
+                                </button>
+
+                                <!-- Hotspot 03: Chassi Monobloco Alumínio -->
+                                <button type="button" onclick="selectTechFeature(0)" class="pointer-events-auto absolute top-[30%] left-[80%] -translate-x-1/2 -translate-y-1/2 group/pin cursor-pointer focus:outline-none" title="Chassi Alumínio 7075-T6">
+                                    <span class="relative flex h-6 w-6 items-center justify-center">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-5 w-5 bg-black/85 text-white border border-white/60 shadow-lg items-center justify-center text-[9px] font-mono font-bold">03</span>
+                                    </span>
+                                    <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2.5 py-1 rounded-lg bg-black/90 backdrop-blur-md text-white text-[10px] font-mono whitespace-nowrap opacity-0 group-hover/pin:opacity-100 transition-opacity shadow-xl border border-white/20">
+                                        Chassi Monobloco 7075-T6 // Pure White
+                                    </span>
+                                </button>
+                            </div>
+
+                            <!-- Floating Glassmorphism Badge 1 (Superior Esquerdo — Idêntico ao Anexo 02) -->
+                            <div id="hud-glass-badge-top" class="absolute top-6 left-6 p-4 border border-white/70 rounded-2xl backdrop-blur-md bg-white/70 shadow-lg text-zinc-900 hover:bg-white/90 transition-all cursor-pointer z-20">
+                                <iconify-icon icon="solar:database-bold-duotone" class="text-2xl text-black mb-1.5 block"></iconify-icon>
+                                <div id="hud-glass-core-label" class="text-[10px] font-mono font-bold text-zinc-800 tracking-widest uppercase">Core_Alu_7075-T6</div>
+                                <div class="h-1 w-24 bg-black/20 mt-2 rounded-full overflow-hidden">
+                                    <div id="hud-glass-core-bar" class="h-full w-[88%] bg-black rounded-full transition-all duration-500"></div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Glassmorphism Badge 2 (Inferior Direito — Idêntico ao Anexo 02) -->
+                            <div id="hud-glass-badge-bot" class="absolute bottom-6 right-6 p-4 border border-white/70 rounded-2xl backdrop-blur-md bg-white/70 shadow-lg text-right hover:bg-white/90 transition-all cursor-pointer z-20">
+                                <div id="hud-glass-tip-val" class="text-3xl font-black text-black leading-none tracking-tight">
+                                    0.1<span class="text-xs font-mono font-semibold text-zinc-500 align-top ml-1">mm</span>
+                                </div>
+                                <div id="hud-glass-tip-label" class="text-[10px] font-mono text-zinc-700 tracking-widest uppercase mt-1">
+                                    Tip_Precision // Swiss CNC
+                                </div>
+                            </div>
+
+                            <!-- Telemetria Óptica Dinâmica no Rodapé Esquerdo (Modo Macro) -->
+                            <div id="macro-telemetry-badge" class="absolute bottom-6 left-6 z-20 px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-white font-mono text-[9px] tracking-wider uppercase flex items-center gap-2 pointer-events-none opacity-85">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span id="macro-coords-val">OPTICAL MACRO 10X // ±0.0008mm</span>
+                            </div>
+
+                            <!-- Seletor de Lentes Flutuante (Superior Direito — APENAS MACRO E STUDIO) -->
+                            <div class="absolute top-6 right-6 z-30 flex items-center gap-1.5 p-1 rounded-full bg-white/80 backdrop-blur-md border border-white/80 shadow-md text-xs font-mono">
+                                <button type="button" onclick="switchTechVisual('macro', this)" class="tech-lens-pill active px-3.5 py-1 rounded-full bg-black text-white font-medium cursor-pointer transition-all flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>Macro 10x</span>
+                                </button>
+                                <button type="button" onclick="switchTechVisual('studio', this)" class="tech-lens-pill px-3.5 py-1 rounded-full text-zinc-600 hover:text-black cursor-pointer transition-all flex items-center gap-1.5">
+                                    <iconify-icon icon="solar:camera-minimalistic-linear" class="text-xs"></iconify-icon>
+                                    <span>Studio 360°</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- COLUNA DIREITA (5 COLUNAS): LISTA VERTICAL DE CARDS INTERATIVOS (IDÊNTICO AO ANEXO 02) -->
+                    <div class="lg:col-span-5 space-y-4 reveal-up">
+
+                        <!-- Item 01: Alumínio Aeroespacial -->
+                        <div
+                            id="tech-card-0"
+                            onclick="selectTechFeature(0)"
+                            onmouseenter="selectTechFeature(0)"
+                            class="tech-feature-card active p-6 rounded-2xl cursor-pointer"
+                        >
+                            <div class="flex items-baseline gap-4 mb-2">
+                                <span class="tech-feature-num text-xs font-mono font-bold text-black transition-all duration-300">01</span>
+                                <h3 class="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300">
+                                    Alumínio Aeroespacial
+                                </h3>
+                            </div>
+                            <p class="tech-feature-border pl-4 border-l-2 border-black text-zinc-600 text-sm leading-relaxed transition-colors">
+                                Estrutura monobloco usinada em Alumínio Série 7075-T6. Leveza extrema (24g) com resistência estrutural de nível militar e toque cerâmico Pure White.
+                            </p>
+                        </div>
+
+                        <!-- Item 02: Fluxo Híbrido & Nanocarbono -->
+                        <div
+                            id="tech-card-1"
+                            onclick="selectTechFeature(1)"
+                            onmouseenter="selectTechFeature(1)"
+                            class="tech-feature-card p-6 rounded-2xl cursor-pointer"
+                        >
+                            <div class="flex items-baseline gap-4 mb-2">
+                                <span class="tech-feature-num text-xs font-mono font-bold text-zinc-400 group-hover:text-black transition-all duration-300">02</span>
+                                <h3 class="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300">
+                                    Fluxo Híbrido &amp; Nanocarbono
+                                </h3>
+                            </div>
+                            <p class="tech-feature-border pl-4 border-l-2 border-zinc-200 text-zinc-500 text-sm leading-relaxed transition-colors">
+                                Sistema de tinta Nano-Pigmentum™ com secagem em 0.04s e regulação por capilaridade assistida. O traço nunca falha até 15° em qualquer velocidade.
+                            </p>
+                        </div>
+
+                        <!-- Item 03: Grip Texturizado & Usinagem CNC -->
+                        <div
+                            id="tech-card-2"
+                            onclick="selectTechFeature(2)"
+                            onmouseenter="selectTechFeature(2)"
+                            class="tech-feature-card p-6 rounded-2xl cursor-pointer"
+                        >
+                            <div class="flex items-baseline gap-4 mb-2">
+                                <span class="tech-feature-num text-xs font-mono font-bold text-zinc-400 group-hover:text-black transition-all duration-300">03</span>
+                                <h3 class="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300">
+                                    Grip Texturizado &amp; CNC
+                                </h3>
+                            </div>
+                            <p class="tech-feature-border pl-4 border-l-2 border-zinc-200 text-zinc-500 text-sm leading-relaxed transition-colors">
+                                Micro-usinagem a laser cria uma superfície recartilhada de aderência perfeita (Ra 0.8µm) sem acumular resíduos nem escorregar com suor.
+                            </p>
+                        </div>
+
+                        <!-- Item 04: Prancheta Virtual 0.1mm (Live Canvas Scratchpad) -->
+                        <div
+                            id="tech-card-3"
+                            onclick="selectTechFeature(3)"
+                            onmouseenter="selectTechFeature(3)"
+                            class="tech-feature-card p-6 rounded-2xl cursor-pointer"
+                        >
+                            <div class="flex items-baseline gap-4 mb-2">
+                                <span class="tech-feature-num text-xs font-mono font-bold text-zinc-400 group-hover:text-black transition-all duration-300">04</span>
+                                <h3 class="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300 flex items-center gap-2">
+                                    <span>Prancheta Virtual 0.1mm</span>
+                                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase font-semibold">Live Canvas</span>
+                                </h3>
+                            </div>
+                            <p class="tech-feature-border pl-4 border-l-2 border-zinc-200 text-zinc-500 text-sm leading-relaxed transition-colors">
+                                Sinta a precisão cirúrgica de 0.10mm ao vivo na prancheta interativa abaixo. Desenhe, assine ou faça testes com o cursor ou toque.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- PRANCHETA INTERATIVA AO VIVO (CANVAS DE ARQUITETURA PARA TESTAR O TRAÇO 0.1MM) -->
+                <div id="scratchpad-section" class="reveal-up p-7 sm:p-9 bg-white rounded-3xl border border-zinc-200 shadow-xl max-w-4xl mx-auto">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="font-mono text-xs uppercase tracking-widest text-zinc-400">LABORATÓRIO DE PRECISÃO // SWISS 0.1MM</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-black tracking-tight mt-1">Prancheta de Teste de Traço ao Vivo</h3>
+                        </div>
+
+                        <!-- Ferramentas do Canvas -->
+                        <div class="flex flex-wrap items-center gap-2">
+                            <div class="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200 font-mono text-xs">
+                                <button type="button" onclick="setPadWidth(0.8, this)" class="pad-tool-width active px-3 py-1 rounded-lg bg-black text-white font-bold cursor-pointer">0.10mm</button>
+                                <button type="button" onclick="setPadWidth(1.6, this)" class="pad-tool-width px-3 py-1 rounded-lg text-zinc-700 hover:text-black cursor-pointer">0.20mm</button>
+                                <button type="button" onclick="setPadWidth(2.8, this)" class="pad-tool-width px-3 py-1 rounded-lg text-zinc-700 hover:text-black cursor-pointer">0.35mm</button>
+                            </div>
+                            <button type="button" onclick="drawPadDemo()" class="px-3.5 py-1.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 border border-zinc-200 text-zinc-800 font-mono text-xs cursor-pointer flex items-center gap-1.5">
+                                <iconify-icon icon="solar:pen-bold"></iconify-icon>
+                                <span>Assinatura Demo</span>
+                            </button>
+                            <button type="button" onclick="clearPadCanvas()" class="px-3.5 py-1.5 rounded-xl bg-zinc-100 hover:bg-red-50 border border-zinc-200 text-red-600 font-mono text-xs cursor-pointer flex items-center gap-1.5">
+                                <iconify-icon icon="solar:trash-bin-trash-bold"></iconify-icon>
+                                <span>Limpar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Interativo -->
+                    <div class="relative rounded-2xl overflow-hidden border border-zinc-200/90 shadow-inner">
+                        <canvas id="stroke-scratchpad" class="w-full h-52 sm:h-60 block"></canvas>
+                        <div id="scratchpad-hint" class="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300">
+                            <span class="font-mono text-xs text-zinc-400 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border border-zinc-200 shadow-2xs">
+                                ✍️ Clique e arraste aqui para testar o traço de 0.10mm
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Telemetria do Traço em Tempo Real -->
+                    <div class="mt-4 pt-3 border-t border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono text-zinc-500 gap-2">
+                        <span>DISTÂNCIA DESENHADA: <strong id="pad-dist-counter" class="text-black font-bold">0.0 cm</strong></span>
+                        <span>PRECISÃO ÓPTICA: <strong class="text-emerald-600">0.100mm ±0.0008mm</strong></span>
+                        <span class="text-black font-semibold">TINTA NANO-PIGMENTUM™ 100% CONTÍNUA</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             3. TERCEIRA DOBRA — ATELIER & LABORATÓRIO DE CALIBRAÇÃO (CUSTOMIZAÇÃO & BENCHMARK)
+             - Baseado no Design System Oficial (DS5 + DS2 + DS7 + DS11)
+             - Configurador em Tempo Real com Gravação a Laser usinada no Chassi 7075-T6
+             - Seletores de Calibre Suíço (0.10mm, 0.30mm, 0.50mm) e Química da Tinta
+             - Bento Grid de Benchmarks Científicos (0.04s Secagem, 14.5km, 572 MPa, 100 Anos)
+             - Marquee Contínuo de Certificações Internacionais (Zurich / ISO 14145-2)
+             ========================================================================= -->
+        <section id="terceira-dobra" class="relative z-30 bg-white py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
+
+            <!-- Fundo Arquitetônico com Grade Sutil do Design System -->
+            <div class="absolute inset-0 pointer-events-none bg-grid-architectural opacity-40"
+                 style="mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 80%); -webkit-mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 80%);">
+            </div>
+
+            <!-- Marca d'água Gigante em Parallax no Fundo (ATELIER) -->
+            <div class="absolute top-6 left-0 -ml-16 pointer-events-none select-none opacity-[0.028] z-0 overflow-hidden">
+                <span class="font-sans font-black text-[15rem] lg:text-[20rem] leading-none text-black tracking-tighter">ATELIER</span>
+            </div>
+
+            <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
+
+                <!-- CABEÇALHO EDITORIAL DA TERCEIRA DOBRA -->
+                <div class="mb-16 md:mb-20 reveal-up">
+                    <div class="inline-flex items-center gap-2 mb-4">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs font-mono uppercase tracking-[0.24em] text-zinc-400">03 // Atelier &amp; Performance Lab</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-zinc-100 text-[10px] font-mono text-zinc-600 border border-zinc-200 uppercase">Zurich Accredited</span>
+                    </div>
+
+                    <h2 class="font-sans text-5xl md:text-7xl lg:text-[5.2rem] font-bold tracking-tight leading-[0.94] text-black">
+                        Calibração &amp; Atelier.<br />
+                        <span class="text-stroke-outline text-zinc-400 font-normal">Customização Sub-Mícron.</span>
+                    </h2>
+
+                    <p class="mt-6 text-base md:text-xl text-zinc-500 max-w-3xl font-light leading-relaxed">
+                        Cada instrumento é calibrado sob demanda na Suíça. Escolha o diâmetro da ponta, a formulação da tinta de nanocarbono e personalize o chassi de alumínio aeroespacial 7075-T6 com sua assinatura gravada a laser em tempo real.
+                    </p>
+                </div>
+
+                <!-- GRID PRINCIPAL DE 12 COLUNAS: 7 COLS CONFIGURADOR + 5 COLS BENCHMARKS -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start mb-20">
+
+                    <!-- COLUNA ESQUERDA (7 COLUNAS): STUDIO WINDOW CONFIGURADOR INTERATIVO -->
+                    <div class="lg:col-span-7 space-y-6 reveal-zoom">
+
+                        <!-- Studio Window Card (Inspirado no System02_Optical.js do Design System) -->
+                        <div class="rounded-3xl border border-zinc-200/90 bg-zinc-50/60 shadow-xl overflow-hidden backdrop-blur-sm">
+
+                            <!-- Window Top Bar (Estilo macOS / Framer do Design System) -->
+                            <div class="h-11 border-b border-zinc-200/90 px-5 flex items-center justify-between bg-white/80">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-400/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-amber-400/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-emerald-400/80"></div>
+                                    <span class="ml-2 text-xs font-mono text-zinc-500 font-medium">Atelier_Configurator_v8.js</span>
+                                </div>
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-mono font-semibold tracking-wider">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    CALIBRATION LIVE
+                                </div>
+                            </div>
+
+                            <!-- Área Visual da Caneta com Gravação a Laser em Tempo Real -->
+                            <div class="relative p-6 sm:p-10 bg-gradient-to-b from-white via-zinc-50/50 to-zinc-100/60 flex flex-col items-center justify-center min-h-[380px] sm:min-h-[420px] overflow-hidden group">
+
+                                <!-- Aura Difusa Central -->
+                                <div class="absolute w-72 h-72 rounded-full bg-zinc-200/50 blur-3xl pointer-events-none"></div>
+
+                                <!-- Imagem Studio da Caneta Completa -->
+                                <div class="relative w-full max-w-md aspect-[4/3] flex items-center justify-center">
+                                    <img
+                                        src="assets/raw_files/pen_studio_showcase.jpg"
+                                        alt="Artools Studio Customizer"
+                                        class="w-full h-full object-contain filter drop-shadow-2xl transition-transform duration-700 group-hover:scale-105 select-none"
+                                    />
+
+                                    <!-- Camada de Gravação a Laser no Corpo da Caneta (Posicionada com Rotação -38deg) -->
+                                    <div class="absolute top-[38%] left-[45%] -translate-x-1/2 -translate-y-1/2 rotate-[-38deg] pointer-events-none z-20">
+                                        <div class="relative px-3 py-1 rounded bg-black/5 backdrop-blur-[1px] border border-black/10 shadow-xs flex items-center justify-center overflow-hidden">
+                                            <!-- Linha de Varredura Laser Verde -->
+                                            <div id="laser-engrave-beam" class="laser-sweep-line"></div>
+                                            <!-- Texto Gravado a Laser em Tempo Real -->
+                                            <span id="live-engraved-text" class="font-mono text-[10px] sm:text-xs font-black tracking-[0.22em] text-zinc-800 uppercase whitespace-nowrap drop-shadow-sm">
+                                                ARTOOLS // GUALBERTO
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- HUD Badges de Telemetria Dinâmica do Configurador -->
+                                <div class="absolute top-5 left-5 p-3 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-sm flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-xl bg-black text-white flex items-center justify-center text-xs font-mono font-bold" id="hud-nib-display">
+                                        0.1
+                                    </div>
+                                    <div>
+                                        <div class="text-[9px] font-mono uppercase text-zinc-400 tracking-widest">Ponta Selecionada</div>
+                                        <div class="text-xs font-mono font-bold text-black" id="hud-nib-name">0.10mm Micro-Linha</div>
+                                    </div>
+                                </div>
+
+                                <div class="absolute bottom-5 right-5 p-3 rounded-2xl bg-white/80 backdrop-blur-md border border-white/90 shadow-sm flex items-center gap-2.5">
+                                    <span class="w-3 h-3 rounded-full bg-black shadow-sm" id="hud-ink-dot"></span>
+                                    <div class="text-right">
+                                        <div class="text-[9px] font-mono uppercase text-zinc-400 tracking-widest">Química da Tinta</div>
+                                        <div class="text-xs font-mono font-bold text-black" id="hud-ink-name">Carbon Black 100%</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Painel Inferior de Customização Tátil -->
+                            <div class="p-6 sm:p-8 bg-white border-t border-zinc-200/90 space-y-6">
+
+                                <!-- Controle 1: Calibre da Ponta -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <label class="text-xs font-mono uppercase tracking-widest text-zinc-400 font-bold">
+                                            01 // Calibre da Ponta Micro-Cônica
+                                        </label>
+                                        <span class="text-xs font-mono text-emerald-600 font-semibold" id="caliber-spec-hint">Precisão Suíça ±0.0008mm</span>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-3">
+                                        <button type="button" onclick="selectNibCaliber('0.10mm', '0.1', 'Micro-Linha Arquitetônica', this)" class="nib-caliber-btn active p-3 rounded-xl border border-black bg-black text-white font-mono text-xs cursor-pointer transition-all flex flex-col items-center justify-center gap-1 shadow-sm">
+                                            <span class="font-black text-sm">0.10mm</span>
+                                            <span class="text-[10px] opacity-75">Arquitetura</span>
+                                        </button>
+                                        <button type="button" onclick="selectNibCaliber('0.30mm', '0.3', 'Ilustração & Traço Híbrido', this)" class="nib-caliber-btn p-3 rounded-xl border border-zinc-200 bg-zinc-50 text-zinc-700 hover:text-black font-mono text-xs cursor-pointer transition-all flex flex-col items-center justify-center gap-1">
+                                            <span class="font-black text-sm">0.30mm</span>
+                                            <span class="text-[10px] text-zinc-400">Ilustração</span>
+                                        </button>
+                                        <button type="button" onclick="selectNibCaliber('0.50mm', '0.5', 'Assinatura & Fluxo Amplo', this)" class="nib-caliber-btn p-3 rounded-xl border border-zinc-200 bg-zinc-50 text-zinc-700 hover:text-black font-mono text-xs cursor-pointer transition-all flex flex-col items-center justify-center gap-1">
+                                            <span class="font-black text-sm">0.50mm</span>
+                                            <span class="text-[10px] text-zinc-400">Assinatura</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Controle 2: Formulação da Tinta Arquival -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-3">
+                                        <label class="text-xs font-mono uppercase tracking-widest text-zinc-400 font-bold">
+                                            02 // Formulação da Tinta Nano-Pigmentum™
+                                        </label>
+                                        <span class="text-xs font-mono text-zinc-400">Secagem 0.04s // ISO 14145-2</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                        <button type="button" onclick="selectInkFormula('Carbon Black', '#000000', this)" class="ink-formula-btn active p-3 rounded-xl border-2 border-black bg-white cursor-pointer transition-all flex items-center gap-3 text-left shadow-xs">
+                                            <span class="w-4 h-4 rounded-full bg-black shrink-0 shadow-inner"></span>
+                                            <div>
+                                                <div class="font-bold text-xs text-black">Carbon Black</div>
+                                                <div class="text-[10px] font-mono text-zinc-400">Nanocarbono 100%</div>
+                                            </div>
+                                        </button>
+                                        <button type="button" onclick="selectInkFormula('Prussian Blue', '#0f172a', this)" class="ink-formula-btn p-3 rounded-xl border border-zinc-200 bg-white hover:border-zinc-400 cursor-pointer transition-all flex items-center gap-3 text-left">
+                                            <span class="w-4 h-4 rounded-full bg-[#0f172a] shrink-0 shadow-inner"></span>
+                                            <div>
+                                                <div class="font-bold text-xs text-black">Prussian Blue</div>
+                                                <div class="text-[10px] font-mono text-zinc-400">Pigmento Mineral</div>
+                                            </div>
+                                        </button>
+                                        <button type="button" onclick="selectInkFormula('Sepia Archival', '#2a2118', this)" class="ink-formula-btn p-3 rounded-xl border border-zinc-200 bg-white hover:border-zinc-400 cursor-pointer transition-all flex items-center gap-3 text-left">
+                                            <span class="w-4 h-4 rounded-full bg-[#2a2118] shrink-0 shadow-inner"></span>
+                                            <div>
+                                                <div class="font-bold text-xs text-black">Sepia Archival</div>
+                                                <div class="text-[10px] font-mono text-zinc-400">Tom Terroso Clássico</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Controle 3: Gravação a Laser no Chassi de Alumínio 7075-T6 -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label for="engraving-input-field" class="text-xs font-mono uppercase tracking-widest text-zinc-400 font-bold">
+                                            03 // Gravação Personalizada a Laser no Chassi
+                                        </label>
+                                        <span class="text-[11px] font-mono text-emerald-600 font-medium">Usinagem CNC Inclusa</span>
+                                    </div>
+                                    <div class="input-group relative">
+                                        <input
+                                            id="engraving-input-field"
+                                            type="text"
+                                            maxlength="22"
+                                            placeholder="Digite seu nome ou monograma (ex: GUALBERTO)..."
+                                            oninput="handleEngravingInput(this.value)"
+                                            class="input-animated font-mono text-sm tracking-wider"
+                                            value="GUALBERTO"
+                                        />
+                                        <div class="input-border-bottom"></div>
+                                    </div>
+                                    <p class="text-[11px] font-mono text-zinc-400 mt-2">
+                                        * A gravação é usinada a laser com profundidade de 0.05mm na liga aeroespacial 7075-T6.
+                                    </p>
+                                </div>
+
+                                <!-- Botão de Confirmação com Feixe Conic -->
+                                <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <div class="text-xs font-mono text-zinc-500">
+                                        EDIÇÃO LIMITADA // LOTE 01 DISPONÍVEL
+                                    </div>
+                                    <button type="button" onclick="applyConfigurationAndScroll()" class="btn-beam-wrapper magnetic-btn w-full sm:w-auto" data-strength="0.25">
+                                        <span class="btn-beam-border"></span>
+                                        <span class="btn-beam-inner text-xs px-7 py-3">
+                                            <span>Salvar Configuração &amp; Reservar</span>
+                                            <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+                                        </span>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- COLUNA DIREITA (5 COLUNAS): BENTO GRID DE BENCHMARKS CIENTÍFICOS -->
+                    <div class="lg:col-span-5 space-y-5 reveal-up">
+
+                        <!-- Card Benchmark 01: Secagem 0.04s com Simulador -->
+                        <div class="flashlight-card p-7 group">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-500">
+                                    <iconify-icon icon="solar:stopwatch-play-bold-duotone" class="text-2xl text-emerald-500"></iconify-icon>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-mono uppercase font-bold tracking-wider">
+                                    Anti-Smudge 100%
+                                </span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span id="dry-time-counter" class="text-4xl font-black text-black tracking-tight font-sans">0.04</span>
+                                <span class="text-sm font-mono font-bold text-zinc-500">segundos</span>
+                            </div>
+                            <h3 class="font-bold text-base text-black mt-1">Secagem Instantânea Molecular</h3>
+                            <p class="text-zinc-500 text-xs mt-2 leading-relaxed">
+                                As nanopartículas de pigmento ligam-se termicamente à celulose instantaneamente. Zero borrões mesmo em movimentos ultrarrápidos de canhotos.
+                            </p>
+                            <!-- Mini Barra Interativa de Secagem -->
+                            <div class="mt-4 pt-4 border-t border-zinc-100 flex items-center justify-between">
+                                <div class="h-1.5 w-36 bg-zinc-100 rounded-full overflow-hidden">
+                                    <div id="dry-progress-bar" class="h-full bg-emerald-500 w-full transition-all duration-300"></div>
+                                </div>
+                                <button type="button" onclick="testDrySpeed()" class="text-[10px] font-mono text-zinc-700 hover:text-black font-semibold cursor-pointer underline">
+                                    Simular Teste ↺
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card Benchmark 02: Autonomia Contínua 14.500m -->
+                        <div class="flashlight-card p-7 group">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-colors duration-500">
+                                    <iconify-icon icon="solar:pen-new-round-bold-duotone" class="text-2xl text-blue-500"></iconify-icon>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-mono uppercase font-bold tracking-wider">
+                                    Capilaridade Assistida
+                                </span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-black tracking-tight font-sans">14.500</span>
+                                <span class="text-sm font-mono font-bold text-zinc-500">metros</span>
+                            </div>
+                            <h3 class="font-bold text-base text-black mt-1">Autonomia Contínua de Linha</h3>
+                            <p class="text-zinc-500 text-xs mt-2 leading-relaxed">
+                                Extensão equivalente a subir e descer o Monte Everest desenhando continuamente sem falhas de fluxo, gotejamento ou perda de densidade preta.
+                            </p>
+                        </div>
+
+                        <!-- Grid 2 Colunas para Rigidez e Durabilidade -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <!-- Benchmark 03: 572 MPa Resistência Torsional -->
+                            <div class="flashlight-card p-6 group">
+                                <div class="flex items-center justify-between mb-3">
+                                    <iconify-icon icon="solar:shield-star-bold-duotone" class="text-xl text-zinc-800"></iconify-icon>
+                                    <span class="text-[10px] font-mono text-zinc-400">7075-T6</span>
+                                </div>
+                                <div class="text-2xl font-black text-black font-sans">572 MPa</div>
+                                <h4 class="text-xs font-bold text-zinc-800 mt-1">Rigidez Torsional</h4>
+                                <p class="text-[11px] text-zinc-500 mt-1">
+                                    +107% vs Alumínio 6061 convencional.
+                                </p>
+                            </div>
+
+                            <!-- Benchmark 04: 100+ Anos Longevidade Arquival -->
+                            <div class="flashlight-card p-6 group">
+                                <div class="flex items-center justify-between mb-3">
+                                    <iconify-icon icon="solar:dropper-minimalistic-2-bold-duotone" class="text-xl text-purple-600"></iconify-icon>
+                                    <span class="text-[10px] font-mono text-emerald-600">ISO 14145</span>
+                                </div>
+                                <div class="text-2xl font-black text-black font-sans">100+ Anos</div>
+                                <h4 class="text-xs font-bold text-zinc-800 mt-1">Longevidade Arquival</h4>
+                                <p class="text-[11px] text-zinc-500 mt-1">
+                                    Fade-proof à prova de raios UV e água.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FAIXA MARQUEE INFINITA DE CERTIFICAÇÕES INTERNACIONAIS (HERDADA DE DS5 & DS7) -->
+            <div class="relative z-20 border-t border-b border-zinc-200/80 bg-zinc-50/70 py-4 overflow-hidden">
+                <div class="marquee-container">
+                    <div class="marquee-content items-center">
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-800">SWISS PRECISION 0.1MM</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-400 text-stroke-outline">ALUMÍNIO 7075-T6</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-emerald-600">SECAGEM 0.04S</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-800">ISO 14145-2 CERTIFIED</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-400 text-stroke-outline">BALANÇO ÁUREO 24.0G</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-800">NANO-PIGMENTUM™ INK</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                    </div>
+                    <div class="marquee-content items-center" aria-hidden="true">
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-800">SWISS PRECISION 0.1MM</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-400 text-stroke-outline">ALUMÍNIO 7075-T6</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-emerald-600">SECAGEM 0.04S</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-800">ISO 14145-2 CERTIFIED</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-400 text-stroke-outline">BALANÇO ÁUREO 24.0G</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                        <span class="text-xs font-mono font-bold tracking-[0.25em] uppercase text-zinc-800">NANO-PIGMENTUM™ INK</span>
+                        <span class="text-xs text-zinc-300">✦</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =========================================================================
+             4. SEÇÃO DE EXPERIÊNCIA DE ESCRITA — FLASHLIGHT CARDS (SEÇÃO 04 DO ANEXO 02 & DS)
+             ========================================================================= -->
+        <section id="writing-experience" class="relative z-20 bg-[#f9f9f8] py-24 md:py-32 overflow-hidden border-b border-zinc-200 selection:bg-black selection:text-white">
+            <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 relative z-10">
+
+                <div class="text-center mb-20 reveal-up">
+                    <span class="text-xs font-mono uppercase tracking-[0.25em] text-zinc-400 mb-4 block">ARCHITECTURE OF THOUGHT</span>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tight text-black max-w-3xl mx-auto leading-tight">
+                        A ferramenta invisível para<br />
+                        <span class="text-stroke-outline text-zinc-400 font-normal">ideias tangíveis.</span>
                     </h2>
                 </div>
-                <div class="flex flex-wrap items-center gap-4">
-                    <button type="button" onclick="scrollToStage(0)" class="btn-pill-light magnetic-btn" data-strength="0.22">
-                        <iconify-icon icon="solar:arrow-up-linear" class="text-base"></iconify-icon>
-                        <span>Voltar ao Topo</span>
-                    </button>
-                    <button type="button" onclick="alert('Pedido iniciado com sucesso!')" class="btn-beam-wrapper magnetic-btn" data-strength="0.3">
-                        <span class="btn-beam-border"></span>
-                        <span class="btn-beam-inner">
-                            <span>Finalizar Pedido — R$ 1.490</span>
-                            <iconify-icon icon="solar:bag-check-bold" class="text-lg text-emerald-400"></iconify-icon>
-                        </span>
-                    </button>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Flashlight Card 1: Fluxo Contínuo -->
+                    <div class="flashlight-card h-[380px] p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-100">
+                        <div>
+                            <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                                <iconify-icon icon="solar:pen-new-square-linear" class="text-2xl"></iconify-icon>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 text-black">Fluxo Contínuo</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">
+                                A tinta flui sem interrupções, permitindo que seus pensamentos corram livremente para o papel sem fricção.
+                            </p>
+                        </div>
+                        <div class="h-1 w-full bg-zinc-100 mt-8 overflow-hidden rounded-full">
+                            <div class="h-full bg-black w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                        </div>
+                    </div>
+
+                    <!-- Flashlight Card 2: Silêncio Absoluto -->
+                    <div class="flashlight-card h-[380px] p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-200">
+                        <div>
+                            <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                                <iconify-icon icon="solar:soundwave-square-linear" class="text-2xl"></iconify-icon>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 text-black">Silêncio Absoluto</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">
+                                Mecanismo de amortecimento interno e ponta selada. Escreva em qualquer ambiente com discrição total.
+                            </p>
+                        </div>
+                        <div class="h-1 w-full bg-zinc-100 mt-8 overflow-hidden rounded-full">
+                            <div class="h-full bg-black w-0 group-hover:w-full transition-all duration-700 ease-out delay-100"></div>
+                        </div>
+                    </div>
+
+                    <!-- Flashlight Card 3: Equilíbrio Neutro -->
+                    <div class="flashlight-card h-[380px] p-8 flex flex-col justify-between rounded-2xl group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl reveal-up delay-300">
+                        <div>
+                            <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                                <iconify-icon icon="solar:scale-linear" class="text-2xl"></iconify-icon>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 text-black">Equilíbrio Neutro</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed">
+                                Centro de gravidade estudado para repousar na junção da mão, reduzindo a fadiga muscular em 40%.
+                            </p>
+                        </div>
+                        <div class="h-1 w-full bg-zinc-100 mt-8 overflow-hidden rounded-full">
+                            <div class="h-full bg-black w-0 group-hover:w-full transition-all duration-700 ease-out delay-200"></div>
+                        </div>
+                    </div>
+
                 </div>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             4. CINEMATIC SHOWCASE COM GLOW BEAM CARD (SEÇÃO 04 DO ANEXO 02 & DESIGN SYSTEM)
+             ========================================================================= -->
+        <section id="comprar" class="relative z-30 py-28 md:py-36 bg-[#09090b] text-white overflow-hidden flex items-center justify-center">
+
+            <!-- Fundo com Aura Luminosa Difusa -->
+            <div class="absolute inset-0 bg-radial-gradient pointer-events-none opacity-40">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-zinc-700 rounded-full blur-[140px]"></div>
+            </div>
+
+            <div class="max-w-[1440px] mx-auto px-6 relative z-10 flex flex-col items-center">
+
+                <!-- Glowing Card de Luxo com Feixe Rotativo Conic (Herdado de design_system_oficial1.html) -->
+                <div class="relative group reveal-zoom">
+                    <!-- Camada de Brilho de Fundo -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-zinc-100 to-zinc-500 rounded-3xl blur-lg opacity-25 group-hover:opacity-60 transition duration-700"></div>
+
+                    <!-- Feixe Giratório Conic (DS5 Beam Animation) -->
+                    <div class="absolute -inset-[2px] rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition duration-500">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220%] h-[220%] bg-[conic-gradient(from_0deg,transparent_0_330deg,white_360deg)] animate-spin-slow"></div>
+                    </div>
+
+                    <!-- Conteúdo Interno do Card -->
+                    <div class="relative px-10 sm:px-16 py-14 sm:py-20 bg-black/90 backdrop-blur-2xl border border-white/10 rounded-3xl flex flex-col items-center justify-center text-center shadow-2xl max-w-lg">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black mb-6 shadow-[0_0_30px_rgba(255,255,255,0.35)] group-hover:scale-110 transition-transform duration-500">
+                            <iconify-icon icon="solar:crown-star-bold-duotone" class="text-3xl"></iconify-icon>
+                        </div>
+
+                        <h2 class="font-sans text-4xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                            Artools<span class="font-light text-zinc-400">Pro</span>
+                        </h2>
+                        <div class="h-px w-14 bg-zinc-700 my-4"></div>
+                        <p class="font-mono text-xs uppercase tracking-[0.3em] text-zinc-400 mb-8">Signature Series • 2026</p>
+
+                        <!-- Botão com Feixe Magnético -->
+                        <button type="button" onclick="alert('Pedido da Artools Precision Pen iniciado!')" class="btn-beam-wrapper magnetic-btn" data-strength="0.32">
+                            <span class="btn-beam-border"></span>
+                            <span class="btn-beam-inner text-sm px-8 py-3.5">
+                                <span>Reservar Agora — R$ 1.490</span>
+                                <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center text-xs font-mono text-zinc-500">
+                    CERTIFICAÇÃO ZURICH // EDIÇÃO LIMITADA A 500 UNIDADES NUMERADAS
+                </div>
+
             </div>
         </section>
     </main>
@@ -637,7 +1763,9 @@
          4. ENGINE JAVASCRIPT DE ALTA PERFORMANCE (60FPS INTRA-FRAME SCRUB + PARALLAX APPLE)
          ========================================================================= -->
     <script>
-        gsap.registerPlugin(ScrollTrigger);
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
 
         let masterScrollTrigger = null;
 
@@ -646,6 +1774,14 @@
             if (!masterScrollTrigger) return;
             const targetY = masterScrollTrigger.start + (masterScrollTrigger.end - masterScrollTrigger.start) * progressRatio;
             window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+
+        // Navegação suave para a Segunda Dobra sem poluir a URL com hash
+        function scrollToSecondFold() {
+            const fold2 = document.getElementById('segunda-dobra');
+            if (fold2) {
+                fold2.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Navegação suave para a seção de compra sem poluir a URL com hash #comprar
@@ -661,6 +1797,405 @@
             const target = document.getElementById('stage-1-blend-target');
             if (target) target.classList.toggle('mix-blend-diff');
         }
+
+        // =========================================================================
+        // 4.1 ESTADO & DADOS TÉCNICOS DOS MÓDULOS DE PRECISÃO (SEÇÃO 02 - ANEXO 02)
+        // =========================================================================
+        const techFeaturesData = [
+            {
+                coreLabel: 'CORE_ALU_7075-T6',
+                coreBar: '88%',
+                tipVal: '0.1',
+                tipUnit: 'mm',
+                tipLabel: 'TIP_PRECISION // SWISS CNC'
+            },
+            {
+                coreLabel: 'NANO-PIGMENTUM™ 0.04S',
+                coreBar: '100%',
+                tipVal: '0.04',
+                tipUnit: 's',
+                tipLabel: 'INSTANT_DRY // ARCHIVAL INK'
+            },
+            {
+                coreLabel: 'LASER_GRIP_RA0.8',
+                coreBar: '96%',
+                tipVal: 'Ra 0.8',
+                tipUnit: 'µm',
+                tipLabel: 'DIAMOND_KNURL // 5-AXIS CNC'
+            },
+            {
+                coreLabel: 'LIVE_CANVAS_0.10MM',
+                coreBar: '100%',
+                tipVal: '0.10',
+                tipUnit: 'mm',
+                tipLabel: 'SCRATCHPAD // ARCHITECTURE'
+            }
+        ];
+
+        let currentTechIndex = 0;
+
+        function selectTechFeature(index) {
+            if (index < 0 || index >= techFeaturesData.length) return;
+            currentTechIndex = index;
+            const data = techFeaturesData[index];
+
+            // 1. Alterna estado ativo nos cards da lista vertical
+            for (let i = 0; i < 4; i++) {
+                const card = document.getElementById(`tech-card-${i}`);
+                if (card) {
+                    if (i === index) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                }
+            }
+
+            // 2. Atualiza os HUD Badges de Vidro Flutuantes sobre a Imagem Macro
+            const coreLabel = document.getElementById('hud-glass-core-label');
+            const coreBar = document.getElementById('hud-glass-core-bar');
+            const tipVal = document.getElementById('hud-glass-tip-val');
+            const tipLabel = document.getElementById('hud-glass-tip-label');
+
+            if (coreLabel) coreLabel.textContent = data.coreLabel;
+            if (coreBar) coreBar.style.width = data.coreBar;
+            if (tipVal) {
+                tipVal.innerHTML = `${data.tipVal}<span class="text-xs font-mono font-semibold text-zinc-500 align-top ml-1">${data.tipUnit}</span>`;
+            }
+            if (tipLabel) tipLabel.textContent = data.tipLabel;
+
+            // Se for o card 04 (Prancheta), rola suavemente até ela e inicializa o canvas
+            if (index === 3) {
+                const scratchSection = document.getElementById('scratchpad-section');
+                if (scratchSection) {
+                    scratchSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                setTimeout(initScratchpad, 200);
+            }
+        }
+
+        let activeVisualMode = 'macro';
+
+        // Alternador de Lente / Fotografia do Palco Óptico (Apenas Macro e Studio)
+        function switchTechVisual(mode, btn) {
+            activeVisualMode = mode;
+            document.querySelectorAll('.tech-lens-pill').forEach((b) => {
+                b.classList.remove('active', 'bg-black', 'text-white', 'font-medium');
+                b.classList.add('text-zinc-600');
+            });
+            if (btn) {
+                btn.classList.add('active', 'bg-black', 'text-white', 'font-medium');
+                btn.classList.remove('text-zinc-600');
+            }
+
+            const img = document.getElementById('tech-feature-img');
+            const hotspots = document.getElementById('macro-hotspots-layer');
+            const telemetry = document.getElementById('macro-telemetry-badge');
+            if (!img) return;
+
+            if (mode === 'macro') {
+                img.src = 'assets/raw_files/artools_tech_macro_enhanced.jpg';
+                if (hotspots) hotspots.style.opacity = '1';
+                if (telemetry) telemetry.style.opacity = '0.85';
+            } else if (mode === 'studio') {
+                img.src = 'assets/raw_files/pen_studio_showcase.jpg';
+                if (hotspots) hotspots.style.opacity = '0';
+                if (telemetry) telemetry.style.opacity = '0';
+                img.style.transform = 'scale(1)';
+                img.style.transformOrigin = 'center center';
+            }
+
+            if (window.gsap) {
+                gsap.fromTo(img, { scale: 1.06, opacity: 0.65 }, { scale: 1, opacity: 1, duration: 0.5, ease: 'expo.out' });
+            }
+        }
+
+        // Função de Lanterna / Rastreamento Radial para os Flashlight Cards (Seção 03)
+        window.updateFlashlight = function (e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        };
+
+        // =========================================================================
+        // 4.2 PRANCHETA VIRTUAL DE TESTE DE TRAÇO 0.1MM (CANVAS SCRATCHPAD)
+        // =========================================================================
+        let padCanvas = null;
+        let padCtx = null;
+        let padDrawing = false;
+        let padStrokeWidth = 0.8; // Calibrado para o traço 0.10mm
+        let padStrokeColor = '#18181b';
+        let padTotalDist = 0;
+        let padLastX = 0;
+        let padLastY = 0;
+        let padInitialized = false;
+
+        function initScratchpad() {
+            padCanvas = document.getElementById('stroke-scratchpad');
+            if (!padCanvas) return;
+
+            const rect = padCanvas.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+
+            if (!padInitialized || padCanvas.width !== Math.floor(rect.width * dpr)) {
+                padCanvas.width = Math.floor(rect.width * dpr);
+                padCanvas.height = Math.floor(rect.height * dpr);
+                padCtx = padCanvas.getContext('2d');
+                padCtx.scale(dpr, dpr);
+                padCtx.lineCap = 'round';
+                padCtx.lineJoin = 'round';
+                padInitialized = true;
+            }
+
+            function getPos(e) {
+                const b = padCanvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - b.left,
+                    y: clientY - b.top
+                };
+            }
+
+            function startDraw(e) {
+                padDrawing = true;
+                const pos = getPos(e);
+                padLastX = pos.x;
+                padLastY = pos.y;
+                const hint = document.getElementById('scratchpad-hint');
+                if (hint) hint.style.opacity = '0';
+            }
+
+            function moveDraw(e) {
+                if (!padDrawing || !padCtx) return;
+                const pos = getPos(e);
+
+                padCtx.beginPath();
+                padCtx.moveTo(padLastX, padLastY);
+                padCtx.lineTo(pos.x, pos.y);
+                padCtx.strokeStyle = padStrokeColor;
+                padCtx.lineWidth = padStrokeWidth;
+                padCtx.stroke();
+
+                // Calcula distância acumulada em cm
+                const dx = pos.x - padLastX;
+                const dy = pos.y - padLastY;
+                const stepPx = Math.sqrt(dx * dx + dy * dy);
+                padTotalDist += (stepPx / 37.8);
+
+                const counter = document.getElementById('pad-dist-counter');
+                if (counter) counter.textContent = `${padTotalDist.toFixed(1)} cm`;
+
+                padLastX = pos.x;
+                padLastY = pos.y;
+            }
+
+            function endDraw() {
+                padDrawing = false;
+            }
+
+            padCanvas.onmousedown = startDraw;
+            window.addEventListener('mousemove', moveDraw);
+            window.addEventListener('mouseup', endDraw);
+
+            padCanvas.ontouchstart = (e) => { e.preventDefault(); startDraw(e); };
+            padCanvas.ontouchmove = (e) => { e.preventDefault(); moveDraw(e); };
+            padCanvas.ontouchend = endDraw;
+        }
+
+        function setPadWidth(w, btn) {
+            padStrokeWidth = w;
+            document.querySelectorAll('.pad-tool-width').forEach((b) => {
+                b.classList.remove('active', 'bg-black', 'text-white', 'font-bold');
+                b.classList.add('bg-white', 'text-zinc-700');
+            });
+            if (btn) {
+                btn.classList.add('active', 'bg-black', 'text-white', 'font-bold');
+                btn.classList.remove('bg-white', 'text-zinc-700');
+            }
+        }
+
+        function clearPadCanvas() {
+            if (!padCanvas || !padCtx) return;
+            const dpr = window.devicePixelRatio || 1;
+            padCtx.clearRect(0, 0, padCanvas.width / dpr, padCanvas.height / dpr);
+            padTotalDist = 0;
+            const counter = document.getElementById('pad-dist-counter');
+            if (counter) counter.textContent = '0.0 cm';
+            const hint = document.getElementById('scratchpad-hint');
+            if (hint) hint.style.opacity = '1';
+        }
+
+        function drawPadDemo() {
+            if (!padCanvas) initScratchpad();
+            if (!padCtx) return;
+
+            clearPadCanvas();
+            const hint = document.getElementById('scratchpad-hint');
+            if (hint) hint.style.opacity = '0';
+
+            const rect = padCanvas.getBoundingClientRect();
+            const startX = rect.width * 0.15;
+            const startY = rect.height * 0.55;
+
+            padCtx.strokeStyle = '#18181b';
+            padCtx.lineWidth = 0.85;
+            padCtx.beginPath();
+            padCtx.moveTo(startX, startY);
+
+            // Traço de assinatura suave de alta fidelidade
+            let points = [
+                { x: startX + 30, y: startY - 45 },
+                { x: startX + 65, y: startY + 15 },
+                { x: startX + 110, y: startY - 30 },
+                { x: startX + 155, y: startY + 5 },
+                { x: startX + 210, y: startY - 50 },
+                { x: startX + 270, y: startY + 10 },
+                { x: startX + 340, y: startY - 15 }
+            ];
+
+            let i = 0;
+            function step() {
+                if (i < points.length) {
+                    padCtx.lineTo(points[i].x, points[i].y);
+                    padCtx.stroke();
+                    padTotalDist += 2.8;
+                    const counter = document.getElementById('pad-dist-counter');
+                    if (counter) counter.textContent = `${padTotalDist.toFixed(1)} cm`;
+                    i++;
+                    requestAnimationFrame(step);
+                } else {
+                    padCtx.beginPath();
+                    padCtx.moveTo(startX, startY + 30);
+                    padCtx.lineTo(startX + 340, startY + 30);
+                    padCtx.strokeStyle = 'rgba(24, 24, 27, 0.4)';
+                    padCtx.lineWidth = 0.5;
+                    padCtx.stroke();
+                }
+            }
+            step();
+        }
+
+        // =========================================================================
+        // 4.4 ATELIER & CONFIGURADOR INTERATIVO (TERCEIRA DOBRA)
+        // =========================================================================
+        let selectedCaliber = '0.10mm';
+        let selectedInk = 'Carbon Black';
+        let dryTestRunning = false;
+
+        function scrollToThirdFold() {
+            const fold3 = document.getElementById('terceira-dobra');
+            if (fold3) {
+                fold3.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function handleEngravingInput(val) {
+            const display = document.getElementById('live-engraved-text');
+            const beam = document.getElementById('laser-engrave-beam');
+            if (display) {
+                display.textContent = val.trim() ? `ARTOOLS // ${val.toUpperCase()}` : 'ARTOOLS // SIGNATURE';
+            }
+            if (beam) {
+                beam.classList.remove('active');
+                void beam.offsetWidth; // Força reflow para disparar animação
+                beam.classList.add('active');
+            }
+        }
+
+        function selectNibCaliber(fullLabel, shortLabel, hint, btn) {
+            selectedCaliber = fullLabel;
+            document.querySelectorAll('.nib-caliber-btn').forEach((b) => {
+                b.classList.remove('active', 'border-black', 'bg-black', 'text-white', 'shadow-sm');
+                b.classList.add('border-zinc-200', 'bg-zinc-50', 'text-zinc-700');
+            });
+            if (btn) {
+                btn.classList.add('active', 'border-black', 'bg-black', 'text-white', 'shadow-sm');
+                btn.classList.remove('border-zinc-200', 'bg-zinc-50', 'text-zinc-700');
+            }
+
+            const hudDisp = document.getElementById('hud-nib-display');
+            const hudName = document.getElementById('hud-nib-name');
+            const specHint = document.getElementById('caliber-spec-hint');
+
+            if (hudDisp) hudDisp.textContent = shortLabel;
+            if (hudName) hudName.textContent = `${fullLabel} ${hint.split(' ')[0]}`;
+            if (specHint) specHint.textContent = `Calibração Suíça // ${hint}`;
+        }
+
+        function selectInkFormula(name, hex, btn) {
+            selectedInk = name;
+            document.querySelectorAll('.ink-formula-btn').forEach((b) => {
+                b.classList.remove('active', 'border-2', 'border-black');
+                b.classList.add('border', 'border-zinc-200');
+            });
+            if (btn) {
+                btn.classList.add('active', 'border-2', 'border-black');
+                btn.classList.remove('border', 'border-zinc-200');
+            }
+
+            const hudName = document.getElementById('hud-ink-name');
+            const hudDot = document.getElementById('hud-ink-dot');
+
+            if (hudName) hudName.textContent = `${name} 100%`;
+            if (hudDot) hudDot.style.backgroundColor = hex;
+        }
+
+        function testDrySpeed() {
+            if (dryTestRunning) return;
+            dryTestRunning = true;
+            const counter = document.getElementById('dry-time-counter');
+            const bar = document.getElementById('dry-progress-bar');
+
+            if (bar) bar.style.width = '0%';
+            if (counter) counter.textContent = '0.00';
+
+            let startTime = performance.now();
+            const duration = 400; // 400ms para percepção visual do 0.04s
+
+            function step(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentSec = (progress * 0.04).toFixed(2);
+
+                if (counter) counter.textContent = currentSec;
+                if (bar) bar.style.width = `${progress * 100}%`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    if (counter) counter.textContent = '0.04';
+                    dryTestRunning = false;
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        function applyConfigurationAndScroll() {
+            const engraveVal = document.getElementById('engraving-input-field')?.value.trim() || 'SIGNATURE';
+            alert(`Configuração Calibrada com Sucesso!\n• Calibre: ${selectedCaliber}\n• Tinta: ${selectedInk}\n• Gravação Laser: ${engraveVal.toUpperCase()}\n\nRedirecionando para a reserva com numeração individual suíça...`);
+            scrollToBuy();
+        }
+
+        // Exportação explícita de métodos para window (Garante acessibilidade global imediata)
+        window.selectTechFeature = selectTechFeature;
+        window.switchTechVisual = switchTechVisual;
+        window.initScratchpad = initScratchpad;
+        window.setPadWidth = setPadWidth;
+        window.clearPadCanvas = clearPadCanvas;
+        window.drawPadDemo = drawPadDemo;
+        window.scrollToStage = scrollToStage;
+        window.scrollToSecondFold = scrollToSecondFold;
+        window.scrollToThirdFold = scrollToThirdFold;
+        window.scrollToBuy = scrollToBuy;
+        window.toggleMixBlend = toggleMixBlend;
+        window.handleEngravingInput = handleEngravingInput;
+        window.selectNibCaliber = selectNibCaliber;
+        window.selectInkFormula = selectInkFormula;
+        window.testDrySpeed = testDrySpeed;
+        window.applyConfigurationAndScroll = applyConfigurationAndScroll;
 
         document.addEventListener('DOMContentLoaded', () => {
             // Limpa memória de scroll do ScrollTrigger e força o topo absoluto
@@ -862,6 +2397,80 @@
                     card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
                 });
             });
+
+            /* ---------------------------------------------------------------------
+               5. SEGUNDA DOBRA E SEÇÕES SUBSEQUENTES: SISTEMA DE REVELAÇÃO INFALÍVEL
+               - Ativação de .reveal-up e .reveal-zoom via ScrollTrigger com once: true
+               - Garante que NUNCA haja tela branca (elimina toggleActions reversas)
+               --------------------------------------------------------------------- */
+            // 5.1 ScrollTrigger para todas as seções (Entrada suave e permanente)
+            gsap.utils.toArray('.reveal-up, .reveal-zoom').forEach(function (elem) {
+                ScrollTrigger.create({
+                    trigger: elem,
+                    start: "top 88%",
+                    once: true,
+                    onEnter: function () {
+                        elem.classList.add('active');
+                    }
+                });
+            });
+
+            // 5.2 Lupa Óptica Interativa e Tilt 3D no Card de Vitrine Macro
+            const techCard = document.getElementById('tech-feature-card');
+            const techImg = document.getElementById('tech-feature-img');
+            const coordsVal = document.getElementById('macro-coords-val');
+
+            if (techCard && techImg) {
+                const rotX = gsap.quickTo(techCard, 'rotationX', { duration: 0.5, ease: 'power3.out' });
+                const rotY = gsap.quickTo(techCard, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+
+                techCard.addEventListener('mousemove', (e) => {
+                    const rect = techCard.getBoundingClientRect();
+                    const normX = (e.clientX - rect.left) / rect.width - 0.5;
+                    const normY = (e.clientY - rect.top) / rect.height - 0.5;
+
+                    // 3D Tilt suave
+                    rotY(normX * 6);
+                    rotX(-normY * 6);
+
+                    // Efeito de Lupa Óptica 10x no modo Macro
+                    if (activeVisualMode === 'macro') {
+                        const xPercent = Math.min(Math.max(((e.clientX - rect.left) / rect.width) * 100, 4), 96);
+                        const yPercent = Math.min(Math.max(((e.clientY - rect.top) / rect.height) * 100, 4), 96);
+                        techImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+                        techImg.style.transform = 'scale(1.32)';
+
+                        if (coordsVal) {
+                            const microX = ((e.clientX - rect.left) * 1.82).toFixed(1);
+                            const microY = ((e.clientY - rect.top) * 1.82).toFixed(1);
+                            coordsVal.textContent = `OPTICAL 10X // X:${microX}µm Y:${microY}µm`;
+                        }
+                    }
+                });
+
+                techCard.addEventListener('mouseleave', () => {
+                    rotX(0);
+                    rotY(0);
+                    if (activeVisualMode === 'macro') {
+                        techImg.style.transform = 'scale(1)';
+                        techImg.style.transformOrigin = 'center center';
+                        if (coordsVal) coordsVal.textContent = 'OPTICAL MACRO 10X // ±0.0008mm';
+                    }
+                });
+            }
+
+            // 5.3 Inicialização Antecipada da Prancheta Interativa
+            initScratchpad();
+
+            // 5.4 Garantia Infalível contra Tela Branca: Ativa elementos visíveis após 600ms
+            setTimeout(() => {
+                document.querySelectorAll('.reveal-up, .reveal-zoom').forEach((el) => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight + 150) {
+                        el.classList.add('active');
+                    }
+                });
+            }, 600);
         });
 
         // Garantia adicional contra rolagem residual em reloads
