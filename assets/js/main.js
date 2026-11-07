@@ -686,11 +686,15 @@
         window.toggleNavSound = toggleNavSound;
         window.toggleMobileNav = toggleMobileNav;
         window.updateNavScrollSpy = updateNavScrollSpy;
+        window.updateNavDockFlashlight = updateNavDockFlashlight;
+        window.moveNavDockSlider = moveNavDockSlider;
+        window.resetNavDockSliderToActive = resetNavDockSliderToActive;
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Limpa memÃ³ria de scroll do ScrollTrigger e forÃ§a o topo absoluto
+            // Limpa memória de scroll do ScrollTrigger e força o topo absoluto
             ScrollTrigger.clearScrollMemory('manual');
             window.scrollTo(0, 0);
+            initNavDockInteractions();
 
             const video = document.getElementById('pen-video');
             const sideProgressFill = document.getElementById('side-progress-fill');
@@ -992,6 +996,60 @@
             }
         }
 
+        function updateNavDockFlashlight(event) {
+            const dock = document.getElementById('nav-dock');
+            if (!dock) return;
+            const rect = dock.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            dock.style.setProperty('--dock-x', `${x}px`);
+            dock.style.setProperty('--dock-y', `${y}px`);
+        }
+
+        function moveNavDockSlider(buttonEl) {
+            const slider = document.getElementById('nav-dock-pill-slider');
+            const dock = document.getElementById('nav-dock');
+            if (!slider || !dock || !buttonEl) return;
+
+            const dockRect = dock.getBoundingClientRect();
+            const btnRect = buttonEl.getBoundingClientRect();
+
+            const left = btnRect.left - dockRect.left;
+            const width = btnRect.width;
+
+            slider.style.left = `${left}px`;
+            slider.style.width = `${width}px`;
+            slider.style.opacity = '1';
+        }
+
+        function resetNavDockSliderToActive() {
+            const activeBtn = document.querySelector('.nav-dock-item.active') || document.querySelector('.nav-dock-item[data-nav-target="hero"]');
+            if (activeBtn) {
+                moveNavDockSlider(activeBtn);
+            }
+        }
+
+        function initNavDockInteractions() {
+            const dock = document.getElementById('nav-dock');
+            const dockItems = document.querySelectorAll('.nav-dock-item');
+            if (!dock) return;
+
+            dockItems.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    moveNavDockSlider(btn);
+                    if (asmrGain && asmrGain.gain.value > 0.01) {
+                        playPenStrokeSound(0.08);
+                    }
+                });
+            });
+
+            dock.addEventListener('mouseleave', () => {
+                resetNavDockSliderToActive();
+            });
+
+            setTimeout(resetNavDockSliderToActive, 300);
+        }
+
         function updateNavScrollSpy() {
             const dockItems = document.querySelectorAll('.nav-dock-item');
             if (!dockItems.length) return;
@@ -1031,6 +1089,7 @@
                     btn.classList.add('active');
                     btn.classList.remove('text-zinc-400');
                     btn.classList.add('text-white');
+                    moveNavDockSlider(btn);
                 } else {
                     btn.classList.remove('active');
                     btn.classList.remove('text-white');

@@ -156,30 +156,86 @@
         }
 
         /* =========================================================================
-           FLOATING PILL CAPSULE DOCK & SOUNDWAVE (REF: AURAL DOCK & SWISS DS)
+           FLOATING PILL CAPSULE DOCK & ADVANCED ANIMATIONS (AURAL + SWISS DS)
            ========================================================================= */
+        .nav-dock-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            padding: 1.5px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transform: translate3d(0, 0, 0);
+            transition: box-shadow 0.4s ease, transform 0.3s ease;
+        }
+
+        .nav-dock-container:hover {
+            box-shadow: 0 22px 52px -8px rgba(0, 0, 0, 0.52), 0 0 24px rgba(16, 185, 129, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .nav-dock-beam {
+            position: absolute;
+            inset: -200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 240deg,
+                rgba(16, 185, 129, 0.8) 300deg,
+                rgba(255, 255, 255, 0.95) 340deg,
+                transparent 360deg
+            );
+            animation: beam-spin 4s linear infinite;
+            pointer-events: none;
+            will-change: transform;
+        }
+
         .nav-dock-item {
             position: relative;
             white-space: nowrap;
-            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2;
+            transition: color 0.25s ease, transform 0.2s ease;
+        }
+
+        .nav-dock-item:hover {
+            transform: translateY(-0.5px);
         }
 
         .nav-dock-item.active {
-            background: rgba(255, 255, 255, 0.18) !important;
             color: #ffffff !important;
             font-weight: 600 !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Fluid Elastic Pill Slider */
+        #nav-dock-pill-slider {
+            position: absolute;
+            top: 5px;
+            bottom: 5px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.09));
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+            transition: left 0.32s cubic-bezier(0.16, 1, 0.3, 1), width 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+            opacity: 0;
+            z-index: 1;
         }
 
         /* Soundwave Equalizer Bars (Aural Reference) */
         @keyframes soundWavePulse {
             0%, 100% { height: 3.5px; opacity: 0.6; }
-            50% { height: 13px; opacity: 1; }
+            50% { height: 14px; opacity: 1; }
+        }
+
+        .sound-wave-active {
+            border-color: rgba(16, 185, 129, 0.5) !important;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.35), 0 8px 24px -4px rgba(0, 0, 0, 0.3) !important;
         }
 
         .sound-wave-active .sound-wave-bar {
             background-color: #10b981 !important;
-            box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
         }
 
         .sound-wave-active .sound-wave-bar:nth-child(1) {
@@ -196,6 +252,28 @@
 
         .sound-wave-active .sound-wave-bar:nth-child(4) {
             animation: soundWavePulse 1.05s ease-in-out infinite 0.1s;
+        }
+
+        /* Logo Shimmer Beam Effect */
+        .logo-text-shimmer {
+            background: linear-gradient(
+                110deg,
+                #18181b 0%,
+                #18181b 40%,
+                #10b981 50%,
+                #18181b 60%,
+                #18181b 100%
+            );
+            background-size: 250% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: background-position 0.8s ease, letter-spacing 0.5s var(--ease-out-expo);
+        }
+
+        .group:hover .logo-text-shimmer {
+            background-position: -120% 0;
+            letter-spacing: 0.32em;
         }
 
         /* Mobile Drawer State */
@@ -918,15 +996,16 @@
 
         /* Reading Progress Bar */
         #header-scroll-progress {
-            position: absolute;
-            bottom: 0;
+            position: fixed;
+            top: 0;
             left: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #10b981 0%, #18181b 100%);
+            height: 2.5px;
+            background: linear-gradient(90deg, #10b981 0%, #34d399 50%, #18181b 100%);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
             width: 0%;
             transition: width 0.08s ease-out;
             pointer-events: none;
-            z-index: 60;
+            z-index: 70;
         }
 
         /* Custom Scrollbar */

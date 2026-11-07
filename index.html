@@ -102,31 +102,45 @@
 
         <div class="max-w-[1440px] mx-auto flex items-center justify-between pointer-events-auto">
 
-            <!-- 1. BRAND LOGO (MINIMALISTA COM EXPANSÃO DE TRACKING NO HOVER) -->
-            <button type="button" onclick="scrollToStage(0)" class="shrink-0 flex items-center gap-2.5 group cursor-pointer border-none bg-transparent text-left p-0" aria-label="ARTOOLS.PRO Início">
-                <div class="w-8 h-8 rounded-full bg-zinc-900/90 text-white flex items-center justify-center border border-white/10 shadow-md group-hover:scale-105 group-hover:rotate-90 transition-all duration-500">
+            <!-- 1. BRAND LOGO (MINIMALISTA COM EXPANSÃO DE TRACKING E SHIMMER LÍQUIDO) -->
+            <button type="button" onclick="scrollToStage(0)" class="shrink-0 flex items-center gap-3 group cursor-pointer border-none bg-transparent text-left p-0" aria-label="ARTOOLS.PRO Início">
+                <div class="w-8 h-8 rounded-full bg-zinc-900/90 text-white flex items-center justify-center border border-white/10 shadow-md group-hover:scale-105 group-hover:rotate-90 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.4)] transition-all duration-500 relative">
                     <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-sm text-emerald-400"></iconify-icon>
+                    <span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 </div>
-                <span class="font-sans font-bold text-sm md:text-[15px] tracking-[0.24em] uppercase text-zinc-900 group-hover:tracking-[0.32em] transition-all duration-500">
+                <span class="font-sans font-bold text-sm md:text-[15px] tracking-[0.24em] uppercase logo-text-shimmer">
                     ARTOOLS<span class="text-zinc-400 font-light text-xs tracking-normal">.PRO</span>
                 </span>
             </button>
 
-            <!-- 2. CAPSULE DOCK NAV CENTRAL (EXACT AURAL CAPSULE STYLE) -->
-            <nav class="hidden md:flex items-center gap-1 bg-zinc-900/90 text-zinc-300 backdrop-blur-xl border border-white/10 rounded-full px-2 py-1.5 shadow-[0_12px_32px_-4px_rgba(0,0,0,0.35)]" aria-label="Navegação Principal">
-                <button type="button" onclick="scrollToStage(0)" data-nav-target="hero" class="nav-dock-item active px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-white cursor-pointer">Design</button>
-                <button type="button" onclick="scrollToStage(0.48)" data-nav-target="giro" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Giro 3D</button>
-                <button type="button" onclick="scrollToSecondFold()" data-nav-target="engenharia" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Engenharia</button>
-                <button type="button" onclick="scrollToThirdFold()" data-nav-target="atelier" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Atelier</button>
-                <button type="button" onclick="scrollToFourthFold()" data-nav-target="cinema" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Cinema</button>
-                <button type="button" onclick="scrollToBuy()" data-nav-target="specs" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide transition-all duration-200 text-zinc-400 hover:text-white hover:bg-white/10 cursor-pointer">Specs</button>
-            </nav>
+            <!-- 2. CAPSULE DOCK NAV CENTRAL COM BEAM 360°, FLASHLIGHT E SLIDER ELÁSTICO FLUIDO -->
+            <div class="nav-dock-container relative hidden md:inline-flex items-center rounded-full p-[1.5px] overflow-hidden group">
+                <!-- 360° Conic Perimeter Beam (Órbita de Luz Contínua) -->
+                <div class="nav-dock-beam"></div>
+
+                <!-- Dock Body com Vidro Obsidiana e Rastreamento de Luz Radial -->
+                <nav id="nav-dock" class="relative flex items-center gap-0.5 bg-[#121215]/90 text-zinc-300 backdrop-blur-2xl rounded-full px-2 py-1.5 shadow-[0_16px_40px_-6px_rgba(0,0,0,0.4)] border border-white/10 overflow-hidden" aria-label="Navegação Principal" onmousemove="updateNavDockFlashlight(event)">
+                    <!-- Flashlight Radial que segue o cursor -->
+                    <div id="nav-dock-flashlight" class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" style="background: radial-gradient(130px circle at var(--dock-x, 50%) var(--dock-y, 50%), rgba(255,255,255,0.14), transparent 70%);"></div>
+
+                    <!-- Sliding Elastic Indicator Pill (Desliza suavemente embaixo do item ativo) -->
+                    <div id="nav-dock-pill-slider"></div>
+
+                    <!-- Dock Buttons -->
+                    <button type="button" onclick="scrollToStage(0)" data-nav-target="hero" class="nav-dock-item active px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide text-white cursor-pointer">Design</button>
+                    <button type="button" onclick="scrollToStage(0.48)" data-nav-target="giro" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide text-zinc-400 hover:text-white cursor-pointer">Giro 3D</button>
+                    <button type="button" onclick="scrollToSecondFold()" data-nav-target="engenharia" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide text-zinc-400 hover:text-white cursor-pointer">Engenharia</button>
+                    <button type="button" onclick="scrollToThirdFold()" data-nav-target="atelier" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide text-zinc-400 hover:text-white cursor-pointer">Atelier</button>
+                    <button type="button" onclick="scrollToFourthFold()" data-nav-target="cinema" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide text-zinc-400 hover:text-white cursor-pointer">Cinema</button>
+                    <button type="button" onclick="scrollToBuy()" data-nav-target="specs" class="nav-dock-item px-3.5 py-1 rounded-full text-[12px] font-sans font-medium tracking-wide text-zinc-400 hover:text-white cursor-pointer">Specs</button>
+                </nav>
+            </div>
 
             <!-- 3. CLUSTER DA DIREITA (SOUND EQUALIZER + RESERVAR BEAM BUTTON + MOBILE TRIGGER) -->
             <div class="shrink-0 flex items-center gap-2.5 sm:gap-3">
-                <!-- Sound Equalizer Pill (Ref: .... SOUND) -->
-                <button id="nav-sound-btn" type="button" onclick="toggleNavSound()" class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 text-zinc-300 hover:text-white border border-white/10 backdrop-blur-xl text-[11px] font-mono tracking-widest uppercase transition-all duration-300 shadow-md hover:scale-[1.03] active:scale-[0.98] cursor-pointer group" aria-label="Alternar Som ASMR">
-                    <span class="flex items-end gap-[3px] h-3 py-[1px]">
+                <!-- Sound Equalizer Pill com Áudio ASMR e Halo Luminous -->
+                <button id="nav-sound-btn" type="button" onclick="toggleNavSound()" class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#121215]/90 text-zinc-300 hover:text-white border border-white/10 backdrop-blur-xl text-[11px] font-mono tracking-widest uppercase transition-all duration-300 shadow-md hover:scale-[1.03] active:scale-[0.98] cursor-pointer group relative overflow-hidden" aria-label="Alternar Som ASMR">
+                    <span class="flex items-end gap-[3px] h-3.5 py-[1px]">
                         <span class="sound-wave-bar w-[2px] h-1.5 bg-zinc-400 rounded-full transition-all"></span>
                         <span class="sound-wave-bar w-[2px] h-3 bg-zinc-400 rounded-full transition-all"></span>
                         <span class="sound-wave-bar w-[2px] h-2 bg-zinc-400 rounded-full transition-all"></span>
